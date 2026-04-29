@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunday Volleyball — Winter 2026</title>
+  <style>
+    /* ── Reset & base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:            #ffffff;
+      --bg2:           #f5f5f5;
+      --bg3:           #ebebeb;
+      --border:        #e0e0e0;
+      --border2:       #d0d0d0;
+      --text:          #111111;
+      --text2:         #555555;
+      --text3:         #888888;
+      --blue:          #185FA5;
+      --blue-bg:       #E6F1FB;
+      --pink:          #993556;
+      --pink-bg:       #FBEAF0;
+      --bar-m:         #378ADD;
+      --bar-f:         #D4537E;
+      --bar-s:         #aaaaaa;
+      --green-bg:      #E1F5EE;
+      --green:         #0F6E56;
+      --fire-bg:       #FAEEDA;
+      --fire:          #854F0B;
+      --sub-bg:        #F1EFE8;
+      --sub:           #5F5E5A;
+      --info-bg:       #E6F1FB;
+      --info:          #185FA5;
+      --radius-sm:     6px;
+      --radius-md:     10px;
+      --radius-lg:     14px;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg2);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Layout ───────────────────────────────────────────────────── */
+    .shell { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+    .header { margin-bottom: 1.5rem; }
+    .header h1 { font-size: 20px; font-weight: 600; color: var(--text); }
+    .header p  { font-size: 13px; color: var(--text3); margin-top: 3px; }
+
+    /* ── Nav ──────────────────────────────────────────────────────── */
+    .nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem;
+           border-bottom: 1px solid var(--border); padding-bottom: .75rem; }
+    .nb  { font-size: 13px; padding: 5px 14px; border-radius: 20px;
+           border: 1px solid var(--border2); background: transparent;
+           color: var(--text2); cursor: pointer; transition: all .15s; }
+    .nb:hover  { border-color: var(--blue); color: var(--blue); }
+    .nb.active { background: var(--info-bg); color: var(--info); border-color: transparent; }
+
+    /* ── Pages ────────────────────────────────────────────────────── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── Section label ────────────────────────────────────────────── */
+    .sl { font-size: 11px; font-weight: 600; letter-spacing: .08em;
+          color: var(--text3); text-transform: uppercase; margin-bottom: .6rem; }
+
+    /* ── Card ─────────────────────────────────────────────────────── */
+    .card { background: var(--bg); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 1rem 1.1rem; }
+
+    /* ── Metric grid ──────────────────────────────────────────────── */
+    .mg { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 1.5rem; }
+    @media(max-width:580px){ .mg { grid-template-columns: repeat(2,1fr); } }
+    .met { background: var(--bg2); border-radius: var(--radius-md); padding: .9rem 1rem; }
+    .mv  { font-size: 28px; font-weight: 600; color: var(--text); line-height: 1; }
+    .ml  { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+    /* ── Two-col ──────────────────────────────────────────────────── */
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.75rem; }
+    @media(max-width:580px){ .two { grid-template-columns: 1fr; } }
+
+    /* ── Section spacing ──────────────────────────────────────────── */
+    .sec { margin-bottom: 1.75rem; }
+
+    /* ── Player row ───────────────────────────────────────────────── */
+    .pr { display: flex; align-items: center; gap: 9px; padding: 6px 0;
+          border-bottom: 1px solid var(--border); }
+    .pr:last-child { border-bottom: none; }
+    .av { width: 28px; height: 28px; border-radius: 50%; display: flex;
+          align-items: center; justify-content: center; font-size: 10px;
+          font-weight: 600; flex-shrink: 0; }
+    .avm { background: var(--blue-bg); color: #0C447C; }
+    .avf { background: var(--pink-bg); color: #72243E; }
+    .avs { background: var(--sub-bg);  color: var(--sub); }
+    .nm   { font-size: 13px; flex: 1; min-width: 0; white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis; }
+    .nm-m { color: var(--blue); }
+    .nm-f { color: var(--pink); }
+    .bw   { width: 60px; background: var(--bg2); border-radius: 4px;
+            height: 6px; overflow: hidden; flex-shrink: 0; }
+    .bm   { height: 6px; border-radius: 4px; background: var(--bar-m); }
+    .bf   { height: 6px; border-radius: 4px; background: var(--bar-f); }
+    .bs   { height: 6px; border-radius: 4px; background: var(--bar-s); }
+    .an   { font-size: 12px; color: var(--text3); width: 34px; text-align: right; flex-shrink: 0; }
+
+    /* ── Badges ───────────────────────────────────────────────────── */
+    .bdg { font-size: 10px; font-weight: 600; padding: 2px 7px;
+           border-radius: 20px; flex-shrink: 0; }
+    .bfi { background: var(--fire-bg); color: var(--fire); }
+    .bst { background: var(--blue-bg); color: var(--blue); }
+    .bsb { background: var(--sub-bg);  color: var(--sub); }
+
+    /* ── Tab row ──────────────────────────────────────────────────── */
+    .tr { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
+    .tb { font-size: 12px; padding: 5px 12px; border-radius: 20px;
+          border: 1px solid var(--border2); background: transparent;
+          color: var(--text2); cursor: pointer; }
+    .tb.active { background: var(--info-bg); color: var(--info); border-color: transparent; }
+
+    /* ── Pair rows ────────────────────────────────────────────────── */
+    .par { display: flex; align-items: center; gap: 9px; padding: 6px 0;
+           border-bottom: 1px solid var(--border); }
+    .par:last-child { border-bottom: none; }
+    .pn  { color: var(--text); flex: 1; font-size: 13px; }
+    .pc  { font-size: 12px; color: var(--text3); flex-shrink: 0; }
+    .dots { display: flex; gap: 3px; flex-shrink: 0; }
+    .dot  { width: 7px; height: 7px; border-radius: 50%;
+            background: var(--bg2); border: 1px solid var(--border); }
+    .dot.on { background: var(--bar-m); border-color: var(--bar-m); }
+
+    /* ── Fun facts ────────────────────────────────────────────────── */
+    .ff  { background: var(--bg2); border-radius: var(--radius-md);
+           padding: .8rem 1rem; margin-bottom: 8px; display: flex;
+           align-items: flex-start; gap: 10px; font-size: 13px;
+           color: var(--text); line-height: 1.5; }
+    .fi  { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Season tag ───────────────────────────────────────────────── */
+    .stg { display: inline-block; font-size: 10px; font-weight: 700;
+           padding: 2px 8px; border-radius: 20px; }
+    .tw  { background: var(--blue-bg); color: #0C447C; }
+    .ts  { background: #FFF3CD; color: #7A4F00; }
+
+    /* ── Progress bar ─────────────────────────────────────────────── */
+    .pw { background: var(--bg2); border-radius: 6px; height: 10px;
+          overflow: hidden; margin-bottom: 6px; }
+    .pf { height: 10px; border-radius: 6px;
+          background: linear-gradient(90deg, #378ADD, #5BA8F5); }
+
+    /* ── Week cards ───────────────────────────────────────────────── */
+    .wc  { background: var(--bg); border: 1px solid var(--border);
+           border-radius: var(--radius-lg); padding: .85rem 1rem;
+           cursor: pointer; margin-bottom: 8px; transition: border-color .15s; }
+    .wc:hover  { border-color: var(--border2); }
+    .wc.open   { border-color: var(--bar-m); }
+    .wh  { display: flex; align-items: center; gap: 10px; }
+    .wn  { font-size: 11px; font-weight: 600; color: var(--text3);
+           width: 18px; flex-shrink: 0; }
+    .wd  { font-size: 13px; color: var(--text); flex: 1; }
+    .wt  { font-size: 12px; color: var(--text2); }
+    .wi  { font-size: 11px; color: var(--text3); flex-shrink: 0; text-align: right; }
+    .wv  { font-size: 11px; color: var(--text3); flex-shrink: 0;
+           transition: transform .2s; margin-left: 4px; }
+    .wc.open .wv { transform: rotate(180deg); }
+    .wb  { display: none; margin-top: .85rem; padding-top: .85rem;
+           border-top: 1px solid var(--border); }
+    .wc.open .wb { display: block; }
+    .wts { display: grid; grid-template-columns: repeat(4,1fr);
+           gap: 8px; margin-bottom: 8px; }
+    @media(max-width:580px){ .wts { grid-template-columns: repeat(2,1fr); } }
+    .tco { background: var(--bg2); border-radius: var(--radius-md);
+           padding: .6rem .75rem; }
+    .tn  { font-size: 11px; font-weight: 600; color: var(--text2);
+           margin-bottom: 6px; white-space: nowrap; overflow: hidden;
+           text-overflow: ellipsis; }
+
+    /* ── Legend ───────────────────────────────────────────────────── */
+    .leg { display: flex; gap: 14px; margin-bottom: 1rem;
+           font-size: 12px; color: var(--text2); flex-wrap: wrap; }
+    .ld  { width: 8px; height: 8px; border-radius: 50%;
+           display: inline-block; margin-right: 4px; vertical-align: middle; }
+
+    /* ── YouTube btn ──────────────────────────────────────────────── */
+    .ytb { display: inline-flex; align-items: center; gap: 6px; font-size: 12px;
+           padding: 5px 12px; border-radius: 20px; background: #FF0000;
+           color: #fff; text-decoration: none; font-weight: 500; }
+    .ytp { display: inline-flex; align-items: center; gap: 6px; font-size: 12px;
+           padding: 5px 12px; border-radius: 20px; background: var(--bg2);
+           color: var(--text3); border: 1px dashed var(--border);
+           text-decoration: none; }
+
+    /* ── Schedule ─────────────────────────────────────────────────── */
+    .sr  { display: flex; align-items: center; gap: 10px; padding: 7px 0;
+           border-bottom: 1px solid var(--border); font-size: 13px; }
+    .sr:last-child { border-bottom: none; }
+    .sn  { width: 20px; font-size: 11px; color: var(--text3); flex-shrink: 0; text-align: right; }
+    .sd  { flex: 1; color: var(--text); }
+    .si  { font-size: 12px; color: var(--text2); }
+    .sb  { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; flex-shrink: 0; }
+    .dn  { background: var(--green-bg); color: var(--green); }
+    .nx  { background: var(--fire-bg);  color: var(--fire); }
+    .up  { background: var(--bg2);      color: var(--text3); }
+    .of  { background: #F5E6E6;         color: #8B2C2C; }
+    .su  { background: #FFF3CD;         color: #7A4F00; }
+
+    /* ── Never-together ───────────────────────────────────────────── */
+    .nts { width: 100%; padding: 8px 10px; border-radius: var(--radius-md);
+           border: 1px solid var(--border); background: var(--bg2);
+           color: var(--text); font-size: 13px; margin-bottom: 1rem; cursor: pointer; }
+    .ntr { background: var(--bg2); border-radius: var(--radius-md);
+           padding: .85rem 1rem; font-size: 13px; line-height: 1.8; }
+    .ng  { display: inline-block; padding: 2px 9px; border-radius: 20px;
+           margin: 2px; font-size: 12px; font-weight: 500; }
+    .ngm { background: var(--blue-bg); color: #0C447C; }
+    .ngf { background: var(--pink-bg); color: #72243E; }
+
+    /* ── Theme timeline ───────────────────────────────────────────── */
+    .tl  { display: flex; flex-direction: column; gap: 6px; }
+    .tlr { display: flex; align-items: center; gap: 10px; }
+    .tln { font-size: 11px; color: var(--text3); width: 16px; text-align: right; flex-shrink: 0; }
+    .tld { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .tlc { height: 2px; flex: 1; background: var(--border); }
+    .tlh { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; flex-shrink: 0; }
+    .tlt { font-size: 11px; color: var(--text3); width: 50px; text-align: right; flex-shrink: 0; }
+
+    /* ── Calendar ─────────────────────────────────────────────────── */
+    .cn  { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .cn button { background: var(--bg); border: 1px solid var(--border);
+                 border-radius: var(--radius-sm); padding: 5px 12px;
+                 cursor: pointer; color: var(--text2); font-size: 14px; }
+    .cn button:hover { border-color: var(--blue); color: var(--blue); }
+    .ct  { font-size: 16px; font-weight: 600; color: var(--text); }
+    .cg  { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+    .dw  { font-size: 11px; color: var(--text3); text-align: center;
+           padding: 4px 0; font-weight: 600; }
+    .dy  { min-height: 38px; border-radius: var(--radius-sm); display: flex;
+           flex-direction: column; align-items: center; justify-content: center;
+           font-size: 12px; }
+    .dy.em { background: transparent; }
+    .dy.no { background: var(--bg2); color: var(--text3); }
+    .dy.vb { background: var(--blue-bg); color: var(--blue);
+             font-weight: 600; cursor: pointer; }
+    .dy.vb:hover { background: #C8E0F8; }
+    .dy.sm { background: #FFF3CD; color: #7A4F00; font-weight: 600; }
+    .dy.td { outline: 2px solid var(--bar-m); outline-offset: -2px; }
+    .vd  { width: 5px; height: 5px; border-radius: 50%;
+           background: var(--bar-m); margin-top: 2px; }
+    .cl  { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap;
+           font-size: 11px; color: var(--text2); }
+    .cb  { width: 12px; height: 12px; border-radius: 3px;
+           display: inline-block; margin-right: 4px; vertical-align: middle; }
+
+    /* ── Footer ───────────────────────────────────────────────────── */
+    .footer { text-align: center; margin-top: 3rem; font-size: 12px; color: var(--text3); }
+    .footer a { color: var(--bar-m); text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="header">
+    <h1>🏐 Sunday Volleyball</h1>
+    <p>Supercamp Vanier · Every Sunday 9:00–11:00 AM</p>
+  </div>
+
+  <div class="nav">
+    <button class="nb active" onclick="showPage('overview',this)">Overview</button>
+    <button class="nb" onclick="showPage('leaderboard',this)">Leaderboard</button>
+    <button class="nb" onclick="showPage('chemistry',this)">Chemistry</button>
+    <button class="nb" onclick="showPage('history',this)">Team history</button>
+    <button class="nb" onclick="showPage('schedule',this)">Schedule</button>
+    <button class="nb" onclick="showPage('calendar',this)">Calendar</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div id="page-overview" class="page active">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem">
+      <span class="stg tw">❄️ Winter 2026</span>
+      <span style="font-size:12px;color:var(--text3)">January – May 10 · 13 of 15 Sundays completed</span>
+    </div>
+    <div class="mg">
+      <div class="met"><div class="mv">13</div><div class="ml">Sundays played</div></div>
+      <div class="met"><div class="mv">2</div><div class="ml">Sundays left</div></div>
+      <div class="met"><div class="mv">4</div><div class="ml">Perfect attendance</div></div>
+      <div class="met"><div class="mv">24</div><div class="ml">Regulars this season</div></div>
+    </div>
+    <div class="sec">
+      <div class="sl">Season progress</div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px"><span>Week 13 of 15</span><span>87%</span></div>
+        <div class="pw"><div class="pf" style="width:87%"></div></div>
+        <div style="font-size:12px;color:var(--text3);margin-top:6px">2 Sundays left (May 3 &amp; May 10) — Jose, Kevin H., Julie &amp; John can still finish perfect 🔥</div>
+      </div>
+    </div>
+    <div class="two">
+      <div>
+        <div class="sl">Group makeup</div>
+        <div class="card">
+          <div style="margin-bottom:12px">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--blue);margin-bottom:4px"><span>Men</span><span>18 regulars</span></div>
+            <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:75%;height:7px;border-radius:4px;background:var(--bar-m)"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--pink);margin-bottom:4px"><span>Women</span><span>6 regulars</span></div>
+            <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:25%;height:7px;border-radius:4px;background:var(--bar-f)"></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sl">Most frequent duos</div>
+        <div class="card" id="duos"></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sl">Theme timeline</div>
+      <div class="card"><div class="tl" id="tl"></div></div>
+    </div>
+    <div class="sec">
+      <div class="sl">Fun facts</div>
+      <div class="ff"><span class="fi">🔥</span>Jose, Kevin H., Julie &amp; John haven't missed a single Sunday — 13 for 13 with 2 left to go.</div>
+      <div class="ff"><span class="fi">📈</span>Emad and Trang are both on a 10-game active streak — the longest in the group right now.</div>
+      <div class="ff"><span class="fi">🤝</span>5 duos tied at 6 times together: Jose &amp; Julie, Julie &amp; Kevin H., Barbara &amp; Kevin H., Jose &amp; Sophie, and Emad &amp; Trang.</div>
+      <div class="ff"><span class="fi">🏠</span>A full house (all 24 regulars) has never happened. Best was 22/24, achieved 3 times this season.</div>
+      <div class="ff"><span class="fi">🎨</span>13 themes so far — season finale themes still to come on May 3 &amp; May 10!</div>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div id="page-leaderboard" class="page">
+    <div class="sec">
+      <div class="stg tw" style="margin-bottom:.75rem">❄️ Winter 2026 — Regulars</div>
+      <div class="card">
+        <div class="tr">
+          <button class="tb active" onclick="showTab(this,'all')">All</button>
+          <button class="tb" onclick="showTab(this,'m')">Men</button>
+          <button class="tb" onclick="showTab(this,'f')">Women</button>
+        </div>
+        <div id="lb"></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sl">Subs — appeared this season</div>
+      <div class="card" id="sublb"></div>
+    </div>
+  </div>
+
+  <!-- CHEMISTRY -->
+  <div id="page-chemistry" class="page">
+    <div class="sec">
+      <div class="sl">Who have I never been on a team with?</div>
+      <div class="card">
+        <select class="nts" onchange="showNever(this.value)">
+          <option value="">— Select a player —</option>
+          <optgroup label="Women">
+            <option>Anita</option><option>Audrey</option><option>Barbara</option>
+            <option>Julie</option><option>Nat</option><option>Sophie</option><option>Trang</option>
+          </optgroup>
+          <optgroup label="Men">
+            <option>Anthony W.</option><option>Daniel</option><option>Emad</option>
+            <option>Erik</option><option>Joey</option><option>John</option><option>Jose</option>
+            <option>Karim-Etienne</option><option>Kevin H.</option><option>Khoa</option>
+            <option>Mark</option><option>Michel</option><option>Nathan</option>
+            <option>Norichar</option><option>Patricio</option><option>Rigil</option><option>Siu</option>
+          </optgroup>
+        </select>
+        <div class="ntr" id="ntres" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <div id="page-history" class="page">
+    <div class="leg">
+      <span><span class="ld" style="background:var(--blue)"></span>Male</span>
+      <span><span class="ld" style="background:var(--pink)"></span>Female</span>
+    </div>
+    <div id="weeks"></div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div id="page-schedule" class="page">
+    <div class="sec">
+      <div class="stg tw" style="margin-bottom:.75rem">❄️ Winter 2026</div>
+      <div class="card" id="schw"></div>
+    </div>
+    <div class="sec">
+      <div class="stg ts" style="margin-bottom:.75rem">☀️ Summer 2026 <span style="font-weight:400;font-size:10px">· New regulars roster TBD</span></div>
+      <div class="card" id="schs"></div>
+    </div>
+  </div>
+
+  <!-- CALENDAR -->
+  <div id="page-calendar" class="page">
+    <div class="sec">
+      <div class="cn">
+        <button onclick="prevM()">‹</button>
+        <span class="ct" id="calt"></span>
+        <button onclick="nextM()">›</button>
+      </div>
+      <div class="card">
+        <div class="cg" id="calg"></div>
+        <div class="cl">
+          <span><span class="cb" style="background:var(--blue-bg)"></span>Volleyball (Winter)</span>
+          <span><span class="cb" style="background:#FFF3CD"></span>Volleyball (Summer)</span>
+          <span><span class="cb" style="background:var(--bg2)"></span>Off / no game</span>
+        </div>
+      </div>
+    </div>
+    <div id="caldet" style="display:none;margin-top:8px"></div>
+  </div>
+
+  <div class="footer">
+    Videos on <a href="https://www.youtube.com/@James.v" target="_blank">@James.v</a> &nbsp;·&nbsp; Winter 2026 Season
+  </div>
+
+</div><!-- /shell -->
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+//  DATA — update this section each week
+// ═══════════════════════════════════════════════════════════════════
+
+const GM = {
+  // Regulars
+  Anita:'f', Audrey:'f', Barbara:'f', Julie:'f', Nat:'f', Sophie:'f', Trang:'f',
+  'Anthony W.':'m', Daniel:'m', Emad:'m', Erik:'m', Joey:'m', John:'m', Jose:'m',
+  'Karim-Etienne':'m', 'Kevin H.':'m', Khoa:'m', Mark:'m', Michel:'m', Nathan:'m',
+  Norichar:'m', Patricio:'m', Rigil:'m', Siu:'m',
+  // Subs
+  Alain:'m', Andre:'m', Bao:'m', Billy:'m', Catherine:'f', Chy:'m', Dat:'m', David:'m',
+  Domenico:'m', James:'m', 'Ke-Nam':'m', 'Kevin L.':'m', Lilian:'f', Malak:'f',
+  Melanie:'f', Nadim:'m', Olivier:'m', Raks:'m', Steven:'m', William:'m', Winnie:'f',
+  // One-off subs
+  Bernard:'m', Bernie:'m', Dom:'m', Jimmy:'m', Nicky:'m', Phillipe:'m', Sam:'m'
+};
+
+// Attendance counts (out of 13 played sessions)
+const REGULARS = [
+  {n:'Jose',        g:'m', att:13, streak:13},
+  {n:'Kevin H.',    g:'m', att:13, streak:13},
+  {n:'Julie',       g:'f', att:13, streak:13},
+  {n:'John',        g:'m', att:13, streak:13},
+  {n:'Trang',       g:'f', att:12, streak:10},
+  {n:'Emad',        g:'m', att:12, streak:10},
+  {n:'Michel',      g:'m', att:12, streak:9},
+  {n:'Daniel',      g:'m', att:12, streak:7},
+  {n:'Sophie',      g:'f', att:12, streak:3},
+  {n:'Rigil',       g:'m', att:12, streak:1},
+  {n:'Erik',        g:'m', att:12, streak:1},
+  {n:'Anita',       g:'f', att:11, streak:2},
+  {n:'Nathan',      g:'m', att:11, streak:2},
+  {n:'Audrey',      g:'f', att:11, streak:2},
+  {n:'Barbara',     g:'f', att:11, streak:0},
+  {n:'Joey',        g:'m', att:10, streak:4},
+  {n:'Mark',        g:'m', att:10, streak:1},
+  {n:'Khoa',        g:'m', att:10, streak:0},
+  {n:'Patricio',    g:'m', att:10, streak:0},
+  {n:'Anthony W.',  g:'m', att:9,  streak:0},
+  {n:'Norichar',    g:'m', att:8,  streak:0},
+  {n:'Siu',         g:'m', att:8,  streak:0},
+  {n:'Nat',         g:'f', att:7,  streak:3},
+  {n:'Karim-Etienne',g:'m',att:7,  streak:2},
+];
+
+const SUBS = [
+  {n:'David',    c:9},  {n:'Chy',      c:5},  {n:'Andre',    c:4},
+  {n:'William',  c:4},  {n:'Alain',    c:3},  {n:'Steven',   c:3},
+  {n:'Catherine',c:3},  {n:'Winnie',   c:3},  {n:'Lilian',   c:3},
+  {n:'James',    c:2},  {n:'Raks',     c:2},  {n:'Olivier',  c:2},
+  {n:'Kevin L.', c:1},  {n:'Dat',      c:1},  {n:'Malak',    c:1},
+];
+
+const DUOS = [
+  {a:'Jose',     b:'Julie',      n:6},
+  {a:'Julie',    b:'Kevin H.',   n:6},
+  {a:'Barbara',  b:'Kevin H.',   n:6},
+  {a:'Jose',     b:'Sophie',     n:6},
+  {a:'Emad',     b:'Trang',      n:6},
+  {a:'Anita',    b:'Joey',       n:5},
+  {a:'John',     b:'Michel',     n:5},
+  {a:'Jose',     b:'Rigil',      n:5},
+];
+
+const NEVER = {
+  'Anita':        ['Anthony W.','Audrey','Kevin H.','Patricio','Trang'],
+  'Anthony W.':   ['Anita','Emad','Julie'],
+  'Audrey':       ['Anita','Joey'],
+  'Barbara':      ['Karim-Etienne','Nat','Norichar','Rigil'],
+  'Daniel':       ['Karim-Etienne','Michel','Nat','Trang'],
+  'Emad':         ['Anthony W.','Nat'],
+  'Erik':         ['Patricio'],
+  'Joey':         ['Audrey','Karim-Etienne','Khoa','Mark','Rigil'],
+  'John':         ['Siu'],
+  'Jose':         ['Nat','Norichar'],
+  'Julie':        ['Anthony W.','Nat'],
+  'Karim-Etienne':['Barbara','Daniel','Joey','Michel','Nathan','Norichar','Trang'],
+  'Kevin H.':     ['Anita','Norichar'],
+  'Khoa':         ['Joey','Michel','Nat','Patricio'],
+  'Mark':         ['Joey'],
+  'Michel':       ['Daniel','Karim-Etienne','Khoa','Nat','Nathan','Rigil'],
+  'Nat':          ['Barbara','Daniel','Emad','Jose','Julie','Khoa','Michel','Siu','Sophie'],
+  'Nathan':       ['Karim-Etienne','Michel','Sophie'],
+  'Norichar':     ['Barbara','Jose','Karim-Etienne','Kevin H.'],
+  'Patricio':     ['Anita','Erik','Khoa'],
+  'Rigil':        ['Barbara','Joey','Michel'],
+  'Siu':          ['John','Nat'],
+  'Sophie':       ['Nat','Nathan'],
+  'Trang':        ['Anita','Daniel','Karim-Etienne'],
+};
+
+const THEMES = [
+  {n:1,  date:'Jan 11', theme:'Pokémon',        color:'#F6C443'},
+  {n:2,  date:'Jan 18', theme:'Colours',         color:'#7E57C2'},
+  {n:3,  date:'Feb 1',  theme:'Pizza',           color:'#EF6C4A'},
+  {n:4,  date:'Feb 8',  theme:'Milk types',      color:'#90CAF9'},
+  {n:5,  date:'Feb 15', theme:'Sodas',           color:'#4CAF82'},
+  {n:6,  date:'Feb 22', theme:'Space',           color:'#3A3F8F'},
+  {n:7,  date:'Mar 1',  theme:'Cutlery',         color:'#9E9E9E'},
+  {n:8,  date:'Mar 8',  theme:'Arctic animals',  color:'#80DEEA'},
+  {n:9,  date:'Mar 15', theme:'AI chatbots',     color:'#26A69A'},
+  {n:10, date:'Mar 22', theme:'Flowers',         color:'#EC407A'},
+  {n:11, date:'Apr 12', theme:'Quebec things',   color:'#E53935'},
+  {n:12, date:'Apr 19', theme:'Condiments',      color:'#F9A825'},
+  {n:13, date:'Apr 26', theme:'K-pop',           color:'#C850C0'},
+];
+
+// YouTube video URLs — add as:  session_number: 'https://youtube.com/watch?v=XXXXX'
+const YT = {
+  // 1: 'https://youtube.com/watch?v=XXXXX',
+};
+
+const WEEKS = [
+  {n:1, date:'Jan 11', theme:'Pokémon', reg:22, teams:[
+    {name:'Squirtle',         p:[{n:'Norichar',g:'m'},{n:'Audrey',g:'f'},{n:'Alain',g:'s',sg:'m'},{n:'Sophie',g:'f'},{n:'Emad',g:'m'},{n:'Daniel',g:'m'}]},
+    {name:'Charmander',       p:[{n:'Barbara',g:'f'},{n:'Erik',g:'m'},{n:'Anita',g:'f'},{n:'Michel',g:'m'},{n:'Joey',g:'m'},{n:'John',g:'m'}]},
+    {name:'Bulbasaur',        p:[{n:'Mark',g:'m'},{n:'Patricio',g:'m'},{n:'Nat',g:'f'},{n:'James',g:'s',sg:'m'},{n:'Anthony W.',g:'m'},{n:'Trang',g:'f'}]},
+    {name:'Pikachu',          p:[{n:'Rigil',g:'m'},{n:'Jose',g:'m'},{n:'Julie',g:'f'},{n:'Khoa',g:'m'},{n:'Kevin H.',g:'m'},{n:'Nathan',g:'m'}]}]},
+  {n:2, date:'Jan 18', theme:'Colours', reg:21, teams:[
+    {name:'Yellow',           p:[{n:'Trang',g:'f'},{n:'Nat',g:'f'},{n:'Patricio',g:'m'},{n:'Joey',g:'m'},{n:'William',g:'s',sg:'m'},{n:'David',g:'s',sg:'m'}]},
+    {name:'Orange',           p:[{n:'Anthony W.',g:'m'},{n:'Erik',g:'m'},{n:'Daniel',g:'m'},{n:'Nathan',g:'m'},{n:'Kevin H.',g:'m'},{n:'Barbara',g:'f'}]},
+    {name:'Green',            p:[{n:'John',g:'m'},{n:'Anita',g:'f'},{n:'Karim-Etienne',g:'m'},{n:'Khoa',g:'m'},{n:'Emad',g:'m'},{n:'Rigil',g:'m'}]},
+    {name:'Purple',           p:[{n:'Alain',g:'s',sg:'m'},{n:'Julie',g:'f'},{n:'Jose',g:'m'},{n:'Michel',g:'m'},{n:'Sophie',g:'f'},{n:'Mark',g:'m'}]}]},
+  {n:3, date:'Feb 1', theme:'Pizza', reg:20, teams:[
+    {name:'Hawaiian',         p:[{n:'Norichar',g:'m'},{n:'Anthony W.',g:'m'},{n:'John',g:'m'},{n:'Khoa',g:'m'},{n:'Catherine',g:'s',sg:'f'},{n:'Rigil',g:'m'}]},
+    {name:"Meat Lover's",     p:[{n:'David',g:'s',sg:'m'},{n:'Julie',g:'f'},{n:'Audrey',g:'f'},{n:'Kevin H.',g:'m'},{n:'Karim-Etienne',g:'m'},{n:'Erik',g:'m'}]},
+    {name:'Quattro Formaggi', p:[{n:'Daniel',g:'m'},{n:'Dat',g:'s',sg:'m'},{n:'Joey',g:'m'},{n:'Nathan',g:'m'},{n:'Anita',g:'f'},{n:'Chy',g:'s',sg:'m'}]},
+    {name:'Margherita',       p:[{n:'Michel',g:'m'},{n:'Jose',g:'m'},{n:'Patricio',g:'m'},{n:'Sophie',g:'f'},{n:'Barbara',g:'f'},{n:'Siu',g:'m'}]}]},
+  {n:4, date:'Feb 8', theme:'Milk types', reg:20, teams:[
+    {name:'Oat Milk',         p:[{n:'Catherine',g:'s',sg:'f'},{n:'Daniel',g:'m'},{n:'Norichar',g:'m'},{n:'Julie',g:'f'},{n:'Siu',g:'m'},{n:'David',g:'s',sg:'m'}]},
+    {name:'Cow Milk',         p:[{n:'Audrey',g:'f'},{n:'Anthony W.',g:'m'},{n:'Nathan',g:'m'},{n:'Mark',g:'m'},{n:'Erik',g:'m'},{n:'Jose',g:'m'}]},
+    {name:'Soy Milk',         p:[{n:'Patricio',g:'m'},{n:'Trang',g:'f'},{n:'Kevin H.',g:'m'},{n:'Barbara',g:'f'},{n:'Emad',g:'m'},{n:'John',g:'m'}]},
+    {name:'Almond Milk',      p:[{n:'Andre',g:'s',sg:'m'},{n:'Karim-Etienne',g:'m'},{n:'Sophie',g:'f'},{n:'Rigil',g:'m'},{n:'Khoa',g:'m'},{n:'Nicky',g:'s',sg:'m'}]}]},
+  {n:5, date:'Feb 15', theme:'Sodas', reg:22, teams:[
+    {name:'Coke',             p:[{n:'David',g:'s',sg:'m'},{n:'Norichar',g:'m'},{n:'Nathan',g:'m'},{n:'Nat',g:'f'},{n:'Patricio',g:'m'},{n:'Audrey',g:'f'}]},
+    {name:'Pepsi',            p:[{n:'Barbara',g:'f'},{n:'Khoa',g:'m'},{n:'Julie',g:'f'},{n:'Jose',g:'m'},{n:'Kevin H.',g:'m'},{n:'Siu',g:'m'}]},
+    {name:'7Up',              p:[{n:'Mark',g:'m'},{n:'Trang',g:'f'},{n:'Michel',g:'m'},{n:'John',g:'m'},{n:'Anthony W.',g:'m'},{n:'Sophie',g:'f'}]},
+    {name:'Rootbeer',         p:[{n:'Erik',g:'m'},{n:'Catherine',g:'s',sg:'f'},{n:'Daniel',g:'m'},{n:'Anita',g:'f'},{n:'Rigil',g:'m'},{n:'Emad',g:'m'}]}]},
+  {n:6, date:'Feb 22', theme:'Space', reg:22, teams:[
+    {name:'Supernova',        p:[{n:'Karim-Etienne',g:'m'},{n:'Patricio',g:'m'},{n:'Kevin H.',g:'m'},{n:'Rigil',g:'m'},{n:'Nat',g:'f'},{n:'Andre',g:'s',sg:'m'}]},
+    {name:'Nebula',           p:[{n:'Norichar',g:'m'},{n:'Anita',g:'f'},{n:'Julie',g:'f'},{n:'Nathan',g:'m'},{n:'Siu',g:'m'},{n:'Joey',g:'m'}]},
+    {name:'Eclipse',          p:[{n:'Barbara',g:'f'},{n:'Erik',g:'m'},{n:'Audrey',g:'f'},{n:'Anthony W.',g:'m'},{n:'Olivier',g:'s',sg:'m'},{n:'Khoa',g:'m'}]},
+    {name:'Vortex',           p:[{n:'Emad',g:'m'},{n:'Sophie',g:'f'},{n:'Jose',g:'m'},{n:'John',g:'m'},{n:'Michel',g:'m'},{n:'Trang',g:'f'}]}]},
+  {n:7, date:'Mar 1', theme:'Cutlery', reg:22, teams:[
+    {name:'Knife',            p:[{n:'Emad',g:'m'},{n:'Barbara',g:'f'},{n:'Kevin H.',g:'m'},{n:'Nathan',g:'m'},{n:'Julie',g:'f'},{n:'Patricio',g:'m'}]},
+    {name:'Fork',             p:[{n:'Anita',g:'f'},{n:'Andre',g:'s',sg:'m'},{n:'Daniel',g:'m'},{n:'Joey',g:'m'},{n:'John',g:'m'},{n:'David',g:'s',sg:'m'}]},
+    {name:'Spoon',            p:[{n:'Erik',g:'m'},{n:'Michel',g:'m'},{n:'Trang',g:'f'},{n:'Sophie',g:'f'},{n:'Mark',g:'m'},{n:'Norichar',g:'m'}]},
+    {name:'Chopsticks',       p:[{n:'Karim-Etienne',g:'m'},{n:'Siu',g:'m'},{n:'Anthony W.',g:'m'},{n:'Rigil',g:'m'},{n:'Audrey',g:'f'},{n:'Jose',g:'m'}]}]},
+  {n:8, date:'Mar 8', theme:'Arctic animals', reg:20, teams:[
+    {name:'Penguin',          p:[{n:'Erik',g:'m'},{n:'Jose',g:'m'},{n:'Sophie',g:'f'},{n:'Anita',g:'f'},{n:'Joey',g:'m'},{n:'Raks',g:'s',sg:'m'}]},
+    {name:'Walruses',         p:[{n:'Rigil',g:'m'},{n:'Kevin H.',g:'m'},{n:'Julie',g:'f'},{n:'Mark',g:'m'},{n:'Patricio',g:'m'},{n:'Daniel',g:'m'}]},
+    {name:'Moose',            p:[{n:'William',g:'s',sg:'m'},{n:'Lilian',g:'s',sg:'f'},{n:'Barbara',g:'f'},{n:'Michel',g:'m'},{n:'Steven',g:'s',sg:'m'},{n:'Siu',g:'m'}]},
+    {name:'Snow Monkey',      p:[{n:'Norichar',g:'m'},{n:'John',g:'m'},{n:'Nathan',g:'m'},{n:'Audrey',g:'f'},{n:'Trang',g:'f'},{n:'Emad',g:'m'}]}]},
+  {n:9, date:'Mar 15', theme:'AI chatbots', reg:18, teams:[
+    {name:'ChatGPT',          p:[{n:'Emad',g:'m'},{n:'Khoa',g:'m'},{n:'Kevin H.',g:'m'},{n:'Trang',g:'f'},{n:'Mark',g:'m'},{n:'Barbara',g:'f'}]},
+    {name:'Claude',           p:[{n:'Anita',g:'f'},{n:'Michel',g:'m'},{n:'Bernard',g:'s',sg:'m'},{n:'Winnie',g:'s',sg:'f'},{n:'Chy',g:'s',sg:'m'},{n:'Steven',g:'s',sg:'m'}]},
+    {name:'Gemini',           p:[{n:'Julie',g:'f'},{n:'Daniel',g:'m'},{n:'Norichar',g:'m'},{n:'Malak',g:'s',sg:'f'},{n:'Nathan',g:'m'},{n:'David',g:'s',sg:'m'}]},
+    {name:'Perplexity',       p:[{n:'Rigil',g:'m'},{n:'Jose',g:'m'},{n:'Sophie',g:'f'},{n:'Erik',g:'m'},{n:'Audrey',g:'f'},{n:'John',g:'m'}]}]},
+  {n:10, date:'Mar 22', theme:'Flowers', reg:17, teams:[
+    {name:'Iris',             p:[{n:'Mark',g:'m'},{n:'Bernie',g:'s',sg:'m'},{n:'Olivier',g:'s',sg:'m'},{n:'Khoa',g:'m'},{n:'Anita',g:'f'},{n:'Jimmy',g:'s',sg:'m'}]},
+    {name:'Peony',            p:[{n:'Julie',g:'f'},{n:'Jose',g:'m'},{n:'Lilian',g:'s',sg:'f'},{n:'Rigil',g:'m'},{n:'William',g:'s',sg:'m'},{n:'Daniel',g:'m'}]},
+    {name:'Edelweiss',        p:[{n:'Erik',g:'m'},{n:'Andre',g:'s',sg:'m'},{n:'Siu',g:'m'},{n:'Emad',g:'m'},{n:'Joey',g:'m'},{n:'Trang',g:'f'}]},
+    {name:'Marigold',         p:[{n:'Kevin H.',g:'m'},{n:'Dom',g:'s',sg:'m'},{n:'John',g:'m'},{n:'Barbara',g:'f'},{n:'Michel',g:'m'},{n:'Audrey',g:'f'}]}]},
+  {n:11, date:'Apr 12', theme:'Quebec things', reg:19, teams:[
+    {name:'Nid-de-poule',     p:[{n:'Sophie',g:'f'},{n:'David',g:'s',sg:'m'},{n:'Barbara',g:'f'},{n:'Daniel',g:'m'},{n:'Patricio',g:'m'},{n:'Anthony W.',g:'m'}]},
+    {name:'Construction Cone',p:[{n:'Mark',g:'m'},{n:'Siu',g:'m'},{n:'Emad',g:'m'},{n:'Khoa',g:'m'},{n:'William',g:'s',sg:'m'},{n:'Lilian',g:'s',sg:'f'}]},
+    {name:'Sesame Bagel',     p:[{n:'Trang',g:'f'},{n:'Chy',g:'s',sg:'m'},{n:'Steven',g:'s',sg:'m'},{n:'Rigil',g:'m'},{n:'Nat',g:'f'},{n:'Erik',g:'m'}]},
+    {name:'Poutine Sauce',    p:[{n:'Julie',g:'f'},{n:'Jose',g:'m'},{n:'Joey',g:'m'},{n:'Kevin H.',g:'m'},{n:'Michel',g:'m'},{n:'John',g:'m'}]}]},
+  {n:12, date:'Apr 19', theme:'Condiments', reg:18, teams:[
+    {name:'Spicy Sriracha',   p:[{n:'David',g:'s',sg:'m'},{n:'Julie',g:'f'},{n:'Jose',g:'m'},{n:'Raks',g:'s',sg:'m'},{n:'Daniel',g:'m'},{n:'Khoa',g:'m'}]},
+    {name:'Dijon Mustard',    p:[{n:'Karim-Etienne',g:'m'},{n:'Sophie',g:'f'},{n:'Kevin H.',g:'m'},{n:'Audrey',g:'f'},{n:'Emad',g:'m'},{n:'John',g:'m'}]},
+    {name:'Kewpie Mayo',      p:[{n:'Winnie',g:'s',sg:'f'},{n:'Sam',g:'s',sg:'m'},{n:'Phillipe',g:'s',sg:'m'},{n:'Chy',g:'s',sg:'m'},{n:'Anita',g:'f'},{n:'Michel',g:'m'}]},
+    {name:'Classic Ketchup',  p:[{n:'Patricio',g:'m'},{n:'Nathan',g:'m'},{n:'Nat',g:'f'},{n:'Joey',g:'m'},{n:'Trang',g:'f'},{n:'Anthony W.',g:'m'}]}]},
+  {n:13, date:'Apr 26', theme:'K-pop', reg:18, teams:[
+    {name:'Black Pink',       p:[{n:'Joey',g:'m'},{n:'Alain',g:'s',sg:'m'},{n:'Julie',g:'f'},{n:'Nathan',g:'m'},{n:'Trang',g:'f'},{n:'Emad',g:'m'}]},
+    {name:'Twice',            p:[{n:'Winnie',g:'s',sg:'f'},{n:'Erik',g:'m'},{n:'Audrey',g:'f'},{n:'Kevin L.',g:'s',sg:'m'},{n:'Michel',g:'m'},{n:'Chy',g:'s',sg:'m'}]},
+    {name:'Big Bang',         p:[{n:'David',g:'s',sg:'m'},{n:'John',g:'m'},{n:'Nat',g:'f'},{n:'Karim-Etienne',g:'m'},{n:'Mark',g:'m'},{n:'Anita',g:'f'}]},
+    {name:'BTS',              p:[{n:'Rigil',g:'m'},{n:'Jose',g:'m'},{n:'Daniel',g:'m'},{n:'Sophie',g:'f'},{n:'James',g:'s',sg:'m'},{n:'Kevin H.',g:'m'}]}]},
+  {n:14, date:'May 3',  theme:'TBD', reg:null, teams:[]},
+  {n:15, date:'May 10', theme:'TBD', reg:null, teams:[]},
+];
+
+const WINTER_SCHED = [
+  {n:1,  date:'Sunday, January 11',  s:'done'},
+  {n:2,  date:'Sunday, January 18',  s:'done'},
+  {n:'', date:'Sunday, January 25',  s:'off', note:'Off week'},
+  {n:3,  date:'Sunday, February 1',  s:'done'},
+  {n:4,  date:'Sunday, February 8',  s:'done'},
+  {n:5,  date:'Sunday, February 15', s:'done'},
+  {n:6,  date:'Sunday, February 22', s:'done'},
+  {n:7,  date:'Sunday, March 1',     s:'done'},
+  {n:8,  date:'Sunday, March 8',     s:'done'},
+  {n:9,  date:'Sunday, March 15',    s:'done'},
+  {n:10, date:'Sunday, March 22',    s:'done'},
+  {n:'', date:'Sunday, March 29',    s:'off', note:'Off week'},
+  {n:'', date:'Sunday, April 6',     s:'off', note:'Off week'},
+  {n:11, date:'Sunday, April 12',    s:'done'},
+  {n:12, date:'Sunday, April 19',    s:'done'},
+  {n:13, date:'Sunday, April 26',    s:'done'},
+  {n:14, date:'Sunday, May 3',       s:'next'},
+  {n:15, date:'Sunday, May 10',      s:'upcoming'},
+];
+
+const VDATES = new Set([
+  '2026-01-11','2026-01-18','2026-02-01','2026-02-08','2026-02-15','2026-02-22',
+  '2026-03-01','2026-03-08','2026-03-15','2026-03-22','2026-04-12','2026-04-19',
+  '2026-04-26','2026-05-03','2026-05-10'
+]);
+const SDATES = new Set();
+(()=>{let d=new Date(2026,4,17);while(d<=new Date(2026,7,31)){SDATES.add(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'));d.setDate(d.getDate()+7);}})();
+const S2W = {
+  '2026-01-11':0,'2026-01-18':1,'2026-02-01':2,'2026-02-08':3,'2026-02-15':4,
+  '2026-02-22':5,'2026-03-01':6,'2026-03-08':7,'2026-03-15':8,'2026-03-22':9,
+  '2026-04-12':10,'2026-04-19':11,'2026-04-26':12
+};
+
+// ═══════════════════════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════════════════════
+
+let CY=2026, CM=0;
+
+function pl(p) {
+  const c = p.g==='s' ? (p.sg==='f'?'#993556':'#185FA5') : (p.g==='f'?'#993556':'#185FA5');
+  const sub = p.g==='s' ? ` <span style="font-size:10px;opacity:.55">(sub)</span>` : '';
+  return `<div style="font-size:12px;padding:1px 0;color:${c}">${p.n}${sub}</div>`;
+}
+function yth(n) {
+  const u = YT[n];
+  return u
+    ? `<a href="${u}" target="_blank" class="ytb">▶ Watch on YouTube</a>`
+    : `<a href="https://www.youtube.com/@James.v" target="_blank" class="ytp">▶ @James.v on YouTube</a>`;
+}
+function dots(n, total) {
+  return Array.from({length:total}, (_,i) =>
+    `<div class="dot${i<n?' on':''}"></div>`).join('');
+}
+
+function rDuos() {
+  const el = document.getElementById('duos');
+  DUOS.forEach(d => {
+    el.innerHTML += `<div class="par"><span class="pn">${d.a} &amp; ${d.b}</span><div class="dots">${dots(d.n,13)}</div><span class="pc">${d.n}/13</span></div>`;
+  });
+}
+
+function rThemes() {
+  const tl = document.getElementById('tl');
+  THEMES.forEach(t => {
+    const r = document.createElement('div'); r.className = 'tlr';
+    r.innerHTML = `<span class="tln">${t.n}</span><div style="display:flex;align-items:center;flex:1"><div class="tld" style="background:${t.color}"></div><div class="tlc"></div></div><span class="tlh" style="background:${t.color}22;color:${t.color}">${t.theme}</span><span class="tlt">${t.date}</span>`;
+    tl.appendChild(r);
+  });
+}
+
+function rLb() {
+  const el = document.getElementById('lb');
+  REGULARS.forEach(r => {
+    const pct = Math.round(r.att / 13 * 100);
+    const streak = r.streak >= 13 ? `<span class="bdg bfi">🔥 ${r.streak}</span>`
+                 : r.streak >= 5  ? `<span class="bdg bst">${r.streak} streak</span>`
+                 : r.streak >= 1  ? `<span class="bdg bst">${r.streak} streak</span>`
+                 : '';
+    el.innerHTML += `<div class="pr" data-g="${r.g}">
+      <div class="av av${r.g}">${r.n.substring(0,2).toUpperCase()}</div>
+      <span class="nm nm-${r.g}">${r.n}</span>
+      ${streak}
+      <div class="bw"><div class="b${r.g}" style="width:${pct}%"></div></div>
+      <span class="an">${r.att}/13</span>
+    </div>`;
+  });
+}
+
+function rSubs() {
+  const el = document.getElementById('sublb');
+  SUBS.forEach(s => {
+    const g = GM[s.n] || 'm';
+    const pct = Math.round(s.c / 13 * 100);
+    el.innerHTML += `<div class="pr">
+      <div class="av av${g}">${s.n.substring(0,2).toUpperCase()}</div>
+      <span class="nm nm-${g}">${s.n}</span>
+      <span class="bdg bsb">sub</span>
+      <div class="bw"><div class="b${g}" style="width:${pct}%"></div></div>
+      <span class="an">${s.c}</span>
+    </div>`;
+  });
+}
+
+function rWeeks() {
+  const c = document.getElementById('weeks');
+  WEEKS.forEach(w => {
+    const pending = w.reg === null;
+    const absent  = pending ? null : 24 - w.reg;
+    const ri      = pending ? 'Teams pending' : `${w.reg}/24 regulars${absent>0?' · '+absent+' absent':''}`;
+    const th      = pending
+      ? `<div style="font-size:13px;color:var(--text3);padding:8px 0">Not yet played — check back after the session!</div>`
+      : `<div class="wts">${w.teams.map(t=>`<div class="tco"><div class="tn">${t.name}</div>${t.p.map(p=>pl(p)).join('')}</div>`).join('')}</div>`;
+    const card = document.createElement('div'); card.className = 'wc';
+    card.innerHTML = `
+      <div class="wh" onclick="tw(this.parentElement)">
+        <span class="wn">${w.n}</span>
+        <span class="wd">${w.date}</span>
+        <span class="wt">${w.theme}</span>
+        <span class="wi">${ri}</span>
+        <span class="wv">▾</span>
+      </div>
+      <div class="wb">${th}<div style="margin-top:6px">${yth(w.n)}</div></div>`;
+    c.appendChild(card);
+  });
+}
+
+function rSched() {
+  const we = document.getElementById('schw');
+  WINTER_SCHED.forEach(s => {
+    const off = s.s === 'off';
+    const lbl = s.s==='done'?'Done':s.s==='next'?'Next up':s.s==='upcoming'?'Upcoming':'Off';
+    const cls = s.s==='done'?'dn':s.s==='next'?'nx':off?'of':'up';
+    const info = off
+      ? `<span style="font-size:12px;color:var(--text3)">${s.note||''}</span>`
+      : `<span class="si">9:00–11:00 AM · Supercamp Vanier</span>`;
+    we.innerHTML += `<div class="sr"><span class="sn">${s.n||''}</span><span class="sd" style="${off?'color:var(--text3)':''}">${s.date}</span>${info}<span class="sb ${cls}">${lbl}</span></div>`;
+  });
+  const se = document.getElementById('schs');
+  let i=1; let d=new Date(2026,4,17);
+  while (d <= new Date(2026,7,31)) {
+    se.innerHTML += `<div class="sr"><span class="sn">${i}</span><span class="sd">${d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}</span><span class="si">9:00–11:00 AM · Supercamp Vanier</span><span class="sb su">Summer</span></div>`;
+    i++; d.setDate(d.getDate()+7);
+  }
+}
+
+function rCal() {
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('calt').textContent = months[CM] + ' ' + CY;
+  const g = document.getElementById('calg'); g.innerHTML = '';
+  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => {
+    const e = document.createElement('div'); e.className = 'dw'; e.textContent = d; g.appendChild(e);
+  });
+  const first = new Date(CY,CM,1).getDay();
+  const days  = new Date(CY,CM+1,0).getDate();
+  const today = new Date();
+  const pad   = n => String(n).padStart(2,'0');
+  for (let i=0; i<first; i++) { const e=document.createElement('div'); e.className='dy em'; g.appendChild(e); }
+  for (let d=1; d<=days; d++) {
+    const key  = `${CY}-${pad(CM+1)}-${pad(d)}`;
+    const isV  = VDATES.has(key);
+    const isSu = SDATES.has(key);
+    const isT  = today.getFullYear()===CY && today.getMonth()===CM && today.getDate()===d;
+    const e    = document.createElement('div');
+    e.className = 'dy ' + (isV?'vb':isSu?'sm':'no');
+    if (isT) e.classList.add('td');
+    e.innerHTML = `<span>${d}</span>${isV?'<div class="vd"></div>':''}`;
+    if (isV) e.onclick = () => rCalDet(key);
+    g.appendChild(e);
+  }
+}
+
+function rCalDet(key) {
+  const idx = S2W[key];
+  const det = document.getElementById('caldet'); det.style.display = 'block';
+  if (idx === undefined) {
+    det.innerHTML = `<div class="card"><div style="font-size:13px;color:var(--text2)">📅 Upcoming session — details TBD</div></div>`;
+    return;
+  }
+  const w = WEEKS[idx]; const pending = w.reg === null;
+  const th = pending
+    ? `<div style="font-size:13px;color:var(--text3);padding:4px 0">Not yet played.</div>`
+    : `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">${w.teams.map(t=>`<div class="tco"><div class="tn">${t.name}</div>${t.p.map(p=>pl(p)).join('')}</div>`).join('')}</div>`;
+  det.innerHTML = `<div class="card"><div style="font-size:13px;font-weight:600;margin-bottom:4px">Session ${w.n} · ${w.date} · Theme: ${w.theme}</div>${pending?'':`<div style="font-size:12px;color:var(--text2);margin-bottom:8px">${w.reg}/24 regulars</div>`}${th}<div style="margin-top:8px">${yth(w.n)}</div></div>`;
+}
+
+function showNever(name) {
+  const el = document.getElementById('ntres');
+  if (!name) { el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  const never = NEVER[name] || [];
+  if (!never.length) { el.innerHTML = `<span style="color:var(--text3);font-style:italic">🎉 ${name} has been on a team with every other regular!</span>`; return; }
+  const chips = never.map(n => `<span class="ng ng${GM[n]==='f'?'f':'m'}">${n}</span>`).join('');
+  el.innerHTML = `<div style="font-size:12px;color:var(--text2);margin-bottom:8px">${name} has never been on a team with:</div>${chips}`;
+}
+
+function tw(c) {
+  const o = c.classList.contains('open');
+  c.classList.toggle('open', !o);
+  c.querySelector('.wb').style.display = o ? 'none' : 'block';
+}
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function showTab(btn, g) {
+  btn.closest('.card').querySelectorAll('.tb').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#lb .pr').forEach(r => {
+    r.style.display = (g==='all' || r.dataset.g===g) ? 'flex' : 'none';
+  });
+}
+function prevM() { CM--; if(CM<0){CM=11;CY--;} rCal(); document.getElementById('caldet').style.display='none'; }
+function nextM() { CM++; if(CM>11){CM=0;CY++;} rCal(); document.getElementById('caldet').style.display='none'; }
+
+// Init
+rDuos(); rThemes(); rLb(); rSubs(); rWeeks(); rSched(); rCal();
+</script>
+</body>
+</html>
