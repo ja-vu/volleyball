@@ -159,6 +159,7 @@
     .att-dot.on-f { background: var(--bar-f); }
     .att-dot.off  { background: var(--bg3); }
     .att-dot.upcoming { background: transparent; border: 1.5px dashed var(--border2); }
+    .leg-dot { display:inline-block; width:10px; height:10px; border-radius:2px; vertical-align:middle; margin-right:4px; }
 
     /* ── Streak strip ─────────────────────────────────────────────── */
     .streak-card { display: inline-flex; align-items: center; gap: 9px;
@@ -408,9 +409,8 @@
       <button class="tb" onclick="showSeasonPanel('ov','summer',this)">☀️ Summer 2026</button>
     </div>
     <div id="ov-winter">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem">
-        <span class="stg tw">❄️ Winter 2026</span>
-        <span style="font-size:12px;color:var(--text3)">January – May 10 · 13 of 15 Sundays completed</span>
+      <div style="margin-bottom:1rem">
+        <span style="font-size:12px;color:var(--text3)">Jan – May 10 · 13 of 15 Sundays</span>
       </div>
       <div class="card" style="margin-bottom:1.5rem">
         <div class="mg" style="margin-bottom:1rem">
@@ -428,16 +428,20 @@
         <div class="card">
           <div class="att-wrap" id="attGrid"></div>
           <div style="display:flex;gap:14px;margin-top:10px;font-size:11px;color:var(--text2);flex-wrap:wrap">
-            <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bar-m);vertical-align:middle;margin-right:4px"></span>Men</span>
-            <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bar-f);vertical-align:middle;margin-right:4px"></span>Women</span>
-            <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bg3);vertical-align:middle;margin-right:4px"></span>Absent</span>
-            <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;border:1.5px dashed var(--border2);vertical-align:middle;margin-right:4px"></span>Upcoming</span>
+            <span><span class="leg-dot" style="background:var(--bar-m)"></span>Men</span>
+            <span><span class="leg-dot" style="background:var(--bar-f)"></span>Women</span>
+            <span><span class="leg-dot" style="background:var(--bg3)"></span>Absent</span>
+            <span><span class="leg-dot" style="border:1.5px dashed var(--border2)"></span>Upcoming</span>
           </div>
         </div>
       </div>
       <div class="sec">
         <div class="sl">Active streaks</div>
         <div id="streakStrip"></div>
+      </div>
+      <div class="sec">
+        <div class="sl">Top subs</div>
+        <div class="card" id="topSubsOv"></div>
       </div>
       <div class="sec">
         <div class="sl">Fun facts</div>
@@ -451,9 +455,8 @@
       </div>
     </div>
     <div id="ov-summer" style="display:none">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem">
-        <span class="stg ts">☀️ Summer 2026</span>
-        <span style="font-size:12px;color:var(--text3)">May 17 – August 16 · 11 Sundays</span>
+      <div style="margin-bottom:1rem">
+        <span style="font-size:12px;color:var(--text3)">May 17 – Aug 16 · 11 Sundays</span>
       </div>
       <div class="card" style="text-align:center;padding:2.5rem 1rem">
         <div style="font-size:32px;margin-bottom:10px">☀️</div>
@@ -500,11 +503,12 @@
             <button class="tb" onclick="showTab(this,'m')">Men</button>
             <button class="tb" onclick="showTab(this,'f')">Women</button>
           </div>
+          <input id="lbSearch" type="text" placeholder="Search player…" oninput="applyLbFilters()" style="width:100%;box-sizing:border-box;padding:6px 10px;font-size:13px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);margin-top:10px;outline:none">
           <div id="lb"></div>
         </div>
       </div>
       <div class="sec">
-        <div class="sl">Subs — appeared this season</div>
+        <div class="stg tw" style="margin-bottom:.75rem">❄️ Winter 2026 — Subs</div>
         <div class="card" id="sublb"></div>
       </div>
     </div>
@@ -675,7 +679,7 @@
   </div>
 
   <div class="footer">
-    Videos on <a href="https://www.youtube.com/@James.v" target="_blank">@James.v</a> &nbsp;·&nbsp; Winter 2026 Season &nbsp;·&nbsp; Organized on <img src="https://www.google.com/s2/favicons?domain=spond.com&sz=32" alt="Spond" style="width:14px;height:14px;vertical-align:middle;margin-right:2px"><span style="color:#00C950;font-weight:600">Spond</span>
+    Videos on <a href="https://www.youtube.com/@James.v" target="_blank">@James.v</a> &nbsp;·&nbsp; Organized on &nbsp<img src="https://www.google.com/s2/favicons?domain=spond.com&sz=32" alt="Spond" style="width:14px;height:14px;vertical-align:middle;margin-right:2px"><span style="color:#00C950;font-weight:600">Spond</span>
   </div>
 
 </div><!-- /shell -->
@@ -745,7 +749,7 @@ const SUBS = [
   {n:'William',  c:4},  {n:'Alain',    c:3},  {n:'Steven',   c:3},
   {n:'Catherine',c:3},  {n:'Winnie',   c:3},  {n:'Lilian',   c:3},
   {n:'James',    c:2},  {n:'Raks',     c:2},  {n:'Olivier',  c:2},
-  {n:'Kevin L.', c:1},  {n:'Dat',      c:1},  {n:'Malak',    c:1},
+  {n:'Kevin L.', c:1},  {n:'Dat',      c:2},  {n:'Malak',    c:1},
 ];
 
 const DUOS = [
@@ -1025,15 +1029,33 @@ function rLb() {
 
 function rSubs() {
   const el = document.getElementById('sublb');
-  SUBS.forEach(s => {
+  const maxC = SUBS[0].c;
+  SUBS.forEach((s, i) => {
     const g = GM[s.n] || 'm';
-    const pct = Math.round(s.c / 13 * 100);
+    const pct = Math.round(s.c / maxC * 100);
     el.innerHTML += `<div class="pr">
+      <span style="font-size:10px;color:var(--text3);width:18px;text-align:right;flex-shrink:0">#${i+1}</span>
       <div class="av av${g}">${s.n.substring(0,2).toUpperCase()}</div>
       <span class="nm nm-${g}"><button class="player-link" onclick="showProfile('${s.n.replace(/'/g, "\\'")}')">${s.n}</button></span>
-      <span class="bdg bsb">sub</span>
       <div class="bw"><div class="b${g}" style="width:${pct}%"></div></div>
-      <span class="an">${s.c}</span>
+      <span class="an">${s.c}×</span>
+    </div>`;
+  });
+}
+
+function rTopSubs() {
+  const el = document.getElementById('topSubsOv');
+  if (!el) return;
+  const maxC = SUBS[0].c;
+  SUBS.slice(0, 5).forEach((s, i) => {
+    const g = GM[s.n] || 'm';
+    const pct = Math.round(s.c / maxC * 100);
+    el.innerHTML += `<div class="pr">
+      <span style="font-size:10px;color:var(--text3);width:18px;text-align:right;flex-shrink:0">#${i+1}</span>
+      <div class="av av${g}">${s.n.substring(0,2).toUpperCase()}</div>
+      <span class="nm nm-${g}"><button class="player-link" onclick="showProfile('${s.n.replace(/'/g, "\\'")}')">${s.n}</button></span>
+      <div class="bw"><div class="b${g}" style="width:${pct}%"></div></div>
+      <span class="an">${s.c}×</span>
     </div>`;
   });
 }
@@ -1043,7 +1065,7 @@ function rWeeks() {
   WEEKS.forEach(w => {
     const pending = w.reg === null;
     const absent  = pending ? null : 24 - w.reg;
-    const ri      = pending ? 'Teams pending' : `${w.reg}/24 regulars${absent>0?' · '+absent+' absent':''}`;
+    const ri      = pending ? 'Upcoming' : `${w.teams.length} teams · ${w.reg} players${absent>0?' · '+absent+' absent':''}`;
     const th      = pending
       ? `<div style="font-size:13px;color:var(--text3);padding:8px 0">Not yet played — check back after the session!</div>`
       : `<div class="wts">${w.teams.map(t=>`<div class="tco"><div class="tn">${t.name}</div>${t.p.map(p=>pl(p)).join('')}</div>`).join('')}</div>`;
@@ -1310,12 +1332,22 @@ function showSeasonPanel(prefix, season, btn) {
   document.getElementById(prefix + '-winter').style.display = season === 'winter' ? 'block' : 'none';
   document.getElementById(prefix + '-summer').style.display = season === 'summer' ? 'block' : 'none';
 }
+let lbGender = 'all';
 function showTab(btn, g, targetId) {
   const id = targetId || 'lb';
   btn.closest('.card').querySelectorAll('.tb').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
+  if (id === 'lb') { lbGender = g; applyLbFilters(); return; }
   document.querySelectorAll(`#${id} .pr`).forEach(r => {
     r.style.display = (g==='all' || r.dataset.g===g) ? 'flex' : 'none';
+  });
+}
+function applyLbFilters() {
+  const q = (document.getElementById('lbSearch')?.value || '').trim().toLowerCase();
+  document.querySelectorAll('#lb .pr').forEach(r => {
+    const name = r.querySelector('.player-link').textContent.toLowerCase();
+    const gOk = lbGender === 'all' || r.dataset.g === lbGender;
+    r.style.display = (gOk && (!q || name.includes(q))) ? 'flex' : 'none';
   });
 }
 function prevM() { CM--; if(CM<0){CM=11;CY--;} rCal(); document.getElementById('caldet').style.display='none'; }
@@ -1329,7 +1361,7 @@ function toggleTheme() {
 }
 
 // Init
-rDuos(); rThemes(); rLb(); rSummerLb(); rSubs(); rWeeks(); rSched(); rCal(); fillSelects(); rConnLb(); rAttGrid(); rStreaks();
+rDuos(); rThemes(); rLb(); rSummerLb(); rSubs(); rTopSubs(); rWeeks(); rSched(); rCal(); fillSelects(); rConnLb(); rAttGrid(); rStreaks();
 (function(){
   const saved = localStorage.getItem('vb-theme') ||
     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
