@@ -60,8 +60,8 @@
       --info-bg:  #1C3B5A;
       --info:     #5BA8F5;
     }
-    [data-theme="dark"] .avm { color: #5BA8F5; }
-    [data-theme="dark"] .avf { color: #D4537E; }
+    [data-theme="dark"] .avm { background: var(--bar-m); color: #fff; }
+    [data-theme="dark"] .avf { background: var(--bar-f); color: #fff; }
     [data-theme="dark"] .tw  { color: #5BA8F5; }
     [data-theme="dark"] .ts,
     [data-theme="dark"] .dy.sm,
@@ -72,20 +72,38 @@
     [data-theme="dark"] .ngf { color: #D4537E; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg2);
+      background-color: #e4e7ec;
+      background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='1.4' fill='%23b0b8c6' fill-opacity='0.45'/%3E%3C/svg%3E");
       color: var(--text);
       min-height: 100vh;
+    }
+    [data-theme="dark"] body {
+      background-color: #111113;
+      background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='1.4' fill='%23ffffff' fill-opacity='0.04'/%3E%3C/svg%3E");
     }
 
     /* ── Layout ───────────────────────────────────────────────────── */
     .shell { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
-    .header { margin-bottom: 1.5rem; display: flex; align-items: flex-start; justify-content: space-between; }
-    .header h1 { font-size: 20px; font-weight: 600; color: var(--text); }
-    .header p  { font-size: 13px; color: var(--text3); margin-top: 3px; }
-    .theme-btn { background: var(--bg2); border: 1px solid var(--border2); border-radius: 50%;
+    .header { margin-bottom: 1.5rem; display: flex; align-items: flex-start; justify-content: space-between;
+              background: linear-gradient(135deg, #1155a0 0%, #2074c8 55%, #1a66b8 100%);
+              border-radius: var(--radius-lg); padding: 1.4rem 1.25rem;
+              box-shadow: 0 4px 20px rgba(17,85,160,.22);
+              position: relative; overflow: hidden; }
+    .header > * { position: relative; z-index: 1; }
+    .header::before { content: ''; position: absolute; border-radius: 50%; pointer-events: none;
+              width: 200px; height: 200px; top: -60px; right: -40px;
+              background: rgba(255,255,255,.07); border: 2px solid rgba(255,255,255,.13); }
+    .header::after  { content: ''; position: absolute; border-radius: 50%; pointer-events: none;
+              width: 120px; height: 120px; bottom: -45px; right: 90px;
+              background: rgba(255,255,255,.05); border: 2px solid rgba(255,255,255,.09); }
+    [data-theme="dark"] .header { background: linear-gradient(135deg, #0d2d4f 0%, #1a4a78 55%, #122d4a 100%);
+              box-shadow: 0 4px 24px rgba(0,0,0,.45); }
+    .header h1 { font-size: 21px; font-weight: 700; color: #fff; }
+    .header p  { font-size: 13px; color: rgba(255,255,255,.72); margin-top: 3px; }
+    .theme-btn { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.28); border-radius: 50%;
                  width: 36px; height: 36px; cursor: pointer; font-size: 16px; flex-shrink: 0;
-                 display: flex; align-items: center; justify-content: center; }
-    .theme-btn:hover { border-color: var(--blue); }
+                 display: flex; align-items: center; justify-content: center; transition: background .15s; }
+    .theme-btn:hover { background: rgba(255,255,255,.28); border-color: rgba(255,255,255,.5); }
 
     /* ── Nav ──────────────────────────────────────────────────────── */
     .nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem;
@@ -94,21 +112,27 @@
            border: 1px solid var(--border2); background: transparent;
            color: var(--text2); cursor: pointer; transition: all .15s; }
     .nb:hover  { border-color: var(--blue); color: var(--blue); }
-    .nb.active { background: var(--info-bg); color: var(--info); border-color: transparent; }
+    .nb.active { background: var(--blue); color: #fff; border-color: transparent;
+                 box-shadow: 0 2px 8px rgba(24,95,165,.28); }
 
     /* ── Pages ────────────────────────────────────────────────────── */
     .page { display: none; }
     .page.active { display: block; }
 
     /* ── Section label ────────────────────────────────────────────── */
-    .sl { font-size: 11px; font-weight: 600; letter-spacing: .08em;
-          color: var(--text3); text-transform: uppercase; margin-bottom: .6rem; }
-    .sl-lg { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: .75rem; }
+    .sl { font-size: 11px; font-weight: 700; letter-spacing: .08em;
+          color: var(--text3); text-transform: uppercase; margin-bottom: .6rem;
+          padding-left: 9px; border-left: 3px solid var(--blue); }
+    .sl-lg { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: .75rem;
+             padding-left: 9px; border-left: 3px solid var(--blue); }
     .rule  { border: none; border-top: 1px solid var(--border2); margin: 0 0 1.5rem; }
 
     /* ── Card ─────────────────────────────────────────────────────── */
     .card { background: var(--bg); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); padding: 1rem 1.1rem; }    .profile-card { margin-bottom: 1.5rem; }
+            border-radius: var(--radius-lg); padding: 1rem 1.1rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.04); }
+    [data-theme="dark"] .card { box-shadow: 0 2px 16px rgba(0,0,0,.3); }
+    .profile-card { margin-bottom: 1.5rem; }
     .profile-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 1rem; }
     .profile-name { font-size: 18px; font-weight: 700; color: var(--text); }
     .profile-label { font-size: 11px; text-transform: uppercase; color: var(--text3); margin-bottom: 4px; }
@@ -123,7 +147,8 @@
     /* ── Metric grid ──────────────────────────────────────────────── */
     .mg { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 1.5rem; }
     @media(max-width:580px){ .mg { grid-template-columns: repeat(2,1fr); } }
-    .met { background: var(--bg2); border-radius: var(--radius-md); padding: .9rem 1rem; border-top: 3px solid transparent; }
+    .met { background: var(--bg2); border-radius: var(--radius-md); padding: .9rem 1rem;
+           border-top: 3px solid transparent; box-shadow: inset 0 0 0 1px rgba(0,0,0,.04); }
     .mv  { font-size: 30px; font-weight: 700; color: var(--text); line-height: 1; }
     .ml  { font-size: 12px; color: var(--text2); margin-top: 4px; }
 
@@ -133,11 +158,14 @@
     .att-dot.on-m { background: var(--bar-m); }
     .att-dot.on-f { background: var(--bar-f); }
     .att-dot.off  { background: var(--bg3); }
+    .att-dot.upcoming { background: transparent; border: 1.5px dashed var(--border2); }
 
     /* ── Streak strip ─────────────────────────────────────────────── */
     .streak-card { display: inline-flex; align-items: center; gap: 9px;
                    background: var(--fire-bg); border-radius: var(--radius-md);
-                   padding: 8px 13px; margin: 0 6px 6px 0; }
+                   padding: 8px 13px; margin: 0 6px 6px 0;
+                   box-shadow: 0 2px 8px rgba(133,79,11,.12);
+                   border: 1px solid rgba(133,79,11,.1); }
     .streak-name { font-size: 13px; font-weight: 600; color: var(--fire); }
     .streak-sub  { font-size: 11px; color: var(--text3); margin-top: 1px; }
 
@@ -155,9 +183,9 @@
     .av { width: 28px; height: 28px; border-radius: 50%; display: flex;
           align-items: center; justify-content: center; font-size: 10px;
           font-weight: 600; flex-shrink: 0; }
-    .avm { background: var(--blue-bg); color: #0C447C; }
-    .avf { background: var(--pink-bg); color: #72243E; }
-    .avs { background: var(--sub-bg);  color: var(--sub); }
+    .avm { background: var(--bar-m); color: #fff; }
+    .avf { background: var(--bar-f); color: #fff; }
+    .avs { background: var(--sub-bg); color: var(--sub); }
     .nm   { font-size: 13px; flex: 1; min-width: 0; white-space: nowrap;
             overflow: hidden; text-overflow: ellipsis; }
     .nm-m { color: var(--blue); }
@@ -180,8 +208,10 @@
     .tr { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
     .tb { font-size: 12px; padding: 5px 12px; border-radius: 20px;
           border: 1px solid var(--border2); background: transparent;
-          color: var(--text2); cursor: pointer; }
-    .tb.active { background: var(--info-bg); color: var(--info); border-color: transparent; }
+          color: var(--text2); cursor: pointer; transition: all .15s; }
+    .tb:hover { border-color: var(--blue); color: var(--blue); }
+    .tb.active { background: var(--blue); color: #fff; border-color: transparent;
+                 box-shadow: 0 2px 6px rgba(24,95,165,.22); }
 
     /* ── Pair rows ────────────────────────────────────────────────── */
     .par { display: flex; align-items: center; gap: 9px; padding: 6px 0;
@@ -198,7 +228,8 @@
     .ff  { background: var(--bg2); border-radius: var(--radius-md);
            padding: .8rem 1rem; margin-bottom: 8px; display: flex;
            align-items: flex-start; gap: 10px; font-size: 13px;
-           color: var(--text); line-height: 1.5; }
+           color: var(--text); line-height: 1.5;
+           border-left: 3px solid var(--blue-bg); }
     .fi  { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
 
     /* ── Season tag ───────────────────────────────────────────────── */
@@ -216,9 +247,10 @@
     /* ── Week cards ───────────────────────────────────────────────── */
     .wc  { background: var(--bg); border: 1px solid var(--border);
            border-radius: var(--radius-lg); padding: .85rem 1rem;
-           cursor: pointer; margin-bottom: 8px; transition: border-color .15s; }
-    .wc:hover  { border-color: var(--border2); }
-    .wc.open   { border-color: var(--bar-m); }
+           cursor: pointer; margin-bottom: 8px; transition: border-color .15s, box-shadow .15s;
+           box-shadow: 0 1px 6px rgba(0,0,0,.05); }
+    .wc:hover  { border-color: var(--blue); box-shadow: 0 2px 12px rgba(24,95,165,.1); }
+    .wc.open   { border-color: var(--bar-m); box-shadow: 0 2px 12px rgba(55,138,221,.15); }
     .wh  { display: flex; align-items: center; gap: 10px; }
     .wn  { font-size: 11px; font-weight: 600; color: var(--text3);
            width: 18px; flex-shrink: 0; }
@@ -392,13 +424,14 @@
         <div style="font-size:12px;color:var(--text3);margin-top:6px">2 Sundays left (May 3 &amp; May 10) — Jose, Kevin H., Julie &amp; John can still finish perfect 🔥</div>
       </div>
       <div class="sec">
-        <div class="sl">Attendance — all 13 sessions</div>
+        <div class="sl">Attendance — 13 played · 2 upcoming</div>
         <div class="card">
           <div class="att-wrap" id="attGrid"></div>
           <div style="display:flex;gap:14px;margin-top:10px;font-size:11px;color:var(--text2);flex-wrap:wrap">
             <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bar-m);vertical-align:middle;margin-right:4px"></span>Men</span>
             <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bar-f);vertical-align:middle;margin-right:4px"></span>Women</span>
             <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bg3);vertical-align:middle;margin-right:4px"></span>Absent</span>
+            <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;border:1.5px dashed var(--border2);vertical-align:middle;margin-right:4px"></span>Upcoming</span>
           </div>
         </div>
       </div>
@@ -410,9 +443,9 @@
         <div class="sl">Fun facts</div>
         <div class="card">
           <div class="ff"><span class="fi">🔥</span>Jose, Kevin H., Julie &amp; John haven't missed a single Sunday — 13 for 13 with 2 left to go.</div>
-          <div class="ff"><span class="fi">📈</span>Emad and Trang are both on a 10-game active streak — the longest in the group right now.</div>
+          <div class="ff"><span class="fi">📈</span>Emad is on a 10-game active streak — the longest non-perfect streak in the group right now.</div>
           <div class="ff"><span class="fi">🤝</span>5 duos tied at 6 times together: Jose &amp; Julie, Julie &amp; Kevin H., Barbara &amp; Kevin H., Jose &amp; Sophie, and Emad &amp; Trang.</div>
-          <div class="ff"><span class="fi">🏠</span>A full house (all 24 regulars) has never happened. Best was 22/24, achieved 3 times this season.</div>
+          <div class="ff"><span class="fi">🏠</span>A full house (all 24 regulars) has never happened. Best was 22/24, achieved 4 times this season (Jan 11, Feb 15, Feb 22, Mar 1).</div>
           <div class="ff" style="margin-bottom:0"><span class="fi">🎨</span>13 themes so far — season finale themes still to come on May 3 &amp; May 10!</div>
         </div>
       </div>
@@ -674,7 +707,7 @@ const REGULARS = [
   {n:'Kevin H.',    g:'m', att:13, streak:13},
   {n:'Julie',       g:'f', att:13, streak:13},
   {n:'John',        g:'m', att:13, streak:13},
-  {n:'Trang',       g:'f', att:12, streak:10},
+  {n:'Trang',       g:'f', att:11, streak:2},
   {n:'Emad',        g:'m', att:12, streak:10},
   {n:'Michel',      g:'m', att:12, streak:9},
   {n:'Daniel',      g:'m', att:12, streak:7},
@@ -747,10 +780,10 @@ const NEVER = {
   'Nathan':       ['Karim-Etienne','Michel','Sophie'],
   'Norichar':     ['Barbara','Jose','Karim-Etienne','Kevin H.'],
   'Patricio':     ['Anita','Erik','Khoa'],
-  'Rigil':        ['Barbara','Joey','Michel'],
+  'Rigil':        ['Barbara','Joey','Michel','Trang'],
   'Siu':          ['John','Nat'],
   'Sophie':       ['Nat','Nathan'],
-  'Trang':        ['Anita','Daniel','Karim-Etienne'],
+  'Trang':        ['Anita','Daniel','Karim-Etienne','Rigil'],
 };
 
 const THEMES = [
@@ -827,10 +860,10 @@ const WEEKS = [
     {name:'Peony',            p:[{n:'Julie',g:'f'},{n:'Jose',g:'m'},{n:'Lilian',g:'s',sg:'f'},{n:'Rigil',g:'m'},{n:'William',g:'s',sg:'m'},{n:'Daniel',g:'m'}]},
     {name:'Edelweiss',        p:[{n:'Erik',g:'m'},{n:'Andre',g:'s',sg:'m'},{n:'Siu',g:'m'},{n:'Emad',g:'m'},{n:'Joey',g:'m'},{n:'Trang',g:'f'}]},
     {name:'Marigold',         p:[{n:'Kevin H.',g:'m'},{n:'Dom',g:'s',sg:'m'},{n:'John',g:'m'},{n:'Barbara',g:'f'},{n:'Michel',g:'m'},{n:'Audrey',g:'f'}]}]},
-  {n:11, date:'Apr 12', theme:'Quebec things', reg:19, teams:[
+  {n:11, date:'Apr 12', theme:'Quebec things', reg:18, teams:[
     {name:'Nid-de-poule',     p:[{n:'Sophie',g:'f'},{n:'David',g:'s',sg:'m'},{n:'Barbara',g:'f'},{n:'Daniel',g:'m'},{n:'Patricio',g:'m'},{n:'Anthony W.',g:'m'}]},
     {name:'Construction Cone',p:[{n:'Mark',g:'m'},{n:'Siu',g:'m'},{n:'Emad',g:'m'},{n:'Khoa',g:'m'},{n:'William',g:'s',sg:'m'},{n:'Lilian',g:'s',sg:'f'}]},
-    {name:'Sesame Bagel',     p:[{n:'Trang',g:'f'},{n:'Chy',g:'s',sg:'m'},{n:'Steven',g:'s',sg:'m'},{n:'Rigil',g:'m'},{n:'Nat',g:'f'},{n:'Erik',g:'m'}]},
+    {name:'Sesame Bagel',     p:[{n:'Dat',g:'s',sg:'m'},{n:'Chy',g:'s',sg:'m'},{n:'Steven',g:'s',sg:'m'},{n:'Rigil',g:'m'},{n:'Nat',g:'f'},{n:'Erik',g:'m'}]},
     {name:'Poutine Sauce',    p:[{n:'Julie',g:'f'},{n:'Jose',g:'m'},{n:'Joey',g:'m'},{n:'Kevin H.',g:'m'},{n:'Michel',g:'m'},{n:'John',g:'m'}]}]},
   {n:12, date:'Apr 19', theme:'Condiments', reg:18, teams:[
     {name:'Spicy Sriracha',   p:[{n:'David',g:'s',sg:'m'},{n:'Julie',g:'f'},{n:'Jose',g:'m'},{n:'Raks',g:'s',sg:'m'},{n:'Daniel',g:'m'},{n:'Khoa',g:'m'}]},
@@ -1101,8 +1134,9 @@ function rAttGrid() {
   // header row
   let html = `<div style="display:flex;align-items:center;gap:3px;margin-bottom:5px">
     <div style="width:90px;flex-shrink:0"></div>`;
-  played.forEach(w => {
-    html += `<div style="width:18px;text-align:center;font-size:9px;font-weight:700;color:var(--text3)">${w.n}</div>`;
+  WEEKS.forEach(w => {
+    const labelCls = w.teams.length === 0 ? 'color:var(--border2)' : 'color:var(--text3)';
+    html += `<div style="width:18px;text-align:center;font-size:9px;font-weight:700;${labelCls}">${w.n}</div>`;
   });
   html += `</div>`;
 
@@ -1111,10 +1145,14 @@ function rAttGrid() {
     const safe = r.n.replace(/'/g, "\\'");
     html += `<div style="display:flex;align-items:center;gap:3px;margin-bottom:3px">
       <button class="player-link nm-${r.g}" style="width:90px;flex-shrink:0;text-align:right;padding-right:8px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" onclick="showProfile('${safe}')">${r.n}</button>`;
-    played.forEach(w => {
-      const on = att[r.n].has(w.n);
-      const cls = on ? (r.g === 'f' ? 'on-f' : 'on-m') : 'off';
-      html += `<div class="att-dot ${cls}" title="Wk ${w.n} ${w.date}: ${on ? 'Attended' : 'Absent'}"></div>`;
+    WEEKS.forEach(w => {
+      if (w.teams.length === 0) {
+        html += `<div class="att-dot upcoming" title="Wk ${w.n} ${w.date}: Upcoming"></div>`;
+      } else {
+        const on = att[r.n].has(w.n);
+        const cls = on ? (r.g === 'f' ? 'on-f' : 'on-m') : 'off';
+        html += `<div class="att-dot ${cls}" title="Wk ${w.n} ${w.date}: ${on ? 'Attended' : 'Absent'}"></div>`;
+      }
     });
     html += `<span style="font-size:10px;color:var(--text3);margin-left:6px;flex-shrink:0">${r.att}/13</span></div>`;
   });
