@@ -35,6 +35,41 @@
       --radius-md:     10px;
       --radius-lg:     14px;
     }
+    [data-theme="dark"] {
+      --bg:       #1c1c1e;
+      --bg2:      #2c2c2e;
+      --bg3:      #3a3a3c;
+      --border:   #3a3a3c;
+      --border2:  #48484a;
+      --text:     #f2f2f7;
+      --text2:    #aeaeb2;
+      --text3:    #636366;
+      --blue:     #5BA8F5;
+      --blue-bg:  #1C3B5A;
+      --pink:     #D4537E;
+      --pink-bg:  #3D1829;
+      --bar-m:    #5BA8F5;
+      --bar-f:    #D4537E;
+      --bar-s:    #636366;
+      --green-bg: #0D2B22;
+      --green:    #4CAF82;
+      --fire-bg:  #2E1E08;
+      --fire:     #F5A623;
+      --sub-bg:   #2C2B28;
+      --sub:      #9E9D99;
+      --info-bg:  #1C3B5A;
+      --info:     #5BA8F5;
+    }
+    [data-theme="dark"] .avm { color: #5BA8F5; }
+    [data-theme="dark"] .avf { color: #D4537E; }
+    [data-theme="dark"] .tw  { color: #5BA8F5; }
+    [data-theme="dark"] .ts,
+    [data-theme="dark"] .dy.sm,
+    [data-theme="dark"] .su  { background: #2E2208; color: #F5A623; }
+    [data-theme="dark"] .of  { background: #2E0D0D; color: #E57373; }
+    [data-theme="dark"] .dy.vb:hover { background: #254A70; }
+    [data-theme="dark"] .ngm { color: #5BA8F5; }
+    [data-theme="dark"] .ngf { color: #D4537E; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg2);
@@ -44,9 +79,13 @@
 
     /* ── Layout ───────────────────────────────────────────────────── */
     .shell { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
-    .header { margin-bottom: 1.5rem; }
+    .header { margin-bottom: 1.5rem; display: flex; align-items: flex-start; justify-content: space-between; }
     .header h1 { font-size: 20px; font-weight: 600; color: var(--text); }
     .header p  { font-size: 13px; color: var(--text3); margin-top: 3px; }
+    .theme-btn { background: var(--bg2); border: 1px solid var(--border2); border-radius: 50%;
+                 width: 36px; height: 36px; cursor: pointer; font-size: 16px; flex-shrink: 0;
+                 display: flex; align-items: center; justify-content: center; }
+    .theme-btn:hover { border-color: var(--blue); }
 
     /* ── Nav ──────────────────────────────────────────────────────── */
     .nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem;
@@ -67,8 +106,18 @@
 
     /* ── Card ─────────────────────────────────────────────────────── */
     .card { background: var(--bg); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); padding: 1rem 1.1rem; }
-
+            border-radius: var(--radius-lg); padding: 1rem 1.1rem; }    .profile-card { margin-bottom: 1.5rem; }
+    .profile-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 1rem; }
+    .profile-name { font-size: 18px; font-weight: 700; color: var(--text); }
+    .profile-label { font-size: 11px; text-transform: uppercase; color: var(--text3); margin-bottom: 4px; }
+    .profile-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+    @media(max-width:580px){ .profile-grid { grid-template-columns: 1fr; } }
+    .profile-summary { font-size: 13px; color: var(--text); line-height: 1.5; }
+    .profile-close { background: transparent; border: 1px solid var(--border2); border-radius: 999px; width: 34px; height: 34px; color: var(--text3); cursor: pointer; }
+    .profile-close:hover { border-color: var(--blue); color: var(--blue); }
+    .player-link { background: none; border: none; padding: 0; margin: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
+    .player-link:hover { text-decoration: underline; color: var(--blue); }
+    .player-link:focus { outline: 2px solid var(--blue); outline-offset: 2px; }
     /* ── Metric grid ──────────────────────────────────────────────── */
     .mg { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 1.5rem; }
     @media(max-width:580px){ .mg { grid-template-columns: repeat(2,1fr); } }
@@ -260,8 +309,39 @@
 <div class="shell">
 
   <div class="header">
-    <h1>🏐 Sunday Volleyball</h1>
-    <p>Supercamp Vanier · Every Sunday 9:00–11:00 AM</p>
+    <div>
+      <h1>🏐 Sunday Volleyball</h1>
+      <p>Supercamp Vanier · Every Sunday 9:00–11:00 AM</p>
+    </div>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle dark mode">🌙</button>
+  </div>
+
+  <div id="profileCard" class="card profile-card" style="display:none">
+    <div class="profile-header">
+      <div>
+        <div class="sl">Player profile</div>
+        <div id="profileName" class="profile-name"></div>
+      </div>
+      <button class="profile-close" onclick="hideProfile()">✕</button>
+    </div>
+    <div class="profile-grid">
+      <div>
+        <div class="profile-label">Attendance</div>
+        <div id="profileAttendance" class="profile-summary"></div>
+      </div>
+      <div>
+        <div class="profile-label">Current streak</div>
+        <div id="profileStreak" class="profile-summary"></div>
+      </div>
+      <div>
+        <div class="profile-label">Top partner</div>
+        <div id="profilePartner" class="profile-summary"></div>
+      </div>
+      <div>
+        <div class="profile-label">Sessions played</div>
+        <div id="profileSessions" class="profile-summary"></div>
+      </div>
+    </div>
   </div>
 
   <div class="nav">
@@ -347,26 +427,42 @@
 
   <!-- CHEMISTRY -->
   <div id="page-chemistry" class="page">
+
     <div class="sec">
-      <div class="sl">Who have I never been on a team with?</div>
+      <div class="sl">Player chemistry</div>
       <div class="card">
-        <select class="nts" onchange="showNever(this.value)">
+        <select class="nts" id="chemSel" onchange="showChemistry(this.value)">
           <option value="">— Select a player —</option>
-          <optgroup label="Women">
-            <option>Anita</option><option>Audrey</option><option>Barbara</option>
-            <option>Julie</option><option>Nat</option><option>Sophie</option><option>Trang</option>
-          </optgroup>
-          <optgroup label="Men">
-            <option>Anthony W.</option><option>Daniel</option><option>Emad</option>
-            <option>Erik</option><option>Joey</option><option>John</option><option>Jose</option>
-            <option>Karim-Etienne</option><option>Kevin H.</option><option>Khoa</option>
-            <option>Mark</option><option>Michel</option><option>Nathan</option>
-            <option>Norichar</option><option>Patricio</option><option>Rigil</option><option>Siu</option>
-          </optgroup>
         </select>
-        <div class="ntr" id="ntres" style="display:none"></div>
+        <div id="chemRes" style="display:none">
+          <div class="sl" style="margin-top:.85rem">Most frequent partners</div>
+          <div id="chemPartners"></div>
+          <div class="sl" style="margin-top:1rem">Never played together</div>
+          <div class="ntr" id="chemNever" style="padding:.5rem 0 0"></div>
+        </div>
       </div>
     </div>
+
+    <div class="sec">
+      <div class="sl">Duo lookup</div>
+      <div class="card">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:.75rem">
+          <select class="nts" id="duoA" onchange="showDuo()" style="margin-bottom:0">
+            <option value="">— Player A —</option>
+          </select>
+          <select class="nts" id="duoB" onchange="showDuo()" style="margin-bottom:0">
+            <option value="">— Player B —</option>
+          </select>
+        </div>
+        <div id="duoRes"></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sl">Partner diversity — regulars</div>
+      <div class="card" id="connLb"></div>
+    </div>
+
   </div>
 
   <!-- HISTORY -->
@@ -626,8 +722,28 @@ const VDATES = new Set([
   '2026-03-01','2026-03-08','2026-03-15','2026-03-22','2026-04-12','2026-04-19',
   '2026-04-26','2026-05-03','2026-05-10'
 ]);
-const SDATES = new Set();
-(()=>{let d=new Date(2026,4,17);while(d<=new Date(2026,7,31)){SDATES.add(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'));d.setDate(d.getDate()+7);}})();
+const SUMMER_DATES = [
+  '2026-05-17','2026-05-31','2026-06-21','2026-06-28',
+  '2026-07-05','2026-07-12','2026-07-19','2026-07-26',
+  '2026-08-02','2026-08-09','2026-08-16'
+];
+const SDATES = new Set(SUMMER_DATES);
+const SUMMER_SCHED = [
+  {n:1,  date:'Sunday, May 17',     s:'su'},
+  {n:'', date:'Sunday, May 24',     s:'off', note:'Off week'},
+  {n:2,  date:'Sunday, May 31',     s:'su'},
+  {n:'', date:'Sunday, June 7',     s:'off', note:'Off week'},
+  {n:'', date:'Sunday, June 14',    s:'off', note:'Off week'},
+  {n:3,  date:'Sunday, June 21',    s:'su'},
+  {n:4,  date:'Sunday, June 28',    s:'su'},
+  {n:5,  date:'Sunday, July 5',     s:'su'},
+  {n:6,  date:'Sunday, July 12',    s:'su'},
+  {n:7,  date:'Sunday, July 19',    s:'su'},
+  {n:8,  date:'Sunday, July 26',    s:'su'},
+  {n:9,  date:'Sunday, August 2',   s:'su'},
+  {n:10, date:'Sunday, August 9',   s:'su'},
+  {n:11, date:'Sunday, August 16',  s:'su'},
+];
 const S2W = {
   '2026-01-11':0,'2026-01-18':1,'2026-02-01':2,'2026-02-08':3,'2026-02-15':4,
   '2026-02-22':5,'2026-03-01':6,'2026-03-08':7,'2026-03-15':8,'2026-03-22':9,
@@ -641,9 +757,42 @@ const S2W = {
 let CY=2026, CM=0;
 
 function pl(p) {
-  const c = p.g==='s' ? (p.sg==='f'?'#993556':'#185FA5') : (p.g==='f'?'#993556':'#185FA5');
+  const gc = (p.g === 'f' || (p.g === 's' && p.sg === 'f')) ? 'nm-f' : 'nm-m';
   const sub = p.g==='s' ? ` <span style="font-size:10px;opacity:.55">(sub)</span>` : '';
-  return `<div style="font-size:12px;padding:1px 0;color:${c}">${p.n}${sub}</div>`;
+  const safeName = p.n.replace(/'/g, "\\'");
+  return `<div style="font-size:12px;padding:1px 0" class="${gc}"><button class="player-link" onclick="showProfile('${safeName}')">${p.n}</button>${sub}</div>`;
+}
+function showProfile(name) {
+  const regular = REGULARS.find(r => r.n === name);
+  const sub = SUBS.find(s => s.n === name);
+  const player = regular || sub;
+  if (!player) return;
+  const sessions = WEEKS.filter(w => w.teams.some(t => t.p.some(p => p.n === name))).map(w => `${w.date} · ${w.theme}`);
+  const partnerCounts = {};
+  WEEKS.forEach(w => w.teams.forEach(t => {
+    const names = t.p.map(p => p.n);
+    if (names.includes(name)) names.forEach(m => { if (m !== name) partnerCounts[m] = (partnerCounts[m] || 0) + 1; });
+  }));
+  const topPairs = Object.entries(partnerCounts)
+    .sort((a, b) => b[1] - a[1])
+    .map(([partner, count]) => `${partner} (${count})`);
+  document.getElementById('profileCard').style.display = 'block';
+  document.getElementById('profileName').textContent = name;
+  document.getElementById('profileAttendance').textContent = regular
+    ? `${player.att}/13 regulars attended`
+    : `${player.c} sessions`;
+  document.getElementById('profileStreak').textContent = regular
+    ? `${player.streak} ${player.streak === 13 ? '(perfect!)' : 'session' + (player.streak === 1 ? '' : 's')}`
+    : 'N/A';
+  document.getElementById('profilePartner').textContent = topPairs.length
+    ? topPairs.slice(0, 3).join(', ')
+    : 'Partner data not available';
+  document.getElementById('profileSessions').textContent = sessions.length
+    ? `${sessions.length} sessions · ${sessions[0]}${sessions.length > 1 ? ' → ' + sessions[sessions.length - 1] : ''}`
+    : 'No sessions recorded';
+}
+function hideProfile() {
+  document.getElementById('profileCard').style.display = 'none';
 }
 function yth(n) {
   const u = YT[n];
@@ -682,7 +831,7 @@ function rLb() {
                  : '';
     el.innerHTML += `<div class="pr" data-g="${r.g}">
       <div class="av av${r.g}">${r.n.substring(0,2).toUpperCase()}</div>
-      <span class="nm nm-${r.g}">${r.n}</span>
+      <span class="nm nm-${r.g}"><button class="player-link" onclick="showProfile('${r.n.replace(/'/g, "\\'")}')">${r.n}</button></span>
       ${streak}
       <div class="bw"><div class="b${r.g}" style="width:${pct}%"></div></div>
       <span class="an">${r.att}/13</span>
@@ -697,7 +846,7 @@ function rSubs() {
     const pct = Math.round(s.c / 13 * 100);
     el.innerHTML += `<div class="pr">
       <div class="av av${g}">${s.n.substring(0,2).toUpperCase()}</div>
-      <span class="nm nm-${g}">${s.n}</span>
+      <span class="nm nm-${g}"><button class="player-link" onclick="showProfile('${s.n.replace(/'/g, "\\'")}')">${s.n}</button></span>
       <span class="bdg bsb">sub</span>
       <div class="bw"><div class="b${g}" style="width:${pct}%"></div></div>
       <span class="an">${s.c}</span>
@@ -740,11 +889,13 @@ function rSched() {
     we.innerHTML += `<div class="sr"><span class="sn">${s.n||''}</span><span class="sd" style="${off?'color:var(--text3)':''}">${s.date}</span>${info}<span class="sb ${cls}">${lbl}</span></div>`;
   });
   const se = document.getElementById('schs');
-  let i=1; let d=new Date(2026,4,17);
-  while (d <= new Date(2026,7,31)) {
-    se.innerHTML += `<div class="sr"><span class="sn">${i}</span><span class="sd">${d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}</span><span class="si">9:00–11:00 AM · Supercamp Vanier</span><span class="sb su">Summer</span></div>`;
-    i++; d.setDate(d.getDate()+7);
-  }
+  SUMMER_SCHED.forEach(s => {
+    const off = s.s === 'off';
+    const info = off
+      ? `<span style="font-size:12px;color:var(--text3)">${s.note||''}</span>`
+      : `<span class="si">9:00–11:00 AM · Supercamp Vanier</span>`;
+    se.innerHTML += `<div class="sr"><span class="sn">${s.n||''}</span><span class="sd" style="${off?'color:var(--text3)':''}">${s.date}</span>${info}<span class="sb ${off?'of':'su'}">${off?'Off':'Summer'}</span></div>`;
+  });
 }
 
 function rCal() {
@@ -787,14 +938,82 @@ function rCalDet(key) {
   det.innerHTML = `<div class="card"><div style="font-size:13px;font-weight:600;margin-bottom:4px">Session ${w.n} · ${w.date} · Theme: ${w.theme}</div>${pending?'':`<div style="font-size:12px;color:var(--text2);margin-bottom:8px">${w.reg}/24 regulars</div>`}${th}<div style="margin-top:8px">${yth(w.n)}</div></div>`;
 }
 
-function showNever(name) {
-  const el = document.getElementById('ntres');
+function fillSelects() {
+  const women = ['Anita','Audrey','Barbara','Julie','Nat','Sophie','Trang'];
+  const men = ['Anthony W.','Daniel','Emad','Erik','Joey','John','Jose',
+    'Karim-Etienne','Kevin H.','Khoa','Mark','Michel','Nathan',
+    'Norichar','Patricio','Rigil','Siu'];
+  const opts = `<optgroup label="Women">${women.map(n=>`<option>${n}</option>`).join('')}</optgroup>`
+             + `<optgroup label="Men">${men.map(n=>`<option>${n}</option>`).join('')}</optgroup>`;
+  ['chemSel','duoA','duoB'].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = `<option value="">${sel.options[0].textContent}</option>` + opts;
+  });
+}
+
+function showChemistry(name) {
+  const el = document.getElementById('chemRes');
   if (!name) { el.style.display = 'none'; return; }
-  el.style.display = 'block';
+  const counts = {};
+  WEEKS.forEach(w => w.teams.forEach(t => {
+    const names = t.p.map(p => p.n);
+    if (names.includes(name)) names.forEach(m => { if (m !== name) counts[m] = (counts[m] || 0) + 1; });
+  }));
+  const pairs = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const maxCount = pairs[0]?.[1] || 1;
+  document.getElementById('chemPartners').innerHTML = pairs.map(([partner, count]) => {
+    const g = GM[partner] || 'm';
+    return `<div class="pr">
+      <span class="nm nm-${g}">${partner}</span>
+      <div class="bw"><div class="b${g}" style="width:${Math.round(count/maxCount*100)}%"></div></div>
+      <span class="an">${count}</span>
+    </div>`;
+  }).join('');
   const never = NEVER[name] || [];
-  if (!never.length) { el.innerHTML = `<span style="color:var(--text3);font-style:italic">🎉 ${name} has been on a team with every other regular!</span>`; return; }
-  const chips = never.map(n => `<span class="ng ng${GM[n]==='f'?'f':'m'}">${n}</span>`).join('');
-  el.innerHTML = `<div style="font-size:12px;color:var(--text2);margin-bottom:8px">${name} has never been on a team with:</div>${chips}`;
+  document.getElementById('chemNever').innerHTML = never.length
+    ? never.map(n => `<span class="ng ng${GM[n]==='f'?'f':'m'}">${n}</span>`).join('')
+    : `<span style="font-size:12px;color:var(--text3);font-style:italic">🎉 ${name} has been on a team with every other regular!</span>`;
+  el.style.display = 'block';
+}
+
+function showDuo() {
+  const a = document.getElementById('duoA').value;
+  const b = document.getElementById('duoB').value;
+  const el = document.getElementById('duoRes');
+  if (!a || !b || a === b) { el.innerHTML = ''; return; }
+  const weeks = WEEKS.filter(w => w.teams.some(t => {
+    const ns = t.p.map(p => p.n);
+    return ns.includes(a) && ns.includes(b);
+  }));
+  if (!weeks.length) {
+    el.innerHTML = `<div style="font-size:13px;color:var(--text3);font-style:italic">${a} and ${b} have never been on the same team.</div>`;
+  } else {
+    const rows = weeks.map(w =>
+      `<div style="font-size:12px;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border)">Week ${w.n} · ${w.date} · ${w.theme}</div>`
+    ).join('');
+    el.innerHTML = `<div style="font-size:13px;font-weight:600;margin-bottom:8px">${a} &amp; ${b} — ${weeks.length} session${weeks.length>1?'s':''} together</div>${rows}`;
+  }
+}
+
+function rConnLb() {
+  const el = document.getElementById('connLb');
+  const data = REGULARS.map(r => {
+    const partners = new Set();
+    WEEKS.forEach(w => w.teams.forEach(t => {
+      const ns = t.p.map(p => p.n);
+      if (ns.includes(r.n)) ns.forEach(m => { if (m !== r.n) partners.add(m); });
+    }));
+    return { n: r.n, g: r.g, unique: partners.size };
+  }).sort((a, b) => b.unique - a.unique);
+  const max = data[0]?.unique || 1;
+  data.forEach(d => {
+    el.innerHTML += `<div class="pr">
+      <div class="av av${d.g}">${d.n.substring(0,2).toUpperCase()}</div>
+      <span class="nm nm-${d.g}">${d.n}</span>
+      <div class="bw" style="width:80px"><div class="b${d.g}" style="width:${Math.round(d.unique/max*100)}%"></div></div>
+      <span class="an" style="width:auto;font-size:11px">${d.unique} unique</span>
+    </div>`;
+  });
 }
 
 function tw(c) {
@@ -807,6 +1026,7 @@ function showPage(id, btn) {
   document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
+  hideProfile();
 }
 function showTab(btn, g) {
   btn.closest('.card').querySelectorAll('.tb').forEach(t => t.classList.remove('active'));
@@ -818,8 +1038,23 @@ function showTab(btn, g) {
 function prevM() { CM--; if(CM<0){CM=11;CY--;} rCal(); document.getElementById('caldet').style.display='none'; }
 function nextM() { CM++; if(CM>11){CM=0;CY++;} rCal(); document.getElementById('caldet').style.display='none'; }
 
+function toggleTheme() {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = dark ? '' : 'dark';
+  document.getElementById('themeBtn').textContent = dark ? '🌙' : '☀️';
+  localStorage.setItem('vb-theme', dark ? 'light' : 'dark');
+}
+
 // Init
-rDuos(); rThemes(); rLb(); rSubs(); rWeeks(); rSched(); rCal();
+rDuos(); rThemes(); rLb(); rSubs(); rWeeks(); rSched(); rCal(); fillSelects(); rConnLb();
+(function(){
+  const saved = localStorage.getItem('vb-theme') ||
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  if (saved === 'dark') {
+    document.documentElement.dataset.theme = 'dark';
+    document.getElementById('themeBtn').textContent = '☀️';
+  }
+})();
 </script>
 </body>
 </html>
