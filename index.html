@@ -103,6 +103,8 @@
     /* ── Section label ────────────────────────────────────────────── */
     .sl { font-size: 11px; font-weight: 600; letter-spacing: .08em;
           color: var(--text3); text-transform: uppercase; margin-bottom: .6rem; }
+    .sl-lg { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: .75rem; }
+    .rule  { border: none; border-top: 1px solid var(--border2); margin: 0 0 1.5rem; }
 
     /* ── Card ─────────────────────────────────────────────────────── */
     .card { background: var(--bg); border: 1px solid var(--border);
@@ -121,9 +123,23 @@
     /* ── Metric grid ──────────────────────────────────────────────── */
     .mg { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 1.5rem; }
     @media(max-width:580px){ .mg { grid-template-columns: repeat(2,1fr); } }
-    .met { background: var(--bg2); border-radius: var(--radius-md); padding: .9rem 1rem; }
-    .mv  { font-size: 28px; font-weight: 600; color: var(--text); line-height: 1; }
+    .met { background: var(--bg2); border-radius: var(--radius-md); padding: .9rem 1rem; border-top: 3px solid transparent; }
+    .mv  { font-size: 30px; font-weight: 700; color: var(--text); line-height: 1; }
     .ml  { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+    /* ── Attendance heatmap ───────────────────────────────────────── */
+    .att-wrap { overflow-x: auto; padding-bottom: 4px; }
+    .att-dot  { width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0; }
+    .att-dot.on-m { background: var(--bar-m); }
+    .att-dot.on-f { background: var(--bar-f); }
+    .att-dot.off  { background: var(--bg3); }
+
+    /* ── Streak strip ─────────────────────────────────────────────── */
+    .streak-card { display: inline-flex; align-items: center; gap: 9px;
+                   background: var(--fire-bg); border-radius: var(--radius-md);
+                   padding: 8px 13px; margin: 0 6px 6px 0; }
+    .streak-name { font-size: 13px; font-weight: 600; color: var(--fire); }
+    .streak-sub  { font-size: 11px; color: var(--text3); margin-top: 1px; }
 
     /* ── Two-col ──────────────────────────────────────────────────── */
     .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.75rem; }
@@ -359,42 +375,31 @@
       <span class="stg tw">❄️ Winter 2026</span>
       <span style="font-size:12px;color:var(--text3)">January – May 10 · 13 of 15 Sundays completed</span>
     </div>
-    <div class="mg">
-      <div class="met"><div class="mv">13</div><div class="ml">Sundays played</div></div>
-      <div class="met"><div class="mv">2</div><div class="ml">Sundays left</div></div>
-      <div class="met"><div class="mv">4</div><div class="ml">Perfect attendance</div></div>
-      <div class="met"><div class="mv">24</div><div class="ml">Regulars this season</div></div>
+    <div class="card" style="margin-bottom:1.5rem">
+      <div class="mg" style="margin-bottom:1rem">
+        <div class="met" style="border-top-color:var(--bar-m)"><div class="mv" style="color:var(--bar-m)">13</div><div class="ml">Sundays played</div></div>
+        <div class="met" style="border-top-color:var(--border2)"><div class="mv">2</div><div class="ml">Sundays left</div></div>
+        <div class="met" style="border-top-color:var(--fire)"><div class="mv" style="color:var(--fire)">4</div><div class="ml">Perfect attendance</div></div>
+        <div class="met" style="border-top-color:var(--bar-m)"><div class="mv">24</div><div class="ml">Regulars this season</div></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px"><span>Week 13 of 15</span><span>87%</span></div>
+      <div class="pw"><div class="pf" style="width:87%"></div></div>
+      <div style="font-size:12px;color:var(--text3);margin-top:6px">2 Sundays left (May 3 &amp; May 10) — Jose, Kevin H., Julie &amp; John can still finish perfect 🔥</div>
     </div>
     <div class="sec">
-      <div class="sl">Season progress</div>
+      <div class="sl">Attendance — all 13 sessions</div>
       <div class="card">
-        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px"><span>Week 13 of 15</span><span>87%</span></div>
-        <div class="pw"><div class="pf" style="width:87%"></div></div>
-        <div style="font-size:12px;color:var(--text3);margin-top:6px">2 Sundays left (May 3 &amp; May 10) — Jose, Kevin H., Julie &amp; John can still finish perfect 🔥</div>
-      </div>
-    </div>
-    <div class="two">
-      <div>
-        <div class="sl">Group makeup</div>
-        <div class="card">
-          <div style="margin-bottom:12px">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--blue);margin-bottom:4px"><span>Men</span><span>18 regulars</span></div>
-            <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:75%;height:7px;border-radius:4px;background:var(--bar-m)"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--pink);margin-bottom:4px"><span>Women</span><span>6 regulars</span></div>
-            <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:25%;height:7px;border-radius:4px;background:var(--bar-f)"></div></div>
-          </div>
+        <div class="att-wrap" id="attGrid"></div>
+        <div style="display:flex;gap:14px;margin-top:10px;font-size:11px;color:var(--text2);flex-wrap:wrap">
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bar-m);vertical-align:middle;margin-right:4px"></span>Men</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bar-f);vertical-align:middle;margin-right:4px"></span>Women</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bg3);vertical-align:middle;margin-right:4px"></span>Absent</span>
         </div>
       </div>
-      <div>
-        <div class="sl">Most frequent duos</div>
-        <div class="card" id="duos"></div>
-      </div>
     </div>
     <div class="sec">
-      <div class="sl">Theme timeline</div>
-      <div class="card"><div class="tl" id="tl"></div></div>
+      <div class="sl">Active streaks</div>
+      <div id="streakStrip"></div>
     </div>
     <div class="sec">
       <div class="sl">Fun facts</div>
@@ -408,6 +413,26 @@
 
   <!-- LEADERBOARD -->
   <div id="page-leaderboard" class="page">
+    <div class="sec">
+      <div class="sl">Group makeup</div>
+      <div class="two" style="margin-bottom:0">
+        <div class="card">
+          <div style="margin-bottom:12px">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--blue);margin-bottom:4px"><span>Men</span><span>18 regulars</span></div>
+            <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:75%;height:7px;border-radius:4px;background:var(--bar-m)"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--pink);margin-bottom:4px"><span>Women</span><span>6 regulars</span></div>
+            <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:25%;height:7px;border-radius:4px;background:var(--bar-f)"></div></div>
+          </div>
+        </div>
+        <div class="card" style="display:flex;align-items:center;justify-content:center;gap:24px">
+          <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--bar-m)">75%</div><div style="font-size:12px;color:var(--text2)">Male</div></div>
+          <div style="width:1px;height:40px;background:var(--border)"></div>
+          <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--bar-f)">25%</div><div style="font-size:12px;color:var(--text2)">Female</div></div>
+        </div>
+      </div>
+    </div>
     <div class="sec">
       <div class="stg tw" style="margin-bottom:.75rem">❄️ Winter 2026 — Regulars</div>
       <div class="card">
@@ -428,8 +453,15 @@
   <!-- CHEMISTRY -->
   <div id="page-chemistry" class="page">
 
-    <div class="sec">
-      <div class="sl">Player chemistry</div>
+    <div style="margin-bottom:1.5rem">
+      <div class="sl-lg">Most frequent duos</div>
+      <div class="card" id="duos"></div>
+    </div>
+
+    <hr class="rule">
+
+    <div style="margin-bottom:1.5rem">
+      <div class="sl-lg">Player chemistry</div>
       <div class="card">
         <select class="nts" id="chemSel" onchange="showChemistry(this.value)">
           <option value="">— Select a player —</option>
@@ -443,8 +475,10 @@
       </div>
     </div>
 
-    <div class="sec">
-      <div class="sl">Duo lookup</div>
+    <hr class="rule">
+
+    <div style="margin-bottom:1.5rem">
+      <div class="sl-lg">Duo lookup</div>
       <div class="card">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:.75rem">
           <select class="nts" id="duoA" onchange="showDuo()" style="margin-bottom:0">
@@ -458,8 +492,10 @@
       </div>
     </div>
 
-    <div class="sec">
-      <div class="sl">Partner diversity — regulars</div>
+    <hr class="rule">
+
+    <div style="margin-bottom:1.5rem">
+      <div class="sl-lg">Partner diversity — regulars</div>
       <div class="card" id="connLb"></div>
     </div>
 
@@ -483,6 +519,10 @@
     <div class="sec">
       <div class="stg ts" style="margin-bottom:.75rem">☀️ Summer 2026 <span style="font-weight:400;font-size:10px">· New regulars roster TBD</span></div>
       <div class="card" id="schs"></div>
+    </div>
+    <div class="sec">
+      <div class="sl">Theme timeline — Winter 2026</div>
+      <div class="card"><div class="tl" id="tl"></div></div>
     </div>
   </div>
 
@@ -938,6 +978,51 @@ function rCalDet(key) {
   det.innerHTML = `<div class="card"><div style="font-size:13px;font-weight:600;margin-bottom:4px">Session ${w.n} · ${w.date} · Theme: ${w.theme}</div>${pending?'':`<div style="font-size:12px;color:var(--text2);margin-bottom:8px">${w.reg}/24 regulars</div>`}${th}<div style="margin-top:8px">${yth(w.n)}</div></div>`;
 }
 
+function rAttGrid() {
+  const el = document.getElementById('attGrid');
+  const played = WEEKS.filter(w => w.teams.length > 0);
+  const att = {};
+  REGULARS.forEach(r => { att[r.n] = new Set(); });
+  played.forEach(w => w.teams.forEach(t => t.p.forEach(p => {
+    if (att[p.n] !== undefined) att[p.n].add(w.n);
+  })));
+
+  // header row
+  let html = `<div style="display:flex;align-items:center;gap:3px;margin-bottom:5px">
+    <div style="width:90px;flex-shrink:0"></div>`;
+  played.forEach(w => {
+    html += `<div style="width:18px;text-align:center;font-size:9px;font-weight:700;color:var(--text3)">${w.n}</div>`;
+  });
+  html += `</div>`;
+
+  // player rows
+  REGULARS.forEach(r => {
+    const safe = r.n.replace(/'/g, "\\'");
+    html += `<div style="display:flex;align-items:center;gap:3px;margin-bottom:3px">
+      <button class="player-link nm-${r.g}" style="width:90px;flex-shrink:0;text-align:right;padding-right:8px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" onclick="showProfile('${safe}')">${r.n}</button>`;
+    played.forEach(w => {
+      const on = att[r.n].has(w.n);
+      const cls = on ? (r.g === 'f' ? 'on-f' : 'on-m') : 'off';
+      html += `<div class="att-dot ${cls}" title="Wk ${w.n} ${w.date}: ${on ? 'Attended' : 'Absent'}"></div>`;
+    });
+    html += `<span style="font-size:10px;color:var(--text3);margin-left:6px;flex-shrink:0">${r.att}/13</span></div>`;
+  });
+  el.innerHTML = html;
+}
+
+function rStreaks() {
+  const el = document.getElementById('streakStrip');
+  const hot = REGULARS.filter(r => r.streak >= 5).sort((a, b) => b.streak - a.streak);
+  el.innerHTML = hot.map(r => `
+    <div class="streak-card">
+      <div class="av av${r.g}" style="width:26px;height:26px;font-size:9px">${r.n.substring(0,2).toUpperCase()}</div>
+      <div>
+        <div class="streak-name">${r.n}</div>
+        <div class="streak-sub">${r.streak} game streak${r.streak === 13 ? ' · perfect!' : ''}</div>
+      </div>
+    </div>`).join('');
+}
+
 function fillSelects() {
   const women = ['Anita','Audrey','Barbara','Julie','Nat','Sophie','Trang'];
   const men = ['Anthony W.','Daniel','Emad','Erik','Joey','John','Jose',
@@ -986,12 +1071,28 @@ function showDuo() {
     return ns.includes(a) && ns.includes(b);
   }));
   if (!weeks.length) {
-    el.innerHTML = `<div style="font-size:13px;color:var(--text3);font-style:italic">${a} and ${b} have never been on the same team.</div>`;
+    el.innerHTML = `<div style="font-size:13px;color:var(--text3);font-style:italic;padding:4px 0">${a} and ${b} have never been on the same team.</div>`;
   } else {
-    const rows = weeks.map(w =>
-      `<div style="font-size:12px;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border)">Week ${w.n} · ${w.date} · ${w.theme}</div>`
-    ).join('');
-    el.innerHTML = `<div style="font-size:13px;font-weight:600;margin-bottom:8px">${a} &amp; ${b} — ${weeks.length} session${weeks.length>1?'s':''} together</div>${rows}`;
+    const summary = `
+      <div style="display:flex;align-items:center;gap:14px;padding:10px 0 14px;border-bottom:1px solid var(--border);margin-bottom:12px">
+        <div style="font-size:38px;font-weight:700;line-height:1;color:var(--text)">${weeks.length}</div>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--text)">${a} &amp; ${b}</div>
+          <div style="font-size:12px;color:var(--text3);margin-top:2px">session${weeks.length>1?'s':''} on the same team</div>
+        </div>
+      </div>`;
+    const rows = weeks.map(w => {
+      const color = THEMES.find(t => t.n === w.n)?.color || 'var(--text3)';
+      const team = w.teams.find(t => { const ns = t.p.map(p => p.n); return ns.includes(a) && ns.includes(b); })?.name || '';
+      return `<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div style="width:32px;height:32px;border-radius:50%;background:${color}22;color:${color};font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${w.n}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;color:var(--text);font-weight:500">${w.theme}</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:1px">${w.date}${team ? ' · Team: ' + team : ''}</div>
+        </div>
+      </div>`;
+    }).join('');
+    el.innerHTML = summary + rows;
   }
 }
 
@@ -1046,7 +1147,7 @@ function toggleTheme() {
 }
 
 // Init
-rDuos(); rThemes(); rLb(); rSubs(); rWeeks(); rSched(); rCal(); fillSelects(); rConnLb();
+rDuos(); rThemes(); rLb(); rSubs(); rWeeks(); rSched(); rCal(); fillSelects(); rConnLb(); rAttGrid(); rStreaks();
 (function(){
   const saved = localStorage.getItem('vb-theme') ||
     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
