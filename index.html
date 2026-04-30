@@ -282,7 +282,8 @@
 
     /* ── Theme timeline ───────────────────────────────────────────── */
     .tl  { display: flex; flex-direction: column; gap: 6px; }
-    .tlr { display: flex; align-items: center; gap: 10px; }
+    .tlr { display: flex; align-items: center; gap: 10px; border-radius: var(--radius-sm); padding: 3px 4px; margin: 0 -4px; cursor: pointer; transition: background .15s; }
+    .tlr:hover { background: var(--bg2); }
     .tln { font-size: 11px; color: var(--text3); width: 16px; text-align: right; flex-shrink: 0; }
     .tld { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
     .tlc { height: 2px; flex: 1; background: var(--border); }
@@ -366,188 +367,282 @@
     <button class="nb" onclick="showPage('chemistry',this)">Chemistry</button>
     <button class="nb" onclick="showPage('history',this)">Team history</button>
     <button class="nb" onclick="showPage('schedule',this)">Schedule</button>
-    <button class="nb" onclick="showPage('calendar',this)">Calendar</button>
   </div>
 
   <!-- OVERVIEW -->
   <div id="page-overview" class="page active">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem">
-      <span class="stg tw">❄️ Winter 2026</span>
-      <span style="font-size:12px;color:var(--text3)">January – May 10 · 13 of 15 Sundays completed</span>
+    <div class="tr" style="margin-bottom:1.25rem">
+      <button class="tb active" onclick="showSeasonPanel('ov','winter',this)">❄️ Winter 2026</button>
+      <button class="tb" onclick="showSeasonPanel('ov','summer',this)">☀️ Summer 2026</button>
     </div>
-    <div class="card" style="margin-bottom:1.5rem">
-      <div class="mg" style="margin-bottom:1rem">
-        <div class="met" style="border-top-color:var(--bar-m)"><div class="mv" style="color:var(--bar-m)">13</div><div class="ml">Sundays played</div></div>
-        <div class="met" style="border-top-color:var(--border2)"><div class="mv">2</div><div class="ml">Sundays left</div></div>
-        <div class="met" style="border-top-color:var(--fire)"><div class="mv" style="color:var(--fire)">4</div><div class="ml">Perfect attendance</div></div>
-        <div class="met" style="border-top-color:var(--bar-m)"><div class="mv">24</div><div class="ml">Regulars this season</div></div>
+    <div id="ov-winter">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem">
+        <span class="stg tw">❄️ Winter 2026</span>
+        <span style="font-size:12px;color:var(--text3)">January – May 10 · 13 of 15 Sundays completed</span>
       </div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px"><span>Week 13 of 15</span><span>87%</span></div>
-      <div class="pw"><div class="pf" style="width:87%"></div></div>
-      <div style="font-size:12px;color:var(--text3);margin-top:6px">2 Sundays left (May 3 &amp; May 10) — Jose, Kevin H., Julie &amp; John can still finish perfect 🔥</div>
-    </div>
-    <div class="sec">
-      <div class="sl">Attendance — all 13 sessions</div>
-      <div class="card">
-        <div class="att-wrap" id="attGrid"></div>
-        <div style="display:flex;gap:14px;margin-top:10px;font-size:11px;color:var(--text2);flex-wrap:wrap">
-          <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bar-m);vertical-align:middle;margin-right:4px"></span>Men</span>
-          <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bar-f);vertical-align:middle;margin-right:4px"></span>Women</span>
-          <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bg3);vertical-align:middle;margin-right:4px"></span>Absent</span>
+      <div class="card" style="margin-bottom:1.5rem">
+        <div class="mg" style="margin-bottom:1rem">
+          <div class="met" style="border-top-color:var(--bar-m)"><div class="mv" style="color:var(--bar-m)">13</div><div class="ml">Sundays played</div></div>
+          <div class="met" style="border-top-color:var(--border2)"><div class="mv">2</div><div class="ml">Sundays left</div></div>
+          <div class="met" style="border-top-color:var(--fire)"><div class="mv" style="color:var(--fire)">4</div><div class="ml">Perfect attendance</div></div>
+          <div class="met" style="border-top-color:var(--bar-m)"><div class="mv">24</div><div class="ml">Regulars this season</div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px"><span>Week 13 of 15</span><span>87%</span></div>
+        <div class="pw"><div class="pf" style="width:87%"></div></div>
+        <div style="font-size:12px;color:var(--text3);margin-top:6px">2 Sundays left (May 3 &amp; May 10) — Jose, Kevin H., Julie &amp; John can still finish perfect 🔥</div>
+      </div>
+      <div class="sec">
+        <div class="sl">Attendance — all 13 sessions</div>
+        <div class="card">
+          <div class="att-wrap" id="attGrid"></div>
+          <div style="display:flex;gap:14px;margin-top:10px;font-size:11px;color:var(--text2);flex-wrap:wrap">
+            <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bar-m);vertical-align:middle;margin-right:4px"></span>Men</span>
+            <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bar-f);vertical-align:middle;margin-right:4px"></span>Women</span>
+            <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bg3);vertical-align:middle;margin-right:4px"></span>Absent</span>
+          </div>
+        </div>
+      </div>
+      <div class="sec">
+        <div class="sl">Active streaks</div>
+        <div id="streakStrip"></div>
+      </div>
+      <div class="sec">
+        <div class="sl">Fun facts</div>
+        <div class="card">
+          <div class="ff"><span class="fi">🔥</span>Jose, Kevin H., Julie &amp; John haven't missed a single Sunday — 13 for 13 with 2 left to go.</div>
+          <div class="ff"><span class="fi">📈</span>Emad and Trang are both on a 10-game active streak — the longest in the group right now.</div>
+          <div class="ff"><span class="fi">🤝</span>5 duos tied at 6 times together: Jose &amp; Julie, Julie &amp; Kevin H., Barbara &amp; Kevin H., Jose &amp; Sophie, and Emad &amp; Trang.</div>
+          <div class="ff"><span class="fi">🏠</span>A full house (all 24 regulars) has never happened. Best was 22/24, achieved 3 times this season.</div>
+          <div class="ff" style="margin-bottom:0"><span class="fi">🎨</span>13 themes so far — season finale themes still to come on May 3 &amp; May 10!</div>
         </div>
       </div>
     </div>
-    <div class="sec">
-      <div class="sl">Active streaks</div>
-      <div id="streakStrip"></div>
-    </div>
-    <div class="sec">
-      <div class="sl">Fun facts</div>
-      <div class="ff"><span class="fi">🔥</span>Jose, Kevin H., Julie &amp; John haven't missed a single Sunday — 13 for 13 with 2 left to go.</div>
-      <div class="ff"><span class="fi">📈</span>Emad and Trang are both on a 10-game active streak — the longest in the group right now.</div>
-      <div class="ff"><span class="fi">🤝</span>5 duos tied at 6 times together: Jose &amp; Julie, Julie &amp; Kevin H., Barbara &amp; Kevin H., Jose &amp; Sophie, and Emad &amp; Trang.</div>
-      <div class="ff"><span class="fi">🏠</span>A full house (all 24 regulars) has never happened. Best was 22/24, achieved 3 times this season.</div>
-      <div class="ff"><span class="fi">🎨</span>13 themes so far — season finale themes still to come on May 3 &amp; May 10!</div>
+    <div id="ov-summer" style="display:none">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem">
+        <span class="stg ts">☀️ Summer 2026</span>
+        <span style="font-size:12px;color:var(--text3)">May 17 – August 16 · 11 Sundays</span>
+      </div>
+      <div class="card" style="text-align:center;padding:2.5rem 1rem">
+        <div style="font-size:32px;margin-bottom:10px">☀️</div>
+        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px">Season starts May 17</div>
+        <div style="font-size:13px;color:var(--text3)">Stats and attendance will appear here once the season begins · 24 regulars registered</div>
+      </div>
     </div>
   </div>
 
   <!-- LEADERBOARD -->
   <div id="page-leaderboard" class="page">
-    <div class="sec">
-      <div class="sl">Group makeup</div>
-      <div class="two" style="margin-bottom:0">
+    <div class="tr" style="margin-bottom:1.25rem">
+      <button class="tb active" onclick="showSeasonPanel('lb','winter',this)">❄️ Winter 2026</button>
+      <button class="tb" onclick="showSeasonPanel('lb','summer',this)">☀️ Summer 2026</button>
+    </div>
+
+    <!-- Winter panel -->
+    <div id="lb-winter">
+      <div class="sec">
+        <div class="sl">Group makeup</div>
+        <div class="two" style="margin-bottom:0">
+          <div class="card">
+            <div style="margin-bottom:12px">
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--blue);margin-bottom:4px"><span>Men</span><span>18 regulars</span></div>
+              <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:75%;height:7px;border-radius:4px;background:var(--bar-m)"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--pink);margin-bottom:4px"><span>Women</span><span>6 regulars</span></div>
+              <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:25%;height:7px;border-radius:4px;background:var(--bar-f)"></div></div>
+            </div>
+          </div>
+          <div class="card" style="display:flex;align-items:center;justify-content:center;gap:24px">
+            <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--bar-m)">75%</div><div style="font-size:12px;color:var(--text2)">Male</div></div>
+            <div style="width:1px;height:40px;background:var(--border)"></div>
+            <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--bar-f)">25%</div><div style="font-size:12px;color:var(--text2)">Female</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="sec">
+        <div class="stg tw" style="margin-bottom:.75rem">❄️ Winter 2026 — Regulars</div>
         <div class="card">
-          <div style="margin-bottom:12px">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--blue);margin-bottom:4px"><span>Men</span><span>18 regulars</span></div>
-            <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:75%;height:7px;border-radius:4px;background:var(--bar-m)"></div></div>
+          <div class="tr">
+            <button class="tb active" onclick="showTab(this,'all')">All</button>
+            <button class="tb" onclick="showTab(this,'m')">Men</button>
+            <button class="tb" onclick="showTab(this,'f')">Women</button>
           </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--pink);margin-bottom:4px"><span>Women</span><span>6 regulars</span></div>
-            <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:25%;height:7px;border-radius:4px;background:var(--bar-f)"></div></div>
-          </div>
-        </div>
-        <div class="card" style="display:flex;align-items:center;justify-content:center;gap:24px">
-          <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--bar-m)">75%</div><div style="font-size:12px;color:var(--text2)">Male</div></div>
-          <div style="width:1px;height:40px;background:var(--border)"></div>
-          <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--bar-f)">25%</div><div style="font-size:12px;color:var(--text2)">Female</div></div>
+          <div id="lb"></div>
         </div>
       </div>
-    </div>
-    <div class="sec">
-      <div class="stg tw" style="margin-bottom:.75rem">❄️ Winter 2026 — Regulars</div>
-      <div class="card">
-        <div class="tr">
-          <button class="tb active" onclick="showTab(this,'all')">All</button>
-          <button class="tb" onclick="showTab(this,'m')">Men</button>
-          <button class="tb" onclick="showTab(this,'f')">Women</button>
-        </div>
-        <div id="lb"></div>
+      <div class="sec">
+        <div class="sl">Subs — appeared this season</div>
+        <div class="card" id="sublb"></div>
       </div>
     </div>
-    <div class="sec">
-      <div class="sl">Subs — appeared this season</div>
-      <div class="card" id="sublb"></div>
+
+    <!-- Summer panel -->
+    <div id="lb-summer" style="display:none">
+      <div class="sec">
+        <div class="sl">Group makeup</div>
+        <div class="two" style="margin-bottom:0">
+          <div class="card">
+            <div style="margin-bottom:12px">
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--blue);margin-bottom:4px"><span>Men</span><span>18 regulars</span></div>
+              <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:75%;height:7px;border-radius:4px;background:var(--bar-m)"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--pink);margin-bottom:4px"><span>Women</span><span>6 regulars</span></div>
+              <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:25%;height:7px;border-radius:4px;background:var(--bar-f)"></div></div>
+            </div>
+          </div>
+          <div class="card" style="display:flex;align-items:center;justify-content:center;gap:24px">
+            <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--bar-m)">75%</div><div style="font-size:12px;color:var(--text2)">Male</div></div>
+            <div style="width:1px;height:40px;background:var(--border)"></div>
+            <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--bar-f)">25%</div><div style="font-size:12px;color:var(--text2)">Female</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="sec">
+        <div class="stg ts" style="margin-bottom:.75rem">☀️ Summer 2026 — Regulars</div>
+        <div class="card">
+          <div style="font-size:12px;color:var(--text3);margin-bottom:.85rem">Season starts May 17 · 11 Sundays · Stats available once the season begins</div>
+          <div class="tr">
+            <button class="tb active" onclick="showTab(this,'all','slb')">All</button>
+            <button class="tb" onclick="showTab(this,'m','slb')">Men</button>
+            <button class="tb" onclick="showTab(this,'f','slb')">Women</button>
+          </div>
+          <div id="slb"></div>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- CHEMISTRY -->
   <div id="page-chemistry" class="page">
-
-    <div style="margin-bottom:1.5rem">
-      <div class="sl-lg">Most frequent duos</div>
-      <div class="card" id="duos"></div>
+    <div class="tr" style="margin-bottom:1.25rem">
+      <button class="tb active" onclick="showSeasonPanel('chem','winter',this)">❄️ Winter 2026</button>
+      <button class="tb" onclick="showSeasonPanel('chem','summer',this)">☀️ Summer 2026</button>
     </div>
+    <div id="chem-winter">
+      <div style="margin-bottom:1.5rem">
+        <div class="sl-lg">Most frequent duos</div>
+        <div class="card" id="duos"></div>
+      </div>
 
-    <hr class="rule">
+      <hr class="rule">
 
-    <div style="margin-bottom:1.5rem">
-      <div class="sl-lg">Player chemistry</div>
-      <div class="card">
-        <select class="nts" id="chemSel" onchange="showChemistry(this.value)">
-          <option value="">— Select a player —</option>
-        </select>
-        <div id="chemRes" style="display:none">
-          <div class="sl" style="margin-top:.85rem">Most frequent partners</div>
-          <div id="chemPartners"></div>
-          <div class="sl" style="margin-top:1rem">Never played together</div>
-          <div class="ntr" id="chemNever" style="padding:.5rem 0 0"></div>
+      <div style="margin-bottom:1.5rem">
+        <div class="sl-lg">Player chemistry</div>
+        <div class="card">
+          <select class="nts" id="chemSel" onchange="showChemistry(this.value)">
+            <option value="">— Select a player —</option>
+          </select>
+          <div id="chemRes" style="display:none">
+            <div class="sl" style="margin-top:.85rem">Most frequent partners</div>
+            <div id="chemPartners"></div>
+            <div class="sl" style="margin-top:1rem">Never played together</div>
+            <div class="ntr" id="chemNever" style="padding:.5rem 0 0"></div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <hr class="rule">
+      <hr class="rule">
 
-    <div style="margin-bottom:1.5rem">
-      <div class="sl-lg">Duo lookup</div>
-      <div class="card">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:.75rem">
-          <select class="nts" id="duoA" onchange="showDuo()" style="margin-bottom:0">
-            <option value="">— Player A —</option>
-          </select>
-          <select class="nts" id="duoB" onchange="showDuo()" style="margin-bottom:0">
-            <option value="">— Player B —</option>
-          </select>
+      <div style="margin-bottom:1.5rem">
+        <div class="sl-lg">Duo lookup</div>
+        <div class="card">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:.75rem">
+            <select class="nts" id="duoA" onchange="showDuo()" style="margin-bottom:0">
+              <option value="">— Player A —</option>
+            </select>
+            <select class="nts" id="duoB" onchange="showDuo()" style="margin-bottom:0">
+              <option value="">— Player B —</option>
+            </select>
+          </div>
+          <div id="duoRes"></div>
         </div>
-        <div id="duoRes"></div>
+      </div>
+
+      <hr class="rule">
+
+      <div style="margin-bottom:1.5rem">
+        <div class="sl-lg">Partner diversity — regulars</div>
+        <div class="card" id="connLb"></div>
       </div>
     </div>
-
-    <hr class="rule">
-
-    <div style="margin-bottom:1.5rem">
-      <div class="sl-lg">Partner diversity — regulars</div>
-      <div class="card" id="connLb"></div>
+    <div id="chem-summer" style="display:none">
+      <div class="card" style="text-align:center;padding:2.5rem 1rem">
+        <div style="font-size:32px;margin-bottom:10px">☀️</div>
+        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px">Season starts May 17</div>
+        <div style="font-size:13px;color:var(--text3)">Chemistry and duo stats will appear here once the season begins</div>
+      </div>
     </div>
-
   </div>
 
   <!-- HISTORY -->
   <div id="page-history" class="page">
-    <div class="leg">
-      <span><span class="ld" style="background:var(--blue)"></span>Male</span>
-      <span><span class="ld" style="background:var(--pink)"></span>Female</span>
+    <div class="tr" style="margin-bottom:1.25rem">
+      <button class="tb active" onclick="showSeasonPanel('hist','winter',this)">❄️ Winter 2026</button>
+      <button class="tb" onclick="showSeasonPanel('hist','summer',this)">☀️ Summer 2026</button>
     </div>
-    <div id="weeks"></div>
-  </div>
-
-  <!-- SCHEDULE -->
-  <div id="page-schedule" class="page">
-    <div class="sec">
-      <div class="stg tw" style="margin-bottom:.75rem">❄️ Winter 2026</div>
-      <div class="card" id="schw"></div>
-    </div>
-    <div class="sec">
-      <div class="stg ts" style="margin-bottom:.75rem">☀️ Summer 2026 <span style="font-weight:400;font-size:10px">· New regulars roster TBD</span></div>
-      <div class="card" id="schs"></div>
-    </div>
-    <div class="sec">
-      <div class="sl">Theme timeline — Winter 2026</div>
-      <div class="card"><div class="tl" id="tl"></div></div>
-    </div>
-  </div>
-
-  <!-- CALENDAR -->
-  <div id="page-calendar" class="page">
-    <div class="sec">
-      <div class="cn">
-        <button onclick="prevM()">‹</button>
-        <span class="ct" id="calt"></span>
-        <button onclick="nextM()">›</button>
+    <div id="hist-winter">
+      <div class="sec">
+        <div class="sl">Theme timeline — click to jump to session</div>
+        <div class="card"><div class="tl" id="tl"></div></div>
       </div>
-      <div class="card">
-        <div class="cg" id="calg"></div>
-        <div class="cl">
-          <span><span class="cb" style="background:var(--blue-bg)"></span>Volleyball (Winter)</span>
-          <span><span class="cb" style="background:#FFF3CD"></span>Volleyball (Summer)</span>
-          <span><span class="cb" style="background:var(--bg2)"></span>Off / no game</span>
+      <div class="leg">
+        <span><span class="ld" style="background:var(--blue)"></span>Male</span>
+        <span><span class="ld" style="background:var(--pink)"></span>Female</span>
+      </div>
+      <div id="weeks"></div>
+    </div>
+    <div id="hist-summer" style="display:none">
+      <div class="card" style="text-align:center;padding:2.5rem 1rem">
+        <div style="font-size:32px;margin-bottom:10px">☀️</div>
+        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px">Season starts May 17</div>
+        <div style="font-size:13px;color:var(--text3)">Team lineups will appear here after each session</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHEDULE + CALENDAR -->
+  <div id="page-schedule" class="page">
+    <div class="tr" style="margin-bottom:1.25rem">
+      <button class="tb" onclick="showSchedView('calendar',this)">📅 Calendar</button>
+      <button class="tb active" onclick="showSchedView('list',this)">📋 List</button>
+    </div>
+
+    <!-- Calendar view -->
+    <div id="sv-calendar" style="display:none">
+      <div class="sec">
+        <div class="cn">
+          <button onclick="prevM()">‹</button>
+          <span class="ct" id="calt"></span>
+          <button onclick="nextM()">›</button>
+        </div>
+        <div class="card">
+          <div class="cg" id="calg"></div>
+          <div class="cl">
+            <span><span class="cb" style="background:var(--blue-bg)"></span>Volleyball (Winter)</span>
+            <span><span class="cb" style="background:#FFF3CD"></span>Volleyball (Summer)</span>
+            <span><span class="cb" style="background:var(--bg2)"></span>Off / no game</span>
+          </div>
         </div>
       </div>
+      <div id="caldet" style="display:none;margin-top:8px"></div>
     </div>
-    <div id="caldet" style="display:none;margin-top:8px"></div>
+
+    <!-- List view -->
+    <div id="sv-list">
+      <div class="sec">
+        <div class="stg tw" style="margin-bottom:.75rem">❄️ Winter 2026</div>
+        <div class="card" id="schw"></div>
+      </div>
+      <div class="sec">
+        <div class="stg ts" style="margin-bottom:.75rem">☀️ Summer 2026 <span style="font-weight:400;font-size:10px">· 24 regulars</span></div>
+        <div class="card" id="schs"></div>
+      </div>
+    </div>
   </div>
 
   <div class="footer">
-    Videos on <a href="https://www.youtube.com/@James.v" target="_blank">@James.v</a> &nbsp;·&nbsp; Winter 2026 Season
+    Videos on <a href="https://www.youtube.com/@James.v" target="_blank">@James.v</a> &nbsp;·&nbsp; Winter 2026 Season &nbsp;·&nbsp; Organized on <img src="https://www.google.com/s2/favicons?domain=spond.com&sz=32" alt="Spond" style="width:14px;height:14px;vertical-align:middle;margin-right:2px"><span style="color:#00C950;font-weight:600">Spond</span>
   </div>
 
 </div><!-- /shell -->
@@ -568,7 +663,9 @@ const GM = {
   Domenico:'m', James:'m', 'Ke-Nam':'m', 'Kevin L.':'m', Lilian:'f', Malak:'f',
   Melanie:'f', Nadim:'m', Olivier:'m', Raks:'m', Steven:'m', William:'m', Winnie:'f',
   // One-off subs
-  Bernard:'m', Bernie:'m', Dom:'m', Jimmy:'m', Nicky:'m', Phillipe:'m', Sam:'m'
+  Bernard:'m', Bernie:'m', Dom:'m', Jimmy:'m', Nicky:'m', Phillipe:'m', Sam:'m',
+  // Summer 2026 new regulars
+  'Xuan-Mai':'f', Samuel:'m'
 };
 
 // Attendance counts (out of 13 played sessions)
@@ -597,6 +694,17 @@ const REGULARS = [
   {n:'Siu',         g:'m', att:8,  streak:0},
   {n:'Nat',         g:'f', att:7,  streak:3},
   {n:'Karim-Etienne',g:'m',att:7,  streak:2},
+];
+
+const SUMMER_REGULARS = [
+  {n:'Sophie',     g:'f'}, {n:'Mark',       g:'m'}, {n:'Julie',      g:'f'},
+  {n:'Jose',       g:'m'}, {n:'Rigil',      g:'m'}, {n:'Emad',       g:'m'},
+  {n:'Patricio',   g:'m'}, {n:'Nat',        g:'f'}, {n:'John',       g:'m'},
+  {n:'Bernie',     g:'m'}, {n:'Anita',      g:'f'}, {n:'Michel',     g:'m'},
+  {n:'Kevin H.',   g:'m'}, {n:'Anthony W.', g:'m'}, {n:'Daniel',     g:'m'},
+  {n:'Steven',     g:'m'}, {n:'Chy',        g:'m'}, {n:'Xuan-Mai',   g:'f'},
+  {n:'James',      g:'m'}, {n:'Kevin L.',   g:'m'}, {n:'Phillipe',   g:'m'},
+  {n:'Alain',      g:'m'}, {n:'Winnie',     g:'f'}, {n:'Samuel',     g:'m'},
 ];
 
 const SUBS = [
@@ -663,7 +771,9 @@ const THEMES = [
 
 // YouTube video URLs — add as:  session_number: 'https://youtube.com/watch?v=XXXXX'
 const YT = {
-  // 1: 'https://youtube.com/watch?v=XXXXX',
+  3: 'https://youtu.be/V_HG8xW1Pes?si=UO_BkNyM2K3HrnOs',
+  4: 'https://youtu.be/N5DObrYZ8HA?si=6i0QITGG0hRxqjWe',
+  5: 'https://youtu.be/IPCLspJVvSE?si=oOfO5t90huX-O8T0',
 };
 
 const WEEKS = [
@@ -857,6 +967,7 @@ function rThemes() {
   THEMES.forEach(t => {
     const r = document.createElement('div'); r.className = 'tlr';
     r.innerHTML = `<span class="tln">${t.n}</span><div style="display:flex;align-items:center;flex:1"><div class="tld" style="background:${t.color}"></div><div class="tlc"></div></div><span class="tlh" style="background:${t.color}22;color:${t.color}">${t.theme}</span><span class="tlt">${t.date}</span>`;
+    r.onclick = () => jumpToWeek(t.n);
     tl.appendChild(r);
   });
 }
@@ -903,7 +1014,7 @@ function rWeeks() {
     const th      = pending
       ? `<div style="font-size:13px;color:var(--text3);padding:8px 0">Not yet played — check back after the session!</div>`
       : `<div class="wts">${w.teams.map(t=>`<div class="tco"><div class="tn">${t.name}</div>${t.p.map(p=>pl(p)).join('')}</div>`).join('')}</div>`;
-    const card = document.createElement('div'); card.className = 'wc';
+    const card = document.createElement('div'); card.className = 'wc'; card.dataset.week = w.n;
     card.innerHTML = `
       <div class="wh" onclick="tw(this.parentElement)">
         <span class="wn">${w.n}</span>
@@ -1096,6 +1207,20 @@ function showDuo() {
   }
 }
 
+function rSummerLb() {
+  const el = document.getElementById('slb');
+  const winterNames = new Set(REGULARS.map(r => r.n));
+  SUMMER_REGULARS.forEach(r => {
+    const isNew = !winterNames.has(r.n);
+    const badge = isNew ? `<span class="bdg" style="background:var(--green-bg);color:var(--green)">new</span>` : '';
+    el.innerHTML += `<div class="pr" data-g="${r.g}">
+      <div class="av av${r.g}">${r.n.substring(0,2).toUpperCase()}</div>
+      <span class="nm nm-${r.g}">${r.n}</span>
+      ${badge}
+    </div>`;
+  });
+}
+
 function rConnLb() {
   const el = document.getElementById('connLb');
   const data = REGULARS.map(r => {
@@ -1129,10 +1254,29 @@ function showPage(id, btn) {
   btn.classList.add('active');
   hideProfile();
 }
-function showTab(btn, g) {
+function jumpToWeek(n) {
+  const card = document.querySelector(`.wc[data-week="${n}"]`);
+  if (!card) return;
+  if (!card.classList.contains('open')) tw(card);
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function showSchedView(view, btn) {
+  btn.closest('.tr').querySelectorAll('.tb').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('sv-calendar').style.display = view === 'calendar' ? 'block' : 'none';
+  document.getElementById('sv-list').style.display = view === 'list' ? 'block' : 'none';
+}
+function showSeasonPanel(prefix, season, btn) {
+  btn.closest('.tr').querySelectorAll('.tb').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(prefix + '-winter').style.display = season === 'winter' ? 'block' : 'none';
+  document.getElementById(prefix + '-summer').style.display = season === 'summer' ? 'block' : 'none';
+}
+function showTab(btn, g, targetId) {
+  const id = targetId || 'lb';
   btn.closest('.card').querySelectorAll('.tb').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('#lb .pr').forEach(r => {
+  document.querySelectorAll(`#${id} .pr`).forEach(r => {
     r.style.display = (g==='all' || r.dataset.g===g) ? 'flex' : 'none';
   });
 }
@@ -1147,7 +1291,7 @@ function toggleTheme() {
 }
 
 // Init
-rDuos(); rThemes(); rLb(); rSubs(); rWeeks(); rSched(); rCal(); fillSelects(); rConnLb(); rAttGrid(); rStreaks();
+rDuos(); rThemes(); rLb(); rSummerLb(); rSubs(); rWeeks(); rSched(); rCal(); fillSelects(); rConnLb(); rAttGrid(); rStreaks();
 (function(){
   const saved = localStorage.getItem('vb-theme') ||
     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
