@@ -115,7 +115,10 @@
 
     /* ── Nav ──────────────────────────────────────────────────────── */
     .nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem;
-           border-bottom: 1px solid var(--border); padding-bottom: .75rem; }
+           border-bottom: 1px solid var(--border); padding: .75rem 1rem .75rem;
+           position: sticky; top: 0; z-index: 100;
+           background: #e4e7ec; margin-left: -1rem; margin-right: -1rem; }
+    [data-theme="dark"] .nav { background: #111113; }
     .nb  { font-size: 13px; padding: 5px 14px; border-radius: 20px;
            border: 1px solid var(--border2); background: transparent;
            color: var(--text2); cursor: pointer; transition: all .15s; }
@@ -147,14 +150,21 @@
             border-radius: var(--radius-lg); padding: 1rem 1.1rem;
             box-shadow: 0 2px 12px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.04); }
     [data-theme="dark"] .card { box-shadow: 0 2px 16px rgba(0,0,0,.3); }
-    .profile-card { margin-bottom: 1.5rem; }
+    .profile-card { position: fixed; top: 0; right: -380px; width: 340px; max-width: 92vw;
+                    height: 100%; overflow-y: auto; z-index: 200; border-radius: 0;
+                    border: none; border-left: 1px solid var(--border);
+                    transition: right .25s cubic-bezier(.4,0,.2,1);
+                    box-shadow: -6px 0 28px rgba(0,0,0,.1); padding: 1.5rem; }
+    .profile-card.open { right: 0; }
+    .profile-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.25);
+                        backdrop-filter: blur(1px); z-index: 199; display: none; }
+    .profile-backdrop.open { display: block; }
     .profile-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 1rem; }
     .profile-name { font-size: 18px; font-weight: 700; color: var(--text); }
     .profile-label { font-size: 11px; text-transform: uppercase; color: var(--text3); margin-bottom: 4px; }
-    .profile-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
-    @media(max-width:580px){ .profile-grid { grid-template-columns: 1fr; } }
+    .profile-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
     .profile-summary { font-size: 13px; color: var(--text); line-height: 1.5; }
-    .profile-close { background: transparent; border: 1px solid var(--border2); border-radius: 999px; width: 34px; height: 34px; color: var(--text3); cursor: pointer; }
+    .profile-close { background: transparent; border: 1px solid var(--border2); border-radius: 999px; width: 34px; height: 34px; color: var(--text3); cursor: pointer; flex-shrink: 0; }
     .profile-close:hover { border-color: var(--blue); color: var(--blue); }
     .player-link { background: none; border: none; padding: 0; margin: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
     .player-link:hover { text-decoration: underline; color: var(--blue); }
@@ -242,11 +252,11 @@
 
     /* ── Fun facts ────────────────────────────────────────────────── */
     .ff  { background: var(--bg2); border-radius: var(--radius-md);
-           padding: .8rem 1rem; margin-bottom: 8px; display: flex;
-           align-items: flex-start; gap: 10px; font-size: 13px;
-           color: var(--text); line-height: 1.5;
+           padding: 1rem 1.1rem; margin-bottom: 10px; display: flex;
+           align-items: flex-start; gap: 12px; font-size: 13px;
+           color: var(--text); line-height: 1.6;
            border-left: 3px solid var(--blue-bg); }
-    .fi  { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+    .fi  { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
 
     /* ── Season tag ───────────────────────────────────────────────── */
     .stg { display: inline-block; font-size: 10px; font-weight: 700;
@@ -273,7 +283,8 @@
     .wn  { font-size: 11px; font-weight: 600; color: var(--text3);
            width: 18px; flex-shrink: 0; }
     .wd  { font-size: 13px; color: var(--text); flex: 1; }
-    .wt  { font-size: 12px; color: var(--text2); }
+    .wt  { font-size: 11px; font-weight: 600; color: var(--blue);
+           background: var(--blue-bg); border-radius: 12px; padding: 2px 9px; flex-shrink: 0; }
     .wi  { font-size: 11px; color: var(--text3); flex-shrink: 0; text-align: right; }
     .wv  { font-size: 11px; color: var(--text3); flex-shrink: 0;
            transition: transform .2s; margin-left: 4px; }
@@ -381,16 +392,12 @@
       <div style="font-size:48px;margin-bottom:.6rem">🏐</div>
       <h1>Sunday Volleyball</h1>
       <p>Supercamp Vanier · Every Sunday 9:00–11:00 AM</p>
-      <div class="hero-stats">
-        <span class="hero-stat"><span id="hc1">0</span> regulars</span>
-        <span class="hero-stat"><span id="hc2">0</span> sessions played</span>
-        <span class="hero-stat"><span id="hc3">0</span> perfect attendance</span>
-      </div>
       <button class="hero-cta" onclick="document.getElementById('app').scrollIntoView({behavior:'smooth'})">View Stats ↓</button>
     </div>
   </div>
 
-  <div id="profileCard" class="card profile-card" style="display:none">
+  <div id="profileBackdrop" class="profile-backdrop" onclick="hideProfile()"></div>
+  <div id="profileCard" class="card profile-card">
     <div class="profile-header">
       <div>
         <div class="sl">Player profile</div>
@@ -404,16 +411,12 @@
         <div id="profileAttendance" class="profile-summary"></div>
       </div>
       <div>
-        <div class="profile-label">Current streak</div>
+        <div class="profile-label">Streak</div>
         <div id="profileStreak" class="profile-summary"></div>
       </div>
       <div>
         <div class="profile-label">Top partner</div>
         <div id="profilePartner" class="profile-summary"></div>
-      </div>
-      <div>
-        <div class="profile-label">Sessions played</div>
-        <div id="profileSessions" class="profile-summary"></div>
       </div>
     </div>
   </div>
@@ -448,24 +451,8 @@
         <div style="font-size:12px;color:var(--text3);margin-top:6px">2 Sundays left (May 3 &amp; May 10) — Jose, Kevin H., Julie &amp; John can still finish perfect 🔥</div>
       </div>
       <div class="sec">
-        <div class="sl">Attendance — 13 played · 2 upcoming</div>
-        <div class="card">
-          <div class="att-wrap" id="attGrid"></div>
-          <div style="display:flex;gap:14px;margin-top:10px;font-size:11px;color:var(--text2);flex-wrap:wrap">
-            <span><span class="leg-dot" style="background:var(--bar-m)"></span>Men</span>
-            <span><span class="leg-dot" style="background:var(--bar-f)"></span>Women</span>
-            <span><span class="leg-dot" style="background:var(--bg3)"></span>Absent</span>
-            <span><span class="leg-dot" style="border:1.5px dashed var(--border2)"></span>Upcoming</span>
-          </div>
-        </div>
-      </div>
-      <div class="sec">
         <div class="sl">Active streaks</div>
         <div id="streakStrip"></div>
-      </div>
-      <div class="sec">
-        <div class="sl">Top subs</div>
-        <div class="card" id="topSubsOv"></div>
       </div>
       <div class="sec">
         <div class="sl">Fun facts</div>
@@ -475,6 +462,18 @@
           <div class="ff"><span class="fi">🤝</span>5 duos tied at 6 times together: Jose &amp; Julie, Julie &amp; Kevin H., Barbara &amp; Kevin H., Jose &amp; Sophie, and Emad &amp; Trang.</div>
           <div class="ff"><span class="fi">🏠</span>A full house (all 24 regulars) has never happened. Best was 22/24, achieved 4 times this season (Jan 11, Feb 15, Feb 22, Mar 1).</div>
           <div class="ff" style="margin-bottom:0"><span class="fi">🎨</span>13 themes so far — season finale themes still to come on May 3 &amp; May 10!</div>
+        </div>
+      </div>
+      <div class="sec">
+        <div class="sl">Attendance — 13 played · 2 upcoming</div>
+        <div class="card">
+          <div class="att-wrap" id="attGrid"></div>
+          <div style="display:flex;gap:14px;margin-top:10px;font-size:11px;color:var(--text2);flex-wrap:wrap">
+            <span><span class="leg-dot" style="background:var(--bar-m)"></span>Men</span>
+            <span><span class="leg-dot" style="background:var(--bar-f)"></span>Women</span>
+            <span><span class="leg-dot" style="background:var(--bg3)"></span>Absent</span>
+            <span><span class="leg-dot" style="border:1.5px dashed var(--border2)"></span>Upcoming</span>
+          </div>
         </div>
       </div>
     </div>
@@ -518,12 +517,12 @@
       <div class="sec">
         <div class="stg tw" style="margin-bottom:.75rem">❄️ Winter 2026 — Regulars</div>
         <div class="card">
+          <input id="lbSearch" type="text" placeholder="Search player…" oninput="applyLbFilters()" style="width:100%;box-sizing:border-box;padding:6px 10px;font-size:13px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);margin-bottom:10px;outline:none">
           <div class="tr">
             <button class="tb active" onclick="showTab(this,'all')">All</button>
             <button class="tb" onclick="showTab(this,'m')">Men</button>
             <button class="tb" onclick="showTab(this,'f')">Women</button>
           </div>
-          <input id="lbSearch" type="text" placeholder="Search player…" oninput="applyLbFilters()" style="width:100%;box-sizing:border-box;padding:6px 10px;font-size:13px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);margin-top:10px;outline:none">
           <div id="lb"></div>
         </div>
       </div>
@@ -578,13 +577,6 @@
     </div>
     <div id="chem-winter">
       <div style="margin-bottom:1.5rem">
-        <div class="sl-lg">Most frequent duos</div>
-        <div class="card" id="duos"></div>
-      </div>
-
-      <hr class="rule">
-
-      <div style="margin-bottom:1.5rem">
         <div class="sl-lg">Player chemistry</div>
         <div class="card">
           <select class="nts" id="chemSel" onchange="showChemistry(this.value)">
@@ -597,6 +589,13 @@
             <div class="ntr" id="chemNever" style="padding:.5rem 0 0"></div>
           </div>
         </div>
+      </div>
+
+      <hr class="rule">
+
+      <div style="margin-bottom:1.5rem">
+        <div class="sl-lg">Most frequent duos</div>
+        <div class="card" id="duos"></div>
       </div>
 
       <hr class="rule">
@@ -978,23 +977,22 @@ function showProfile(name) {
   const topPairs = Object.entries(partnerCounts)
     .sort((a, b) => b[1] - a[1])
     .map(([partner, count]) => `${partner} (${count})`);
-  document.getElementById('profileCard').style.display = 'block';
+  document.getElementById('profileCard').classList.add('open');
+  document.getElementById('profileBackdrop').classList.add('open');
   document.getElementById('profileName').textContent = name;
   document.getElementById('profileAttendance').textContent = regular
-    ? `${player.att}/13 regulars attended`
+    ? `${player.att}/13 sessions`
     : `${player.c} sessions`;
   document.getElementById('profileStreak').textContent = regular
-    ? `${player.streak} ${player.streak === 13 ? '(perfect!)' : 'session' + (player.streak === 1 ? '' : 's')}`
+    ? `${player.streak} ${player.streak === 13 ? '(perfect!)' : 'game' + (player.streak === 1 ? '' : 's')}`
     : 'N/A';
   document.getElementById('profilePartner').textContent = topPairs.length
     ? topPairs.slice(0, 3).join(', ')
-    : 'Partner data not available';
-  document.getElementById('profileSessions').textContent = sessions.length
-    ? `${sessions.length} sessions · ${sessions[0]}${sessions.length > 1 ? ' → ' + sessions[sessions.length - 1] : ''}`
-    : 'No sessions recorded';
+    : 'No data yet';
 }
 function hideProfile() {
-  document.getElementById('profileCard').style.display = 'none';
+  document.getElementById('profileCard').classList.remove('open');
+  document.getElementById('profileBackdrop').classList.remove('open');
 }
 function yth(n) {
   const u = YT[n];
@@ -1418,10 +1416,7 @@ function rSummerEmpty() {
 }
 
 // Init
-rDuos(); rThemes(); rLb(); rSummerLb(); rSubs(); rTopSubs(); rWeeks(); rSched(); rCal(); fillSelects(); rConnLb(); rAttGrid(); rStreaks(); rSummerEmpty();
-countUp('hc1', 24, 200);
-countUp('hc2', 13, 450);
-countUp('hc3', 4,  700);
+rDuos(); rThemes(); rLb(); rSummerLb(); rSubs(); rWeeks(); rSched(); rCal(); fillSelects(); rConnLb(); rAttGrid(); rStreaks(); rSummerEmpty();
 (function(){
   const saved = localStorage.getItem('vb-theme') ||
     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
