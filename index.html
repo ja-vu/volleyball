@@ -975,7 +975,7 @@ function rDuos() {
     .slice(0, 10)
     .forEach(([key, n]) => {
       const [a, b] = key.split('|||');
-      el.innerHTML += `<div class="par"><span class="pn">${a} &amp; ${b}</span><div class="dots">${dots(n,13)}</div><span class="pc">${n}/13</span></div>`;
+      el.innerHTML += `<div class="par"><span class="pn">${a} &amp; ${b}</span><div class="dots">${dots(n,PLAYED_COUNT)}</div><span class="pc">${n}/${PLAYED_COUNT}</span></div>`;
     });
 }
 
