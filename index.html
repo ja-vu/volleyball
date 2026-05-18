@@ -33,7 +33,9 @@
       --info:          #185FA5;
       --radius-sm:     6px;
       --radius-md:     10px;
-      --radius-lg:     14px;
+      --radius-lg:     16px;
+      --accent:        #185FA5;
+      --accent-bg:     #E6F1FB;
     }
     [data-theme="dark"] {
       --bg:       #1c1c1e;
@@ -59,6 +61,8 @@
       --sub:      #9E9D99;
       --info-bg:  #1C3B5A;
       --info:     #5BA8F5;
+      --accent:   #5BA8F5;
+      --accent-bg:#1C3B5A;
     }
     [data-theme="dark"] .avm { background: var(--bar-m); color: #fff; }
     [data-theme="dark"] .avf { background: var(--bar-f); color: #fff; }
@@ -100,7 +104,6 @@
               box-shadow: 0 4px 24px rgba(0,0,0,.45); }
     .header h1 { font-size: 30px; font-weight: 700; color: #fff; letter-spacing: -.3px; }
     .header p  { font-size: 13px; color: rgba(255,255,255,.72); margin-top: 5px; }
-    .hero-stats { display: flex; justify-content: center; gap: 10px; margin-top: 1.25rem; flex-wrap: wrap; }
     .hero-stat  { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
                   border-radius: 20px; padding: 4px 13px; font-size: 12px; color: rgba(255,255,255,.9); }
     .hero-cta   { margin-top: 1.75rem; background: rgba(255,255,255,.15);
@@ -122,9 +125,19 @@
     .nb  { font-size: 13px; padding: 5px 14px; border-radius: 20px;
            border: 1px solid var(--border2); background: transparent;
            color: var(--text2); cursor: pointer; transition: all .15s; }
-    .nb:hover  { border-color: var(--blue); color: var(--blue); }
-    .nb.active { background: var(--blue); color: #fff; border-color: transparent;
+    .nb:hover  { border-color: var(--accent); color: var(--accent); }
+    .nb.active { background: var(--accent); color: #fff; border-color: transparent;
                  box-shadow: 0 2px 8px rgba(24,95,165,.28); }
+    .nb-icon { display: none; font-size: 20px; line-height: 1.1; }
+
+    /* ── Global season toggle ────────────────────────────────────── */
+    .global-season { display: flex; gap: 6px; margin-bottom: 1.25rem; align-items: center; }
+    .gst { font-size: 13px; padding: 6px 16px; border-radius: 20px;
+           border: 1px solid var(--border2); background: transparent;
+           color: var(--text2); cursor: pointer; transition: all .15s; font-weight: 500; }
+    .gst:hover  { border-color: var(--accent); color: var(--accent); }
+    .gst.active { background: var(--accent); color: #fff; border-color: transparent;
+                  box-shadow: 0 2px 8px rgba(24,95,165,.22); }
 
     /* ── Pages ────────────────────────────────────────────────────── */
     .page { display: none; }
@@ -140,16 +153,16 @@
     /* ── Section label ────────────────────────────────────────────── */
     .sl { font-size: 11px; font-weight: 700; letter-spacing: .08em;
           color: var(--text3); text-transform: uppercase; margin-bottom: .6rem;
-          padding-left: 9px; border-left: 3px solid var(--blue); }
+          padding-left: 9px; border-left: 3px solid var(--accent); }
     .sl-lg { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: .75rem;
-             padding-left: 9px; border-left: 3px solid var(--blue); }
+             padding-left: 9px; border-left: 3px solid var(--accent); }
     .rule  { border: none; border-top: 1px solid var(--border2); margin: 0 0 1.5rem; }
 
     /* ── Card ─────────────────────────────────────────────────────── */
     .card { background: var(--bg); border: 1px solid var(--border);
             border-radius: var(--radius-lg); padding: 1rem 1.1rem;
-            box-shadow: 0 2px 12px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.04); }
-    [data-theme="dark"] .card { box-shadow: 0 2px 16px rgba(0,0,0,.3); }
+            box-shadow: 0 4px 20px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.05); }
+    [data-theme="dark"] .card { box-shadow: 0 4px 24px rgba(0,0,0,.35); }
     .profile-card { position: fixed; top: 0; right: -380px; width: 340px; max-width: 92vw;
                     height: 100%; overflow-y: auto; z-index: 200; border-radius: 0;
                     border: none; border-left: 1px solid var(--border);
@@ -167,7 +180,7 @@
     .profile-close { background: transparent; border: 1px solid var(--border2); border-radius: 999px; width: 34px; height: 34px; color: var(--text3); cursor: pointer; flex-shrink: 0; }
     .profile-close:hover { border-color: var(--blue); color: var(--blue); }
     .player-link { background: none; border: none; padding: 0; margin: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
-    .player-link:hover { text-decoration: underline; color: var(--blue); }
+    .player-link:hover { text-decoration: underline; color: var(--accent); }
     .player-link:focus { outline: 2px solid var(--blue); outline-offset: 2px; }
     button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
     input[type="text"]:focus { outline: 2px solid var(--blue); outline-offset: 0; box-shadow: none; }
@@ -175,10 +188,10 @@
     /* ── Metric grid ──────────────────────────────────────────────── */
     .mg { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 1.5rem; }
     @media(max-width:580px){ .mg { grid-template-columns: repeat(2,1fr); } }
-    .met { background: var(--bg2); border-radius: var(--radius-md); padding: .9rem 1rem;
+    .met { background: var(--bg2); border-radius: var(--radius-md); padding: 1rem 1.1rem;
            border-top: 3px solid transparent; box-shadow: inset 0 0 0 1px rgba(0,0,0,.04); }
-    .mv  { font-size: 30px; font-weight: 700; color: var(--text); line-height: 1; }
-    .ml  { font-size: 12px; color: var(--text2); margin-top: 4px; }
+    .mv  { font-size: 40px; font-weight: 700; color: var(--text); line-height: 1; }
+    .ml  { font-size: 12px; color: var(--text2); margin-top: 6px; }
 
     /* ── Attendance heatmap ───────────────────────────────────────── */
     .att-wrap { overflow-x: auto; padding-bottom: 4px; }
@@ -238,8 +251,8 @@
     .tb { font-size: 12px; padding: 5px 12px; border-radius: 20px;
           border: 1px solid var(--border2); background: transparent;
           color: var(--text2); cursor: pointer; transition: all .15s; }
-    .tb:hover { border-color: var(--blue); color: var(--blue); }
-    .tb.active { background: var(--blue); color: #fff; border-color: transparent;
+    .tb:hover { border-color: var(--accent); color: var(--accent); }
+    .tb.active { background: var(--accent); color: #fff; border-color: transparent;
                  box-shadow: 0 2px 6px rgba(24,95,165,.22); }
 
     /* ── Pair rows ────────────────────────────────────────────────── */
@@ -270,8 +283,8 @@
     /* ── Progress bar ─────────────────────────────────────────────── */
     .pw { background: var(--bg2); border-radius: 6px; height: 10px;
           overflow: hidden; margin-bottom: 6px; }
-    .pf { height: 10px; border-radius: 6px;
-          background: linear-gradient(90deg, #378ADD, #5BA8F5); }
+    .pf { height: 10px; border-radius: 6px; background: var(--accent);
+          transition: background .4s ease; }
 
     /* ── Week cards ───────────────────────────────────────────────── */
     .wc  { background: var(--bg); border: 1px solid var(--border);
@@ -377,17 +390,65 @@
     .cb  { width: 12px; height: 12px; border-radius: 3px;
            display: inline-block; margin-right: 4px; vertical-align: middle; }
 
+    /* ── Last session card ───────────────────────────────────────── */
+    .lsc { background: var(--bg); border: 1px solid var(--border);
+           border-radius: var(--radius-lg); padding: 1rem 1.1rem;
+           margin-bottom: 1.5rem;
+           box-shadow: 0 2px 12px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.04); }
+    .lsc-head { display: flex; align-items: center; gap: 8px; margin-bottom: .85rem; }
+    .lsc-title { font-size: 15px; font-weight: 700; color: var(--text); flex: 1; }
+    .lsc-meta  { font-size: 11px; color: var(--text3); }
+    .lsc-row { display: flex; align-items: center; gap: 10px; padding: 5px 0;
+               border-bottom: 1px solid var(--border); }
+    .lsc-row:last-child { border-bottom: none; }
+    .lsc-team { font-size: 13px; font-weight: 600; color: var(--text); width: 110px; flex-shrink: 0;
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lsc-bar-wrap { flex: 1; background: var(--bg3); border-radius: 4px; height: 8px; overflow: hidden; }
+    .lsc-bar-fill { height: 8px; border-radius: 4px; background: var(--green); transition: width .4s ease; }
+    .lsc-rec { font-size: 11px; font-weight: 700; color: var(--text2); width: 36px; text-align: right; flex-shrink: 0; }
+    .lsc-trophy { font-size: 14px; flex-shrink: 0; }
+
+    /* ── Win-rate bar (leaderboard) ──────────────────────────────── */
+    .wr-wrap { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .wr-bar  { width: 72px; background: var(--bg3); border-radius: 4px; height: 6px; overflow: hidden; }
+    .wr-fill { height: 6px; border-radius: 4px; background: var(--green); }
+    .wr-w    { font-size: 11px; font-weight: 700; color: var(--green); min-width: 22px; text-align: right; }
+    .wr-l    { font-size: 11px; font-weight: 700; color: var(--text3); min-width: 18px; }
+
+    /* ── Panel fade-in ───────────────────────────────────────────── */
+    @keyframes panelIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+    .panel-in { animation: panelIn .22s ease; }
+
     /* ── Footer ───────────────────────────────────────────────────── */
     .footer { text-align: center; margin-top: 3rem; font-size: 12px; color: var(--text3); }
     .footer a { color: var(--bar-m); text-decoration: none; }
 
-    /* ── Trend sparkline ─────────────────────────────────────────── */
-    .spk { display: flex; align-items: flex-end; gap: 4px; height: 48px; padding: 0 2px; }
-    .spk-bar { flex: 1; border-radius: 3px 3px 0 0; background: var(--bar-m); min-width: 8px;
-               transition: opacity .15s; cursor: default; position: relative; }
-    .spk-bar:hover { opacity: .75; }
-    .spk-lbl { display: flex; gap: 4px; margin-top: 4px; padding: 0 2px; }
-    .spk-lbl span { flex: 1; text-align: center; font-size: 9px; color: var(--text3); font-weight: 600; min-width: 8px; }
+    /* ── Profile timeline ────────────────────────────────────────── */
+    .ptl { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 4px; }
+    .ptd { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
+    .ptd-m  { background: var(--bar-m); }
+    .ptd-f  { background: var(--bar-f); }
+    .ptd-s  { background: var(--bar-s); opacity: .6; }
+    .ptd-off{ background: var(--bg3); }
+    .ptd-up { background: transparent; border: 1.5px dashed var(--border2); }
+
+    /* ── Next session spotlight ──────────────────────────────────── */
+    .nxt-card { background: linear-gradient(135deg,var(--accent-bg) 0%,var(--bg) 100%);
+                border: 1.5px solid var(--accent); border-radius: var(--radius-lg);
+                padding: 1rem 1.1rem; margin-bottom: 1.25rem;
+                display: flex; align-items: center; gap: 14px;
+                transition: border-color .4s ease, background .4s ease; }
+    .nxt-icon { font-size: 28px; flex-shrink: 0; }
+    .nxt-body { flex: 1; min-width: 0; }
+    .nxt-label{ font-size: 10px; font-weight: 700; text-transform: uppercase;
+                letter-spacing: .08em; color: var(--accent); margin-bottom: 2px;
+                transition: color .4s ease; }
+    .nxt-date { font-size: 15px; font-weight: 700; color: var(--text); }
+    .nxt-meta { font-size: 12px; color: var(--text2); margin-top: 2px; }
+    .nxt-cd   { font-size: 22px; font-weight: 800; color: var(--accent);
+                flex-shrink: 0; text-align: right; line-height: 1;
+                transition: color .4s ease; }
+    .nxt-cd-lbl { font-size: 10px; color: var(--text3); font-weight: 500; }
 
     /* ── Mobile polish ────────────────────────────────────────────── */
     @media(max-width:480px){
@@ -400,9 +461,128 @@
       .profile-grid { grid-template-columns: repeat(2,1fr); }
       .pn { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     }
+
+    /* ── Sidebar ─────────────────────────────────────────────────────── */
+    .sidebar {
+      position: fixed; top: 0; left: 0; bottom: 0; width: 220px;
+      background: linear-gradient(180deg, #0d2d52 0%, #081828 100%);
+      border-right: 1px solid rgba(255,255,255,.07);
+      display: flex; flex-direction: column; z-index: 100;
+      overflow-y: auto; padding: 1.5rem 0 1.5rem;
+    }
+    [data-theme="dark"] .sidebar { background: linear-gradient(180deg, #09192e 0%, #040c18 100%); }
+    .sb-brand { display: flex; align-items: center; gap: 10px;
+                padding: 0 1.25rem 1.25rem;
+                border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: .75rem; }
+    .sb-logo  { font-size: 24px; flex-shrink: 0; }
+    .sb-title { font-size: 12.5px; font-weight: 700; color: rgba(255,255,255,.9);
+                line-height: 1.35; letter-spacing: -.2px; }
+    .sb-subtitle { font-size: 10px; color: rgba(255,255,255,.38); font-weight: 400; margin-top: 1px; }
+    .sb-nav   { display: flex; flex-direction: column; gap: 2px; padding: 0 .65rem; }
+    .sb-btn   { display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+                border-radius: 9px; border: none; background: transparent;
+                color: rgba(255,255,255,.48); font-size: 13px; font-weight: 500;
+                cursor: pointer; text-align: left; width: 100%;
+                transition: background .15s, color .15s; }
+    .sb-btn:hover  { background: rgba(255,255,255,.08); color: rgba(255,255,255,.85); }
+    .sb-btn.active { background: rgba(255,255,255,.13); color: #fff; }
+    .sb-icon  { font-size: 17px; width: 22px; text-align: center; flex-shrink: 0; line-height: 1; }
+    .sb-season { margin: .75rem .65rem 0;
+                 border-top: 1px solid rgba(255,255,255,.08); padding-top: .85rem; }
+    .sb-season-label { font-size: 9px; font-weight: 700; letter-spacing: .12em;
+                       text-transform: uppercase; color: rgba(255,255,255,.28);
+                       padding: 0 .45rem; margin-bottom: .4rem; }
+    .sb-gst   { display: flex; align-items: center; width: 100%; padding: 7px 12px;
+                border-radius: 8px; border: none; background: transparent;
+                color: rgba(255,255,255,.5); font-size: 12px; font-weight: 500;
+                cursor: pointer; transition: background .15s, color .15s;
+                text-align: left; margin-bottom: 2px; }
+    .sb-gst:hover  { background: rgba(255,255,255,.08); color: rgba(255,255,255,.8); }
+    .sb-gst.active { background: var(--accent); color: #fff; }
+    .sb-footer { margin-top: auto; padding: .85rem .65rem 0;
+                 border-top: 1px solid rgba(255,255,255,.08); }
+    .sb-theme  { display: flex; align-items: center; gap: 8px; width: 100%;
+                 padding: 8px 12px; border-radius: 8px; border: none;
+                 background: transparent; color: rgba(255,255,255,.42);
+                 font-size: 12px; font-weight: 500; cursor: pointer;
+                 transition: background .15s, color .15s; text-align: left; }
+    .sb-theme:hover { background: rgba(255,255,255,.08); color: rgba(255,255,255,.75); }
+    .sb-pill   { padding: 0 .5rem .65rem; font-size: 11px; color: rgba(255,255,255,.32);
+                 line-height: 1.5; }
+
+    /* ── Desktop layout (sidebar visible) ───────────────────────────── */
+    @media(min-width:620px) {
+      .shell  { margin-left: 220px; padding: 1.75rem 2rem 4rem; }
+      .header { display: none; }
+      .nav    { display: none !important; }
+      #globalSeason { display: none !important; }
+    }
+    /* ── Mobile layout (sidebar hidden) ─────────────────────────────── */
+    @media(max-width:619px) {
+      .sidebar { display: none; }
+    }
+
+    /* ── Bottom nav on mobile ─────────────────────────────────────── */
+    @media(max-width:540px){
+      .nav {
+        position: fixed; bottom: 0; top: auto;
+        left: 0; right: 0; width: 100%;
+        margin: 0;
+        border-bottom: none;
+        border-top: 1px solid var(--border);
+        background: var(--bg);
+        padding: 4px 2px 10px;
+        justify-content: space-around;
+        gap: 0;
+        flex-wrap: nowrap;
+      }
+      [data-theme="dark"] .nav { background: var(--bg); }
+      .nb {
+        display: flex; flex-direction: column;
+        align-items: center; gap: 2px;
+        font-size: 9px; font-weight: 600;
+        padding: 4px 6px 3px;
+        border: none; border-radius: 10px;
+        flex: 1; color: var(--text3);
+      }
+      .nb:hover { border-color: transparent; color: var(--blue); }
+      .nb.active { background: var(--blue-bg); color: var(--blue); box-shadow: none; border-color: transparent; }
+      .nb-icon { display: block; }
+      .shell { padding-bottom: 5.5rem; }
+      #scrollTopBtn { bottom: 5.5rem; }
+    }
   </style>
 </head>
 <body>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand">
+    <div class="sb-logo">🏐</div>
+    <div>
+      <div class="sb-title">Sunday Volleyball</div>
+      <div class="sb-subtitle">Supercamp Vanier · Sundays</div>
+    </div>
+  </div>
+  <nav class="sb-nav">
+    <button class="sb-btn active" data-page="overview"    onclick="showPage('overview',this)"><span class="sb-icon">📊</span>Overview</button>
+    <button class="sb-btn"        data-page="leaderboard" onclick="showPage('leaderboard',this)"><span class="sb-icon">🏆</span>Standings</button>
+    <button class="sb-btn"        data-page="chemistry"   onclick="showPage('chemistry',this)"><span class="sb-icon">🤝</span>Chemistry</button>
+    <button class="sb-btn"        data-page="history"     onclick="showPage('history',this)"><span class="sb-icon">📅</span>History</button>
+    <button class="sb-btn"        data-page="schedule"    onclick="showPage('schedule',this)"><span class="sb-icon">📆</span>Schedule</button>
+    <button class="sb-btn"        data-page="media"       onclick="showPage('media',this)"><span class="sb-icon">🎬</span>Media</button>
+  </nav>
+  <div class="sb-season" id="sbSeason">
+    <div class="sb-season-label">Season</div>
+    <button class="sb-gst active" id="sbgst-summer" onclick="setGlobalSeason('summer',this)">☀️ Summer 2026</button>
+    <button class="sb-gst"        id="sbgst-winter" onclick="setGlobalSeason('winter',this)">❄️ Winter 2026</button>
+    <button class="sb-gst"        id="sbgst-all"    onclick="setGlobalSeason('all',this)" style="display:none">🏐 All Time</button>
+  </div>
+  <div class="sb-footer">
+    <div id="sbHeaderPill" class="sb-pill"></div>
+    <button class="sb-theme" id="themeBtn-sb" onclick="toggleTheme()"><span id="themeIcon-sb">🌙</span>&nbsp; Dark mode</button>
+  </div>
+</aside>
+
 <div class="shell">
 
   <div class="header">
@@ -411,6 +591,7 @@
       <div style="font-size:48px;margin-bottom:.6rem">🏐</div>
       <h1>Sunday Volleyball</h1>
       <p>Supercamp Vanier · Every Sunday 9:00–11:00 AM</p>
+      <div id="headerSeasonPill" style="margin-top:.85rem"></div>
       <button class="hero-cta" onclick="document.getElementById('app').scrollIntoView({behavior:'smooth'})">View Stats ↓</button>
     </div>
   </div>
@@ -450,23 +631,32 @@
         <div id="profileWL" class="profile-summary"></div>
       </div>
     </div>
+    <div id="profileTimelineWrap" style="margin-top:1rem;display:none">
+      <div id="profileTimelineLabel" class="profile-label" style="margin-bottom:4px"></div>
+      <div id="profileTimeline" class="ptl"></div>
+    </div>
   </div>
 
   <div class="nav" id="app">
-    <button class="nb active" onclick="showPage('overview',this)">Overview</button>
-    <button class="nb" onclick="showPage('leaderboard',this)">Leaderboard</button>
-    <button class="nb" onclick="showPage('chemistry',this)">Chemistry</button>
-    <button class="nb" onclick="showPage('history',this)">Team history</button>
-    <button class="nb" onclick="showPage('schedule',this)">Schedule</button>
+    <button class="nb active" onclick="showPage('overview',this)"><span class="nb-icon">📊</span><span class="nb-lbl">Overview</span></button>
+    <button class="nb" onclick="showPage('leaderboard',this)"><span class="nb-icon">🏆</span><span class="nb-lbl">Standings</span></button>
+    <button class="nb" onclick="showPage('chemistry',this)"><span class="nb-icon">🤝</span><span class="nb-lbl">Chemistry</span></button>
+    <button class="nb" onclick="showPage('history',this)"><span class="nb-icon">📅</span><span class="nb-lbl">History</span></button>
+    <button class="nb" onclick="showPage('schedule',this)"><span class="nb-icon">📆</span><span class="nb-lbl">Schedule</span></button>
+    <button class="nb" onclick="showPage('media',this)"><span class="nb-icon">🎬</span><span class="nb-lbl">Media</span></button>
+  </div>
+
+  <!-- Global season toggle -->
+  <div class="global-season" id="globalSeason">
+    <button class="gst active" id="gst-summer" onclick="setGlobalSeason('summer',this)">☀️ Summer 2026</button>
+    <button class="gst" id="gst-winter" onclick="setGlobalSeason('winter',this)">❄️ Winter 2026</button>
+    <button class="gst" id="gst-all" onclick="setGlobalSeason('all',this)" style="display:none">🏐 All Time</button>
   </div>
 
   <!-- OVERVIEW -->
   <div id="page-overview" class="page active">
-    <select class="season-sel" onchange="showSeasonPanel('ov',this.value)">
-      <option value="summer">☀️ Summer 2026</option>
-      <option value="winter">❄️ Winter 2026</option>
-    </select>
     <div id="ov-winter" style="display:none">
+      <div id="lastSessionWinter"></div>
       <div style="margin-bottom:1rem">
         <span style="font-size:12px;color:var(--text3)">Jan – May 10 · 15 of 15 Sundays</span>
       </div>
@@ -532,13 +722,7 @@
       </div>
       <div class="sec">
         <div class="sl">Fun facts</div>
-        <div class="card">
-          <div class="ff"><span class="fi">🏆</span>Jose, Kevin H. &amp; John finished the season 15 for 15 — perfect attendance! Julie came agonizingly close at 14/15, missing only the finale.</div>
-          <div class="ff"><span class="fi">📈</span>Emad closed the season on a 12-game streak — played every session from Week 4 through the finale without a miss.</div>
-          <div class="ff"><span class="fi">🤝</span>Jose &amp; Julie are the top duo of the season with 7 sessions together — ahead of 4 pairs tied at 6 (Julie &amp; Kevin H., Barbara &amp; Kevin H., Jose &amp; Sophie, Emad &amp; Trang).</div>
-          <div class="ff"><span class="fi">🏠</span>A full house (all 24 regulars) never happened. Best was 22/24, achieved 4 times (Jan 11, Feb 15, Feb 22, Mar 1).</div>
-          <div class="ff" style="margin-bottom:0"><span class="fi">🎨</span>15 weeks, 15 themes — winter season complete! See you at Summer 2026 ☀️</div>
-        </div>
+        <div class="card" id="winterFunFacts"></div>
       </div>
       <div class="sec">
         <div class="sl">Attendance — 15 played · season complete</div>
@@ -555,6 +739,7 @@
       </div>
     </div>
     <div id="ov-summer">
+      <div id="lastSessionSummer"></div>
       <div style="margin-bottom:1rem">
         <span style="font-size:12px;color:var(--text3)">May 17 – Aug 16 · 11 Sundays</span>
       </div>
@@ -595,11 +780,6 @@
 
   <!-- LEADERBOARD -->
   <div id="page-leaderboard" class="page">
-    <select class="season-sel" onchange="showSeasonPanel('lb',this.value)">
-      <option value="summer">☀️ Summer 2026</option>
-      <option value="winter">❄️ Winter 2026</option>
-    </select>
-
     <!-- Winter panel -->
     <div id="lb-winter" style="display:none">
       <div class="sec">
@@ -649,11 +829,6 @@
 
   <!-- CHEMISTRY -->
   <div id="page-chemistry" class="page">
-    <select class="season-sel" onchange="showSeasonPanel('chem',this.value)">
-      <option value="summer">☀️ Summer 2026</option>
-      <option value="winter">❄️ Winter 2026</option>
-      <option value="all">🏐 All Time</option>
-    </select>
     <div id="chem-winter" style="display:none">
       <div style="margin-bottom:1.5rem">
         <div class="sl-lg">Player chemistry</div>
@@ -665,8 +840,13 @@
             <div class="sl" style="margin-top:.85rem">Most frequent partners <span style="font-size:10px;color:var(--text3);font-weight:400">— click any to see sessions</span></div>
             <div id="chemPartners"></div>
             <div id="chemDuoDetail" style="display:none;margin:.5rem 0;border-radius:var(--radius-md);background:var(--bg2);padding:.75rem 1rem"></div>
-            <div class="sl" style="margin-top:1rem">Never played together <span id="chemNeverCount" style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px"></span></div>
-            <div class="ntr" id="chemNever" style="padding:.5rem 0 0"></div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:1rem;margin-bottom:.4rem">
+              <div class="sl" style="margin-bottom:0;flex:1">Never played together</div>
+              <button id="neverBtn" onclick="toggleNeverPlayed()" style="font-size:11px;color:var(--text3);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:3px;padding:0">
+                <span id="chemNeverCount"></span><span id="neverChev" style="transition:transform .2s">▾</span>
+              </button>
+            </div>
+            <div class="ntr" id="chemNever" style="padding:.5rem 0 0;display:none"></div>
           </div>
         </div>
       </div>
@@ -737,10 +917,6 @@
 
   <!-- HISTORY -->
   <div id="page-history" class="page">
-    <select class="season-sel" onchange="showSeasonPanel('hist',this.value)">
-      <option value="summer">☀️ Summer 2026</option>
-      <option value="winter">❄️ Winter 2026</option>
-    </select>
     <div id="hist-winter" style="display:none">
       <div class="leg">
         <span><span class="ld" style="background:var(--blue)"></span>Male</span>
@@ -790,19 +966,34 @@
 
     <!-- List view -->
     <div id="sv-list">
-      <div class="sec">
-        <div class="stg tw" style="margin-bottom:.75rem">❄️ Winter 2026</div>
-        <div class="card" id="schw"></div>
-      </div>
+      <div id="nextSessionSpotlight"></div>
       <div class="sec">
         <div class="stg ts" style="margin-bottom:.75rem">☀️ Summer 2026 <span style="font-weight:400;font-size:10px">· 24 regulars</span></div>
         <div class="card" id="schs"></div>
       </div>
+      <div class="sec">
+        <button onclick="toggleWinterSched(this)" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;gap:6px;margin-bottom:.75rem">
+          <span class="stg tw">❄️ Winter 2026 · Complete</span>
+          <span id="winterSchedChevron" style="font-size:11px;color:var(--text3);transition:transform .2s">▼</span>
+        </button>
+        <div id="schw-wrap" style="display:none"><div class="card" id="schw"></div></div>
+      </div>
     </div>
   </div>
 
+  <!-- MEDIA -->
+  <div id="page-media" class="page">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:8px">
+      <div>
+        <div class="sl-lg" style="margin-bottom:2px">Reels</div>
+        <a href="https://www.instagram.com/jv.vball.clips" target="_blank" style="font-size:12px;color:var(--blue);text-decoration:none">@jv.vball.clips on Instagram ↗</a>
+      </div>
+    </div>
+    <div id="reelsGrid"></div>
+  </div>
+
   <div class="footer">
-    Videos on <a href="https://www.youtube.com/@James.v" target="_blank">@James.v</a> &nbsp;·&nbsp; Organized on &nbsp<img src="https://www.google.com/s2/favicons?domain=spond.com&sz=32" alt="Spond" style="width:14px;height:14px;vertical-align:middle;margin-right:2px"><span style="color:#00C950;font-weight:600">Spond</span>
+    Videos on <a href="https://www.youtube.com/@James.v" target="_blank">@James.v</a> &nbsp;·&nbsp; Reels on <a href="https://www.instagram.com/jv.vball.clips" target="_blank">@jv.vball.clips</a> &nbsp;·&nbsp; Organized on &nbsp<img src="https://www.google.com/s2/favicons?domain=spond.com&sz=32" alt="Spond" style="width:14px;height:14px;vertical-align:middle;margin-right:2px"><span style="color:#00C950;font-weight:600">Spond</span>
   </div>
 
 </div><!-- /shell -->
@@ -880,6 +1071,12 @@ const THEMES = [
 ];
 
 // YouTube video URLs — add as:  session_number: 'https://youtube.com/watch?v=XXXXX'
+// Instagram reels — add { id: 'shortcode', caption: '...', week: N }
+// Shortcode is the last part of the reel URL: instagram.com/reel/SHORTCODE/
+const REELS = [
+  { id: 'DRLwrIwDtRd', caption: 'Sunday pickup at Supercamp Vanier' },
+];
+
 const YT = {
   3: 'https://youtu.be/V_HG8xW1Pes?si=UO_BkNyM2K3HrnOs',
   4: 'https://youtu.be/N5DObrYZ8HA?si=6i0QITGG0hRxqjWe',
@@ -1118,7 +1315,7 @@ function showProfile(name) {
   }));
 
   const partnerCounts = regular ? winterCounts : summerCounts;
-  const topPairs = Object.entries(partnerCounts).sort((a, b) => b[1] - a[1]).map(([p, c]) => `${p} (${c})`);
+  const topPairsData = Object.entries(partnerCounts).sort((a, b) => b[1] - a[1]).slice(0, 3);
   const uniqueCount = Object.keys(partnerCounts).length;
 
   const att       = ATT[name] ?? 0;
@@ -1144,7 +1341,15 @@ function showProfile(name) {
   document.getElementById('profileName').textContent = name;
   document.getElementById('profileAttendance').textContent = attText;
   document.getElementById('profileStreak').textContent = streakText;
-  document.getElementById('profilePartner').textContent = topPairs.length ? topPairs.slice(0, 3).join(', ') : 'No data yet';
+  const partnerEl = document.getElementById('profilePartner');
+  if (topPairsData.length) {
+    partnerEl.innerHTML = topPairsData.map(([p, c]) => {
+      const pg = (GM[p] || 'm') === 'f' ? 'pink' : 'blue';
+      return `<span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;padding:2px 8px;border-radius:20px;margin:2px 2px 0 0;background:var(--${pg}-bg);color:var(--${pg})">${p}<span style="opacity:.6">×${c}</span></span>`;
+    }).join('');
+  } else {
+    partnerEl.innerHTML = '<span style="color:var(--text3);font-style:italic;font-size:12px">No data yet</span>';
+  }
   document.getElementById('profileUnique').textContent = `${uniqueCount} player${uniqueCount !== 1 ? 's' : ''}`;
 
   const neverWrap = document.getElementById('profileNeverWrap');
@@ -1165,6 +1370,43 @@ function showProfile(name) {
     document.getElementById('profileWL').textContent = `${wl.w}W – ${wl.l}L (${pct}%)`;
   } else {
     wlWrap.style.display = 'none';
+  }
+
+  // Attendance timeline dots
+  const tlWrap  = document.getElementById('profileTimelineWrap');
+  const tlLabel = document.getElementById('profileTimelineLabel');
+  const tlEl    = document.getElementById('profileTimeline');
+  const g = (GM[name] || 'm') === 'f' ? 'f' : 'm';
+  const timelines = [];
+  if (regular) {
+    const dots = WINTER_WEEKS.map(w => {
+      const pl = w.teams.flatMap(t => t.p).find(p => p.n === name);
+      if (!pl)      return '<div class="ptd ptd-off" title="Absent"></div>';
+      if (pl.ns)    return '<div class="ptd ptd-off" style="opacity:.3" title="No show"></div>';
+      return `<div class="ptd ptd-${g}" title="${w.date}"></div>`;
+    }).join('');
+    timelines.push({ label: '❄️ Winter', dots });
+  }
+  if (summerReg) {
+    const playedDots = SUMMER_WEEKS.map(w => {
+      const pl = w.teams.flatMap(t => t.p).find(p => p.n === name);
+      if (!pl)   return '<div class="ptd ptd-off" title="Absent"></div>';
+      if (pl.ns) return '<div class="ptd ptd-off" style="opacity:.3" title="No show"></div>';
+      return `<div class="ptd ptd-${g}" title="${w.date}"></div>`;
+    });
+    const upcoming = Array.from({ length: 11 - SUMMER_WEEKS.length },
+      () => '<div class="ptd ptd-up" title="Upcoming"></div>');
+    timelines.push({ label: '☀️ Summer', dots: [...playedDots, ...upcoming].join('') });
+  }
+  if (timelines.length) {
+    tlWrap.style.display = '';
+    tlLabel.textContent = timelines.length > 1 ? 'Attendance timeline' : timelines[0].label + ' attendance';
+    tlEl.innerHTML = timelines.map(tl =>
+      (timelines.length > 1 ? `<div style="font-size:10px;color:var(--text3);margin-bottom:2px;margin-top:6px">${tl.label}</div>` : '')
+      + `<div class="ptl">${tl.dots}</div>`
+    ).join('');
+  } else {
+    tlWrap.style.display = 'none';
   }
 }
 function hideProfile() {
@@ -1265,6 +1507,105 @@ function subRow(s, i, maxC) {
     </div>`;
 }
 
+function rLastSession() {
+  // Summer
+  const sumEl = document.getElementById('lastSessionSummer');
+  if (sumEl && SUMMER_WEEKS.length) {
+    const w = SUMMER_WEEKS[SUMMER_WEEKS.length - 1];
+    const th = THEMES[w.n] || {};
+    const hasResults = w.results && w.results.length;
+    let teamStandings = [];
+    if (hasResults) {
+      const wl = {};
+      w.teams.forEach(t => { wl[t.name] = { w: 0, l: 0 }; });
+      w.results.forEach(r => {
+        if (wl[r.w]) wl[r.w].w++;
+        const loser = r.a === r.w ? r.b : r.a;
+        if (wl[loser]) wl[loser].l++;
+      });
+      teamStandings = Object.entries(wl)
+        .map(([name, rec]) => ({ name, w: rec.w, l: rec.l }))
+        .sort((a, b) => b.w - a.w || a.l - b.l);
+    }
+    const maxWins = teamStandings[0]?.w || 1;
+    sumEl.innerHTML = `<div class="lsc">
+      <div class="lsc-head">
+        <div>
+          <div class="lsc-title">⚡ Last session · ${w.theme}</div>
+          <div class="lsc-meta">Week ${w.n - 15} · ${w.date} · ${w.reg} players</div>
+        </div>
+        <button class="player-link" style="font-size:11px;color:var(--blue);flex-shrink:0" onclick="goToWeek(${w.n})">View →</button>
+      </div>
+      ${hasResults ? teamStandings.map((t, i) => `
+        <div class="lsc-row">
+          <span class="lsc-team">${t.name}</span>
+          <div class="lsc-bar-wrap"><div class="lsc-bar-fill" style="width:${Math.round(t.w/maxWins*100)}%"></div></div>
+          <span class="lsc-rec" style="color:${t.w > t.l ? 'var(--green)' : t.w === t.l ? 'var(--text2)' : 'var(--text3)'}">${t.w}–${t.l}</span>
+          <span class="lsc-trophy">${i === 0 ? '🏆' : ''}</span>
+        </div>`).join('') : `<div style="font-size:12px;color:var(--text3)">
+          ${w.teams.map(t => t.name).join(' · ')}
+        </div>`}
+    </div>`;
+  }
+
+  // Winter
+  const winEl = document.getElementById('lastSessionWinter');
+  if (winEl && WINTER_WEEKS.length) {
+    const w = WINTER_WEEKS[WINTER_WEEKS.length - 1];
+    const th = THEMES[w.n] || {};
+    winEl.innerHTML = `<div class="lsc">
+      <div class="lsc-head">
+        <div>
+          <div class="lsc-title">⚡ Last session · ${w.theme}</div>
+          <div class="lsc-meta">Week ${w.n} · ${w.date} · ${w.reg} players</div>
+        </div>
+        <button class="player-link" style="font-size:11px;color:var(--blue);flex-shrink:0" onclick="goToWeek(${w.n})">View →</button>
+      </div>
+      <div style="font-size:12px;color:var(--text2)">${w.teams.map(t => t.name).join(' · ')}</div>
+    </div>`;
+  }
+}
+
+function setAccentColor(season) {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  if (season === 'summer') {
+    document.documentElement.style.setProperty('--accent',    dark ? '#F5A623' : '#B45309');
+    document.documentElement.style.setProperty('--accent-bg', dark ? '#2E1E08' : '#FEF3C7');
+  } else {
+    document.documentElement.style.setProperty('--accent',    dark ? '#5BA8F5' : '#185FA5');
+    document.documentElement.style.setProperty('--accent-bg', dark ? '#1C3B5A' : '#E6F1FB');
+  }
+}
+
+function daysUntil(isoDate) {
+  const t = new Date(isoDate + 'T00:00:00');
+  const n = new Date(); n.setHours(0,0,0,0);
+  return Math.round((t - n) / 86400000);
+}
+
+function rHeaderPill(season) {
+  const el = document.getElementById('headerSeasonPill');
+  const sbEl = document.getElementById('sbHeaderPill');
+  let text = '';
+  if (season === 'summer') {
+    const played = SUMMER_PLAYED || 0;
+    const total = 11;
+    const nextDate = SUMMER_DATES.find(d => daysUntil(d) > 0);
+    const days = nextDate ? daysUntil(nextDate) : null;
+    let status;
+    if (played >= total)    status = 'Season complete';
+    else if (played === 0)  status = 'Starting soon';
+    else                    status = `Week ${played} of ${total}`;
+    const cd = days !== null && played < total ? ` · in ${days}d` : '';
+    text = `☀️ Summer 2026 · ${status}${cd}`;
+    if (el) el.innerHTML = `<span class="hero-stat">${text}</span>`;
+  } else {
+    text = `❄️ Winter 2026 · Season complete`;
+    if (el) el.innerHTML = `<span class="hero-stat">${text}</span>`;
+  }
+  if (sbEl) sbEl.textContent = text;
+}
+
 function rSubs() {
   const maxC = SUBS_SORTED[0]?.c || 1;
   document.getElementById('sublb').innerHTML = SUBS_SORTED.map((s, i) => subRow(s, i, maxC)).join('');
@@ -1310,10 +1651,10 @@ function rWLLb() {
         : `<span style="width:22px;flex-shrink:0"></span>`}
       <div class="av av${p.g}">${ini(p.n)}</div>
       <span class="nm nm-${p.g}" style="flex:1;min-width:0"><button class="player-link" onclick="showProfile('${esc(p.n)}')">${p.n}</button>${nsBadge}</span>
-      <div style="display:flex;gap:4px;align-items:center;flex-shrink:0">
-        <span style="font-size:13px;font-weight:700;background:var(--green-bg);color:var(--green);padding:2px 7px;border-radius:20px">${p.w}W</span>
-        <span style="font-size:13px;font-weight:700;background:var(--bg3);color:var(--text2);padding:2px 7px;border-radius:20px">${p.l}L</span>
-        <span style="font-size:11px;color:var(--text3);min-width:32px;text-align:right">${wPct}%</span>
+      <div class="wr-wrap">
+        <span class="wr-w">${p.w}W</span>
+        <div class="wr-bar"><div class="wr-fill" style="width:${wPct}%"></div></div>
+        <span class="wr-l">${p.l}L</span>
       </div>
     </div>`;
   };
@@ -1355,10 +1696,10 @@ function rSummerWLOverview() {
         : `<span style="font-size:11px;color:var(--text3);width:22px;text-align:right;flex-shrink:0">#${rank}</span>`}
       <div class="av av${p.g}">${ini(p.n)}</div>
       <span class="nm nm-${p.g}" style="flex:1;min-width:0"><button class="player-link" onclick="showProfile('${esc(p.n)}')">${p.n}</button></span>
-      <div style="display:flex;gap:4px;align-items:center;flex-shrink:0">
-        <span style="font-size:12px;font-weight:700;background:var(--green-bg);color:var(--green);padding:2px 7px;border-radius:20px">${p.w}W</span>
-        <span style="font-size:12px;font-weight:700;background:var(--bg3);color:var(--text2);padding:2px 7px;border-radius:20px">${p.l}L</span>
-        <span style="font-size:11px;color:var(--text3);min-width:30px;text-align:right">${wPct}%</span>
+      <div class="wr-wrap">
+        <span class="wr-w">${p.w}W</span>
+        <div class="wr-bar"><div class="wr-fill" style="width:${wPct}%"></div></div>
+        <span class="wr-l">${p.l}L</span>
       </div>
     </div>`;
   }).join('');
@@ -1366,6 +1707,61 @@ function rSummerWLOverview() {
     <button class="player-link" style="font-size:12px;color:var(--blue)" onclick="showPage('leaderboard',document.querySelector('.nb[onclick*=\\'leaderboard\\']'))">See full standings →</button>
   </div>`;
   el.innerHTML = rows + (regs.length > 6 ? link : '');
+}
+
+function rWinterFunFacts() {
+  const el = document.getElementById('winterFunFacts');
+  if (!el || !PLAYED_COUNT) return;
+  const facts = [];
+
+  // Perfect attendance
+  const perfect = REGULARS.filter(r => (ATT[r.n] || 0) === PLAYED_COUNT);
+  const close   = REGULARS.filter(r => (ATT[r.n] || 0) === PLAYED_COUNT - 1 && !perfect.find(p => p.n === r.n));
+  if (perfect.length) {
+    const names = perfect.map(r => r.n).join(', ');
+    const closeTxt = close.length ? ` ${close.map(r => r.n).join(' & ')} came close at ${PLAYED_COUNT-1}/${PLAYED_COUNT}.` : '';
+    facts.push({ icon: '🏆', text: `${names} finished ${PLAYED_COUNT} for ${PLAYED_COUNT} — perfect attendance!${closeTxt}` });
+  }
+
+  // Best streak
+  const topStreak = Object.entries(STREAK).sort((a, b) => b[1] - a[1])[0];
+  if (topStreak && topStreak[1] > 3) {
+    facts.push({ icon: '🔥', text: `${topStreak[0]} closed the season on a ${topStreak[1]}-game streak — the longest end-of-season run.` });
+  }
+
+  // Top duo
+  const pairs = {};
+  WINTER_WEEKS.forEach(w => w.teams.forEach(t => {
+    const names = t.p.filter(p => !p.ns && REG_NAMES.has(p.n)).map(p => p.n);
+    for (let i = 0; i < names.length; i++)
+      for (let j = i+1; j < names.length; j++) {
+        const key = [names[i], names[j]].sort().join('|');
+        pairs[key] = (pairs[key] || 0) + 1;
+      }
+  }));
+  const topPair = Object.entries(pairs).sort((a, b) => b[1] - a[1])[0];
+  if (topPair) {
+    const [a, b] = topPair[0].split('|');
+    const tiedCount = Object.values(pairs).filter(v => v === topPair[1]).length - 1;
+    const tieTxt = tiedCount > 0 ? ` (${tiedCount} other pair${tiedCount>1?'s':''} tied at ${topPair[1]-1})` : '';
+    facts.push({ icon: '🤝', text: `${a} & ${b} are the top duo with ${topPair[1]} sessions together.${tieTxt}` });
+  }
+
+  // Best turnout vs full house
+  const maxReg = Math.max(...WINTER_WEEKS.map(w => w.reg));
+  const maxWeeks = WINTER_WEEKS.filter(w => w.reg === maxReg).map(w => w.date);
+  const totalReg = REGULARS.length;
+  if (maxReg < totalReg) {
+    facts.push({ icon: '🏠', text: `A full house (all ${totalReg}) never happened. Best was ${maxReg}/${totalReg}${maxWeeks.length === 1 ? ` on ${maxWeeks[0]}` : `, achieved ${maxWeeks.length} times`}.` });
+  } else {
+    facts.push({ icon: '🏠', text: `Full house achieved! All ${totalReg} regulars showed up on ${maxWeeks.join(', ')}.` });
+  }
+
+  facts.push({ icon: '🎨', text: `${PLAYED_COUNT} weeks, ${PLAYED_COUNT} themes — winter season complete! See you at Summer 2026 ☀️` });
+
+  el.innerHTML = facts.map((f, i) =>
+    `<div class="ff"${i === facts.length-1 ? ' style="margin-bottom:0"' : ''}><span class="fi">${f.icon}</span>${f.text}</div>`
+  ).join('');
 }
 
 function rSummerFunFacts() {
@@ -1495,15 +1891,18 @@ function rSummerWeeks() {
     // compute winner for collapsed header
     let winnerBadge = '';
     if (w.results && w.results.length) {
-      const tally = {};
-      w.teams.forEach(t => { tally[t.name] = 0; });
-      w.results.forEach(r => { if (tally[r.w] !== undefined) tally[r.w]++; });
-      const top = Object.entries(tally).sort((a, b) => b[1] - a[1]);
-      if (top.length && top[0][1] > 0) {
-        const maxW = top[0][1];
-        const winners = top.filter(([, v]) => v === maxW).map(([n]) => n);
-        const label = winners.length === 1 ? `🏆 ${winners[0]}` : `🏆 ${winners.join(' & ')}`;
-        winnerBadge = `<span style="font-size:11px;font-weight:600;color:var(--green);margin-left:auto;flex-shrink:0">${label}</span>`;
+      const st = {};
+      w.teams.forEach(t => { st[t.name] = { w: 0, l: 0 }; });
+      w.results.forEach(r => {
+        const loser = r.a === r.w ? r.b : r.a;
+        if (st[r.w]) st[r.w].w++;
+        if (st[loser]) st[loser].l++;
+      });
+      const sorted = Object.entries(st).sort((a, b) => b[1].w - a[1].w || a[1].l - b[1].l);
+      const [topName, topRec] = sorted[0] || [];
+      const isUnique = topName && sorted.filter(([, r]) => r.w === topRec.w).length === 1;
+      if (isUnique && topRec.w > 0) {
+        winnerBadge = `<span style="font-size:11px;font-weight:700;background:var(--green-bg);color:var(--green);padding:2px 9px;border-radius:20px;flex-shrink:0">${topName} ${topRec.w}–${topRec.l} 🏆</span>`;
       }
     }
     const card = document.createElement('div'); card.className = 'wc'; card.dataset.week = w.n;
@@ -1564,6 +1963,31 @@ function rSched() {
     const done = s.s === 'done';
     return schedRow(s, off ? 'of' : done ? 'dn' : 'su', off ? 'Off' : done ? 'Done' : 'Upcoming');
   }).join('');
+
+  // Next session spotlight
+  const spotEl = document.getElementById('nextSessionSpotlight');
+  if (!spotEl) return;
+  const nextEntry = SUMMER_SCHED.find(s => s.s === 'su' && s.n);
+  if (!nextEntry) { spotEl.innerHTML = ''; return; }
+  const isoDate = SUMMER_DATES.find(d => {
+    const sd = new Date(d + 'T00:00:00');
+    return nextEntry.date.includes(sd.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }));
+  }) || SUMMER_DATES[SUMMER_WEEKS.length];
+  const days = isoDate ? daysUntil(isoDate) : null;
+  const cdNum  = days === 0 ? '🎉' : days !== null ? String(days) : '';
+  const cdSub  = days === 0 ? 'Today!'  : days === 1 ? 'day away' : days !== null ? 'days away' : '';
+  spotEl.innerHTML = `<div class="nxt-card">
+    <div class="nxt-icon">📅</div>
+    <div class="nxt-body">
+      <div class="nxt-label">Next session · Week ${nextEntry.n}</div>
+      <div class="nxt-date">${nextEntry.date}</div>
+      <div class="nxt-meta">Supercamp Vanier · 9:00–11:00 AM</div>
+    </div>
+    ${cdNum ? `<div style="text-align:right;flex-shrink:0">
+      <div class="nxt-cd">${cdNum}</div>
+      <div class="nxt-cd-lbl">${cdSub}</div>
+    </div>` : ''}
+  </div>`;
 }
 
 function rCal() {
@@ -1780,10 +2204,20 @@ function showChemistry(name) {
   }
   document.getElementById('chemPartners').innerHTML = pHtml;
   const never = REGULARS.filter(r => r.n !== name && !counts[r.n]).map(r => r.n);
-  document.getElementById('chemNeverCount').textContent = never.length ? `— ${never.length} player${never.length !== 1 ? 's' : ''}` : '';
-  document.getElementById('chemNever').innerHTML = never.length
-    ? never.map(n => `<span class="ng ng${GM[n]==='f'?'f':'m'}">${n}</span>`).join('')
-    : `<span style="font-size:12px;color:var(--text3);font-style:italic">🎉 ${name} has been on a team with every other regular!</span>`;
+  const neverEl = document.getElementById('chemNever');
+  const neverCount = document.getElementById('chemNeverCount');
+  const neverChev = document.getElementById('neverChev');
+  if (never.length) {
+    neverCount.textContent = `${never.length} player${never.length !== 1 ? 's' : ''}`;
+    neverEl.innerHTML = never.map(n => `<span class="ng ng${GM[n]==='f'?'f':'m'}">${n}</span>`).join('');
+    neverEl.style.display = 'none';
+    if (neverChev) neverChev.style.transform = '';
+  } else {
+    neverCount.textContent = '';
+    neverEl.innerHTML = `<span style="font-size:12px;color:var(--text3);font-style:italic">🎉 ${name} has played with every regular!</span>`;
+    neverEl.style.display = 'block';
+    if (neverChev) neverChev.style.transform = 'rotate(180deg)';
+  }
   el.style.display = 'block';
 }
 
@@ -1906,12 +2340,47 @@ function tw(c) {
   c.classList.toggle('open', !o);
   c.querySelector('.wb').style.display = o ? 'none' : 'block';
 }
+let ACTIVE_SEASON = 'summer';
+
+function setGlobalSeason(s, _btn) {
+  document.querySelectorAll('#globalSeason .gst').forEach(b => b.classList.remove('active'));
+  document.getElementById('gst-' + s)?.classList.add('active');
+  document.querySelectorAll('#sbSeason .sb-gst').forEach(b => b.classList.remove('active'));
+  document.getElementById('sbgst-' + s)?.classList.add('active');
+  if (s === 'all') {
+    showSeasonPanel('chem', 'all');
+  } else {
+    ACTIVE_SEASON = s;
+    setAccentColor(s);
+    rHeaderPill(s);
+    ['ov', 'lb', 'hist', 'chem'].forEach(prefix => showSeasonPanel(prefix, s));
+  }
+}
+
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
+  if (btn.classList.contains('nb')) {
+    document.querySelector(`.sb-btn[data-page="${id}"]`)?.classList.add('active');
+  } else {
+    document.querySelector(`.nb[onclick*="'${id}'"]`)?.classList.add('active');
+  }
   hideProfile();
+  const noToggle = ['schedule', 'media'];
+  const gs = document.getElementById('globalSeason');
+  const sbSeason = document.getElementById('sbSeason');
+  const allBtn = document.getElementById('gst-all');
+  const sbAllBtn = document.getElementById('sbgst-all');
+  if (gs) gs.style.display = noToggle.includes(id) ? 'none' : 'flex';
+  if (sbSeason) sbSeason.style.display = noToggle.includes(id) ? 'none' : '';
+  if (allBtn)   allBtn.style.display   = id === 'chemistry' ? '' : 'none';
+  if (sbAllBtn) sbAllBtn.style.display = id === 'chemistry' ? '' : 'none';
+  if (id !== 'chemistry' && (allBtn?.classList.contains('active') || sbAllBtn?.classList.contains('active'))) {
+    setGlobalSeason(ACTIVE_SEASON, null);
+  }
 }
 function jumpToWeek(n) {
   const card = document.querySelector(`.wc[data-week="${n}"]`);
@@ -1922,10 +2391,37 @@ function jumpToWeek(n) {
 function goToWeek(n) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('page-history').classList.add('active');
-  document.querySelector('.nb[onclick*="\'history\'"]').classList.add('active');
+  document.querySelector('.nb[onclick*="history"]')?.classList.add('active');
+  document.querySelector('.sb-btn[data-page="history"]')?.classList.add('active');
   hideProfile();
+  const targetWeek = WEEKS.find(w => w.n === n);
+  const season = (targetWeek && targetWeek.season === 's') ? 'summer' : 'winter';
+  const gs = document.getElementById('globalSeason');
+  const sbSeason = document.getElementById('sbSeason');
+  const allBtn = document.getElementById('gst-all');
+  const sbAllBtn = document.getElementById('sbgst-all');
+  if (gs) gs.style.display = 'flex';
+  if (sbSeason) sbSeason.style.display = '';
+  if (allBtn)   allBtn.style.display   = 'none';
+  if (sbAllBtn) sbAllBtn.style.display = 'none';
+  setGlobalSeason(season, null);
   setTimeout(() => jumpToWeek(n), 80);
+}
+function toggleNeverPlayed() {
+  const el = document.getElementById('chemNever');
+  const chev = document.getElementById('neverChev');
+  const open = el.style.display !== 'none';
+  el.style.display = open ? 'none' : 'block';
+  if (chev) chev.style.transform = open ? '' : 'rotate(180deg)';
+}
+function toggleWinterSched(btn) {
+  const wrap = document.getElementById('schw-wrap');
+  const chev = document.getElementById('winterSchedChevron');
+  const open = wrap.style.display !== 'none';
+  wrap.style.display = open ? 'none' : 'block';
+  if (chev) chev.style.transform = open ? '' : 'rotate(180deg)';
 }
 function showSchedView(view, btn) {
   btn.closest('.tr').querySelectorAll('.tb').forEach(t => t.classList.remove('active'));
@@ -1942,7 +2438,15 @@ function showSummerLbTab(tab, btn) {
 function showSeasonPanel(prefix, season) {
   ['winter', 'summer', 'all'].forEach(s => {
     const el = document.getElementById(prefix + '-' + s);
-    if (el) el.style.display = s === season ? 'block' : 'none';
+    if (!el) return;
+    if (s === season) {
+      el.style.display = 'block';
+      el.classList.remove('panel-in');
+      void el.offsetWidth; // force reflow
+      el.classList.add('panel-in');
+    } else {
+      el.style.display = 'none';
+    }
   });
 }
 let lbGender = 'all';
@@ -1969,8 +2473,48 @@ function nextM() { CM++; if(CM>11){CM=0;CY++;} rCal(); document.getElementById('
 function toggleTheme() {
   const dark = document.documentElement.dataset.theme === 'dark';
   document.documentElement.dataset.theme = dark ? '' : 'dark';
-  document.getElementById('themeBtn').textContent = dark ? '🌙' : '☀️';
+  const icon = dark ? '🌙' : '☀️';
+  const themeBtn = document.getElementById('themeBtn');
+  const sbIcon = document.getElementById('themeIcon-sb');
+  if (themeBtn) themeBtn.textContent = icon;
+  if (sbIcon) sbIcon.textContent = icon;
   localStorage.setItem('vb-theme', dark ? 'light' : 'dark');
+  setAccentColor(ACTIVE_SEASON);
+}
+
+// ── Media ────────────────────────────────────────────────────────────
+function rReels() {
+  const el = document.getElementById('reelsGrid');
+  if (!el) return;
+  const reels = [...REELS].reverse();
+  if (!reels.length) {
+    el.innerHTML = `<div style="font-size:13px;color:var(--text3);font-style:italic;text-align:center;padding:2rem 0">No reels added yet — check back soon!</div>`;
+    return;
+  }
+  el.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem">${
+    reels.map(r => {
+      if (r.week && !r.caption) {
+        const w = WEEKS.find(wk => wk.n === r.week);
+        if (w) r = { ...r, caption: `Week ${w.n} · ${w.theme} · ${w.date}` };
+      }
+      const weekBadge = r.week
+        ? `<div style="font-size:11px;color:var(--blue);margin-top:6px;cursor:pointer" onclick="goToWeek(${r.week});showPage('history',document.querySelector('.nb[onclick*=\\'history\\']'))">↗ Week ${r.week}</div>`
+        : '';
+      return `<div class="card" style="padding:0;overflow:hidden">
+        <div style="position:relative;width:100%;padding-top:177.77%">
+          <iframe
+            src="https://www.instagram.com/reel/${r.id}/embed/"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;border:none"
+            scrolling="no" allowtransparency allowfullscreen>
+          </iframe>
+        </div>
+        ${r.caption || weekBadge ? `<div style="padding:.75rem 1rem">
+          ${r.caption ? `<div style="font-size:13px;color:var(--text);font-weight:500">${r.caption}</div>` : ''}
+          ${weekBadge}
+        </div>` : ''}
+      </div>`;
+    }).join('')
+  }</div>`;
 }
 
 // ── History filter ──────────────────────────────────────────────────
@@ -2021,13 +2565,15 @@ function filterHistory(q) {
 
 // ── Init ────────────────────────────────────────────────────────────
 computeStats(); computeWL();
-rLb(); rSummerLb(); rWLLb(); rSummerWLOverview(); rSummerFunFacts(); rSubs(); rTopSubs();
+setAccentColor('summer');
+rLastSession(); rHeaderPill('summer');
+rLb(); rSummerLb(); rWLLb(); rSummerWLOverview(); rWinterFunFacts(); rSummerFunFacts(); rSubs(); rTopSubs();
 rDuos(); rSummerDuos(); rAllTimeDuos();
 rConnLb(); rSummerConnLb(); rAllTimeConnLb();
 rWeeks(); rSummerWeeks();
 rSched(); rCal();
 rAttGrid(); rSummerAttGrid(); rStreaks();
-fillSelects(); fillSummerSelects(); fillAllSelects();
+fillSelects(); fillSummerSelects(); fillAllSelects(); rReels();
 window.addEventListener('scroll', () => {
   const btn = document.getElementById('scrollTopBtn');
   if (btn) btn.style.display = window.scrollY > 300 ? 'block' : 'none';
@@ -2043,7 +2589,11 @@ window.addEventListener('scroll', () => {
     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   if (saved === 'dark') {
     document.documentElement.dataset.theme = 'dark';
-    document.getElementById('themeBtn').textContent = '☀️';
+    const themeBtn = document.getElementById('themeBtn');
+    const sbIcon = document.getElementById('themeIcon-sb');
+    if (themeBtn) themeBtn.textContent = '☀️';
+    if (sbIcon) sbIcon.textContent = '☀️';
+    setAccentColor(ACTIVE_SEASON);
   }
 })();
 </script>
