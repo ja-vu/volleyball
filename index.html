@@ -445,6 +445,10 @@
         <div class="profile-label">Never played with</div>
         <div id="profileNever" class="profile-summary"></div>
       </div>
+      <div id="profileWLWrap">
+        <div class="profile-label">Summer W/L</div>
+        <div id="profileWL" class="profile-summary"></div>
+      </div>
     </div>
   </div>
 
@@ -519,7 +523,7 @@
         </div>
       </div>
       <div class="sec">
-        <div class="sl">Active streaks</div>
+        <div class="sl">End-of-season streaks</div>
         <div id="streakStrip"></div>
       </div>
       <div class="sec">
@@ -557,7 +561,6 @@
       <div style="margin-bottom:1rem">
         <span style="font-size:12px;color:var(--text3)">May 17 – Aug 16 · 11 Sundays</span>
       </div>
-      <div class="card summer-empty" style="text-align:center;padding:2.5rem 1rem;margin-bottom:1rem"></div>
       <div class="card" style="margin-bottom:1.5rem">
         <div class="mg" style="margin-bottom:1rem">
           <div class="met" style="border-top-color:var(--bar-m)"><div class="mv">1</div><div class="ml">Sundays played</div></div>
@@ -570,8 +573,24 @@
         <div style="font-size:12px;color:var(--text3);margin-top:6px">Season underway! Anglerfish swept Week 1 with a perfect 4–0.</div>
       </div>
       <div class="sec">
-        <div class="sl">Upcoming sessions</div>
-        <div class="card" id="summerSchedPreview"></div>
+        <div class="sl">W/L standings</div>
+        <div class="card" id="summerWLOverview"></div>
+      </div>
+      <div class="sec">
+        <div class="sl">Weekly turnout</div>
+        <div class="card" id="summerAttTrend"></div>
+      </div>
+      <div class="sec">
+        <div class="sl" id="summerAttLabel">Attendance</div>
+        <div class="card">
+          <div class="att-wrap" id="summerAttGrid"></div>
+          <div style="display:flex;gap:14px;margin-top:10px;font-size:11px;color:var(--text2);flex-wrap:wrap">
+            <span><span class="leg-dot" style="background:var(--bar-m)"></span>Men</span>
+            <span><span class="leg-dot" style="background:var(--bar-f)"></span>Women</span>
+            <span><span class="leg-dot" style="background:var(--bg3)"></span>Absent</span>
+            <span><span class="leg-dot" style="border:1.5px dashed var(--border2)"></span>Upcoming</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -586,27 +605,8 @@
     <!-- Winter panel -->
     <div id="lb-winter" style="display:none">
       <div class="sec">
-        <div class="sl">Group makeup</div>
-        <div class="two" style="margin-bottom:0">
-          <div class="card">
-            <div style="margin-bottom:12px">
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--blue);margin-bottom:4px"><span>Men</span><span>17 regulars</span></div>
-              <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:71%;height:7px;border-radius:4px;background:var(--bar-m)"></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--pink);margin-bottom:4px"><span>Women</span><span>7 regulars</span></div>
-              <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:29%;height:7px;border-radius:4px;background:var(--bar-f)"></div></div>
-            </div>
-          </div>
-          <div class="card" style="display:flex;align-items:center;justify-content:center;gap:24px">
-            <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--bar-m)">71%</div><div style="font-size:12px;color:var(--text2)">Male</div></div>
-            <div style="width:1px;height:40px;background:var(--border)"></div>
-            <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--bar-f)">29%</div><div style="font-size:12px;color:var(--text2)">Female</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="sec">
-        <div class="stg tw" style="margin-bottom:.75rem">❄️ Winter 2026 — Regulars</div>
+        <div class="stg tw" style="margin-bottom:.25rem">❄️ Winter 2026 — Regulars</div>
+        <div style="font-size:12px;color:var(--text3);margin-bottom:.75rem"><span style="color:var(--bar-m)">17M</span> · <span style="color:var(--pink)">7F</span> · 24 regulars</div>
         <div class="card">
           <input id="lbSearch" type="text" placeholder="Search player…" oninput="applyLbFilters()" style="width:100%;box-sizing:border-box;padding:6px 10px;font-size:13px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);margin-bottom:10px">
           <div class="tr">
@@ -626,27 +626,8 @@
     <!-- Summer panel -->
     <div id="lb-summer">
       <div class="sec">
-        <div class="sl">Group makeup</div>
-        <div class="two" style="margin-bottom:0">
-          <div class="card">
-            <div style="margin-bottom:12px">
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--blue);margin-bottom:4px"><span>Men</span><span>18 regulars</span></div>
-              <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:75%;height:7px;border-radius:4px;background:var(--bar-m)"></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--pink);margin-bottom:4px"><span>Women</span><span>6 regulars</span></div>
-              <div style="background:var(--bg2);border-radius:4px;height:7px;overflow:hidden"><div style="width:25%;height:7px;border-radius:4px;background:var(--bar-f)"></div></div>
-            </div>
-          </div>
-          <div class="card" style="display:flex;align-items:center;justify-content:center;gap:24px">
-            <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--bar-m)">75%</div><div style="font-size:12px;color:var(--text2)">Male</div></div>
-            <div style="width:1px;height:40px;background:var(--border)"></div>
-            <div style="text-align:center"><div style="font-size:28px;font-weight:700;color:var(--bar-f)">25%</div><div style="font-size:12px;color:var(--text2)">Female</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="sec">
-        <div class="stg ts" style="margin-bottom:.75rem">☀️ Summer 2026</div>
+        <div class="stg ts" style="margin-bottom:.25rem">☀️ Summer 2026</div>
+        <div style="font-size:12px;color:var(--text3);margin-bottom:.75rem"><span style="color:var(--bar-m)">18M</span> · <span style="color:var(--pink)">6F</span> · 24 regulars</div>
         <div class="card">
           <div class="tr" id="summerLbTabs">
             <button class="tb active" onclick="showSummerLbTab('wl',this)">W/L Record</button>
@@ -673,6 +654,7 @@
     <select class="season-sel" onchange="showSeasonPanel('chem',this.value)">
       <option value="summer">☀️ Summer 2026</option>
       <option value="winter">❄️ Winter 2026</option>
+      <option value="all">🏐 All Time</option>
     </select>
     <div id="chem-winter" style="display:none">
       <div style="margin-bottom:1.5rem">
@@ -729,6 +711,30 @@
         <div class="card" id="summerConnLb"></div>
       </div>
     </div>
+    <div id="chem-all" style="display:none">
+      <div style="margin-bottom:1.5rem">
+        <div class="sl-lg">Player chemistry</div>
+        <div class="card">
+          <select class="nts" id="chemAllSel" onchange="showAllTimeChemistry(this.value)">
+            <option value="">— Select a player —</option>
+          </select>
+          <div id="chemAllRes" style="display:none">
+            <div class="sl" style="margin-top:.85rem">Partners across all sessions</div>
+            <div id="chemAllPartners"></div>
+          </div>
+        </div>
+      </div>
+      <hr class="rule">
+      <div style="margin-bottom:1.5rem">
+        <div class="sl-lg">Most frequent duos</div>
+        <div class="card" id="allTimeDuos"></div>
+      </div>
+      <hr class="rule">
+      <div style="margin-bottom:1.5rem">
+        <div class="sl-lg">Who's mixed it up the most?</div>
+        <div class="card" id="allTimeConnLb"></div>
+      </div>
+    </div>
   </div>
 
   <!-- HISTORY -->
@@ -751,6 +757,8 @@
         <span><span class="ld" style="background:var(--blue)"></span>Male</span>
         <span><span class="ld" style="background:var(--pink)"></span>Female</span>
       </div>
+      <input id="summerHistSearch" type="text" placeholder="Filter by player…" oninput="filterSummerWeeks()" style="width:100%;box-sizing:border-box;padding:6px 10px;font-size:13px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);margin-bottom:10px">
+      <div id="summerHistCount" style="font-size:12px;color:var(--text3);margin-bottom:8px;display:none"></div>
       <div id="summer-weeks"></div>
     </div>
   </div>
@@ -851,6 +859,8 @@ const SUMMER_REGULARS = [
   {n:'Alain',      g:'m'}, {n:'Winnie',     g:'f'}, {n:'Samuel',     g:'m'},
 ];
 
+const ALL_REG_NAMES = new Set([...REGULARS, ...SUMMER_REGULARS].map(r => r.n));
+const ALL_REGULARS = [...REGULARS, ...SUMMER_REGULARS.filter(r => !REG_NAMES.has(r.n))];
 
 const THEMES = [
   {n:1,  date:'Jan 11', theme:'Pokémon',        color:'#F6C443'},
@@ -1093,10 +1103,11 @@ function pl(p) {
 }
 function showProfile(name) {
   const regular = REGULARS.find(r => r.n === name);
-  const isSub = !regular && name in SUB_COUNTS;
-  if (!regular && !isSub) return;
+  const summerReg = SUMMER_REGULARS.find(r => r.n === name);
+  const isSub = !regular && !summerReg && name in SUB_COUNTS;
+  if (!regular && !summerReg && !isSub) return;
   const partnerCounts = {};
-  WEEKS.forEach(w => w.teams.forEach(t => {
+  WINTER_WEEKS.forEach(w => w.teams.forEach(t => {
     const names = t.p.map(p => p.n);
     if (names.includes(name)) names.forEach(m => { if (m !== name) partnerCounts[m] = (partnerCounts[m] || 0) + 1; });
   }));
@@ -1131,6 +1142,15 @@ function showProfile(name) {
   } else {
     neverWrap.style.display = 'none';
   }
+  const wlWrap = document.getElementById('profileWLWrap');
+  const wl = WL[name];
+  if (wl) {
+    wlWrap.style.display = '';
+    const pct = wl.w + wl.l > 0 ? Math.round(wl.w / (wl.w + wl.l) * 100) : 0;
+    document.getElementById('profileWL').textContent = `${wl.w}W – ${wl.l}L (${pct}%)`;
+  } else {
+    wlWrap.style.display = 'none';
+  }
 }
 function hideProfile() {
   document.getElementById('profileCard').classList.remove('open');
@@ -1148,11 +1168,13 @@ function dots(n, total) {
 }
 
 // ── Leaderboard ─────────────────────────────────────────────────────
-function rDuos() {
-  const el = document.getElementById('duos');
+function rDuosInto(elementId, weeks, regNames, playedCount) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  if (!playedCount) { el.innerHTML = '<div style="font-size:13px;color:var(--text3);font-style:italic">No data yet.</div>'; return; }
   const counts = {};
-  WINTER_WEEKS.forEach(w => w.teams.forEach(t => {
-    const names = t.p.map(p => p.n).filter(n => REG_NAMES.has(n));
+  weeks.forEach(w => w.teams.forEach(t => {
+    const names = t.p.map(p => p.n).filter(n => regNames.has(n));
     for (let i = 0; i < names.length; i++)
       for (let j = i + 1; j < names.length; j++) {
         const key = [names[i], names[j]].sort().join('|||');
@@ -1164,10 +1186,12 @@ function rDuos() {
     .slice(0, 10)
     .map(([key, n]) => {
       const [a, b] = key.split('|||');
-      return `<div class="par"><span class="pn">${a} &amp; ${b}</span><div class="dots">${dots(n,PLAYED_COUNT)}</div><span class="pc">${n}/${PLAYED_COUNT}</span></div>`;
+      return `<div class="par"><span class="pn">${a} &amp; ${b}</span><div class="dots">${dots(n, playedCount)}</div><span class="pc">${n}/${playedCount}</span></div>`;
     }).join('');
 }
-
+function rDuos()        { rDuosInto('duos',        WINTER_WEEKS, REG_NAMES,     PLAYED_COUNT); }
+function rSummerDuos()  { rDuosInto('summerDuos',  SUMMER_WEEKS, new Set(SUMMER_REGULARS.map(r => r.n)), SUMMER_WEEKS.filter(w => w.teams.length > 0).length); }
+function rAllTimeDuos() { rDuosInto('allTimeDuos', WEEKS,        ALL_REG_NAMES, WEEKS.filter(w => w.teams.length > 0).length); }
 
 function rLb() {
   const el = document.getElementById('lb');
@@ -1196,12 +1220,30 @@ function rLb() {
   el.innerHTML = html;
 }
 
+function rSummerLb() {
+  const el = document.getElementById('slb');
+  const sorted = [...SUMMER_REGULARS].sort((a, b) => (SUMMER_ATT[b.n]||0) - (SUMMER_ATT[a.n]||0));
+  el.innerHTML = sorted.map(r => {
+    const badge = !REG_NAMES.has(r.n) ? `<span class="bdg" style="background:var(--green-bg);color:var(--green)">new</span>` : '';
+    const att = SUMMER_ATT[r.n] || 0;
+    const pct = SUMMER_PLAYED > 0 ? Math.round(att / SUMMER_PLAYED * 100) : 0;
+    const attHtml = SUMMER_PLAYED > 0
+      ? `<div class="bw"><div class="b${r.g}" style="width:${pct}%"></div></div><span class="an">${att}/${SUMMER_PLAYED}</span>`
+      : '';
+    return `<div class="pr" data-g="${r.g}">
+      <div class="av av${r.g}">${ini(r.n)}</div>
+      <span class="nm nm-${r.g}">${r.n}</span>
+      ${badge}${attHtml}
+    </div>`;
+  }).join('');
+}
+
 function subRow(s, i, maxC) {
   const g = GM[s.n] || 'm';
   const pct = Math.round(s.c / maxC * 100);
   return `<div class="pr">
       <span style="font-size:10px;color:var(--text3);width:18px;text-align:right;flex-shrink:0">#${i+1}</span>
-      <div class="av av${g}">${s.n.substring(0,2).toUpperCase()}</div>
+      <div class="av av${g}">${ini(s.n)}</div>
       <span class="nm nm-${g}"><button class="player-link" onclick="showProfile('${esc(s.n)}')">${s.n}</button></span>
       <div class="bw"><div class="b${g}" style="width:${pct}%"></div></div>
       <span class="an">${s.c}×</span>
@@ -1220,7 +1262,89 @@ function rTopSubs() {
   el.innerHTML = SUBS_SORTED.slice(0, 5).map((s, i) => subRow(s, i, maxC)).join('');
 }
 
-// ── Team history ────────────────────────────────────────────────────
+function rWLLb() {
+  const el = document.getElementById('wllb');
+  if (!el) return;
+  if (!Object.keys(WL).length) {
+    el.innerHTML = '<div style="font-size:13px;color:var(--text3);font-style:italic">No results recorded yet.</div>';
+    return;
+  }
+  const SUMMER_REG_NAMES = new Set(SUMMER_REGULARS.map(r => r.n));
+  const all = Object.entries(WL).map(([n, rec]) => ({
+    n, w: rec.w, l: rec.l,
+    pct: (rec.w + rec.l) > 0 ? rec.w / (rec.w + rec.l) : 0,
+    g: GM[n] || 'm', isReg: SUMMER_REG_NAMES.has(n)
+  })).sort((a, b) => b.pct - a.pct || (b.w + b.l) - (a.w + a.l));
+  const regs = all.filter(p => p.isReg);
+  const subs = all.filter(p => !p.isReg);
+  let rank = 0, lastPct = -1, sameCount = 0;
+  const row = (p, showRank) => {
+    const total = p.w + p.l;
+    const wPct = total > 0 ? Math.round(p.w / total * 100) : 0;
+    const medal = showRank && rank === 1 ? '🥇' : showRank && rank === 2 ? '🥈' : showRank && rank === 3 ? '🥉' : '';
+    return `<div class="pr" data-g="${p.g}" style="align-items:center">
+      ${showRank
+        ? medal
+          ? `<span style="font-size:14px;flex-shrink:0;width:22px;text-align:center">${medal}</span>`
+          : `<span style="font-size:11px;color:var(--text3);width:22px;text-align:right;flex-shrink:0">#${rank}</span>`
+        : `<span style="width:22px;flex-shrink:0"></span>`}
+      <div class="av av${p.g}">${ini(p.n)}</div>
+      <span class="nm nm-${p.g}" style="flex:1;min-width:0"><button class="player-link" onclick="showProfile('${esc(p.n)}')">${p.n}</button></span>
+      <div style="display:flex;gap:4px;align-items:center;flex-shrink:0">
+        <span style="font-size:13px;font-weight:700;background:var(--green-bg);color:var(--green);padding:2px 7px;border-radius:20px">${p.w}W</span>
+        <span style="font-size:13px;font-weight:700;background:var(--bg3);color:var(--text2);padding:2px 7px;border-radius:20px">${p.l}L</span>
+        <span style="font-size:11px;color:var(--text3);min-width:32px;text-align:right">${wPct}%</span>
+      </div>
+    </div>`;
+  };
+  let html = regs.map(p => {
+    if (p.pct !== lastPct) { rank += 1 + sameCount; sameCount = 0; lastPct = p.pct; } else sameCount++;
+    return row(p, true);
+  }).join('');
+  if (subs.length) {
+    html += `<div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin:10px 0 4px;padding-top:8px;border-top:1px solid var(--border)">Subs</div>`;
+    html += subs.map(p => row(p, false)).join('');
+  }
+  el.innerHTML = html;
+}
+
+function rSummerWLOverview() {
+  const el = document.getElementById('summerWLOverview');
+  if (!el) return;
+  if (!Object.keys(WL).length) {
+    el.innerHTML = '<div style="font-size:13px;color:var(--text3);font-style:italic">No results yet — check back after Sunday!</div>';
+    return;
+  }
+  const SUMMER_REG_NAMES = new Set(SUMMER_REGULARS.map(r => r.n));
+  const regs = Object.entries(WL)
+    .filter(([n]) => SUMMER_REG_NAMES.has(n))
+    .map(([n, rec]) => ({
+      n, w: rec.w, l: rec.l,
+      pct: (rec.w + rec.l) > 0 ? rec.w / (rec.w + rec.l) : 0,
+      g: GM[n] || 'm'
+    }))
+    .sort((a, b) => b.pct - a.pct || b.w - a.w || a.l - b.l);
+  let rank = 0, lastPct = -1, sameCount = 0;
+  el.innerHTML = regs.map(p => {
+    if (p.pct !== lastPct) { rank += 1 + sameCount; sameCount = 0; lastPct = p.pct; } else sameCount++;
+    const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
+    const wPct = p.w + p.l > 0 ? Math.round(p.pct * 100) : 0;
+    return `<div class="pr" style="align-items:center">
+      ${medal
+        ? `<span style="font-size:14px;flex-shrink:0;width:22px;text-align:center">${medal}</span>`
+        : `<span style="font-size:11px;color:var(--text3);width:22px;text-align:right;flex-shrink:0">#${rank}</span>`}
+      <div class="av av${p.g}">${ini(p.n)}</div>
+      <span class="nm nm-${p.g}" style="flex:1;min-width:0"><button class="player-link" onclick="showProfile('${esc(p.n)}')">${p.n}</button></span>
+      <div style="display:flex;gap:4px;align-items:center;flex-shrink:0">
+        <span style="font-size:12px;font-weight:700;background:var(--green-bg);color:var(--green);padding:2px 7px;border-radius:20px">${p.w}W</span>
+        <span style="font-size:12px;font-weight:700;background:var(--bg3);color:var(--text2);padding:2px 7px;border-radius:20px">${p.l}L</span>
+        <span style="font-size:11px;color:var(--text3);min-width:30px;text-align:right">${wPct}%</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Team history ─────────────────────────────────────────────────────
 function rWeeks() {
   const c = document.getElementById('weeks');
   WINTER_WEEKS.forEach(w => {
@@ -1300,6 +1424,20 @@ function rSummerWeeks() {
       </div>`;
     })() : '';
     const th = `<div class="wts">${w.teams.map(t=>`<div class="tco"><div class="tn">${t.name}</div>${t.p.map(p=>pl(p)).join('')}</div>`).join('')}</div>${resultsHtml}`;
+    // compute winner for collapsed header
+    let winnerBadge = '';
+    if (w.results && w.results.length) {
+      const tally = {};
+      w.teams.forEach(t => { tally[t.name] = 0; });
+      w.results.forEach(r => { if (tally[r.w] !== undefined) tally[r.w]++; });
+      const top = Object.entries(tally).sort((a, b) => b[1] - a[1]);
+      if (top.length && top[0][1] > 0) {
+        const maxW = top[0][1];
+        const winners = top.filter(([, v]) => v === maxW).map(([n]) => n);
+        const label = winners.length === 1 ? `🏆 ${winners[0]}` : `🏆 ${winners.join(' & ')}`;
+        winnerBadge = `<span style="font-size:11px;font-weight:600;color:var(--green);margin-left:auto;flex-shrink:0">${label}</span>`;
+      }
+    }
     const card = document.createElement('div'); card.className = 'wc'; card.dataset.week = w.n;
     card.innerHTML = `
       <div class="wh" onclick="tw(this.parentElement)">
@@ -1307,9 +1445,10 @@ function rSummerWeeks() {
         <span class="wd">${w.date}</span>
         <span class="wt" ${wtStyle}>${w.theme}</span>
         <span class="wi">${w.teams.length} teams · ${w.reg} regulars</span>
+        ${winnerBadge}
         <span class="wv">▾</span>
       </div>
-      <div class="wb" style="display:none">${th}</div>`;
+      <div class="wb" style="display:none">${th}<div style="margin-top:8px"><button class="copy-btn" onclick="copyTeams(${w.n})" style="font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer">📋 Copy</button></div></div>`;
     c.appendChild(card);
   });
   if (!c.children.length) {
@@ -1317,50 +1456,23 @@ function rSummerWeeks() {
   }
 }
 
-function rWLLb() {
-  const el = document.getElementById('wllb');
-  if (!el) return;
-  if (!Object.keys(WL).length) {
-    el.innerHTML = '<div style="font-size:13px;color:var(--text3);font-style:italic">No results recorded yet.</div>';
-    return;
-  }
-  const SUMMER_REG_NAMES = new Set(SUMMER_REGULARS.map(r => r.n));
-  const all = Object.entries(WL).map(([n, rec]) => ({
-    n, w: rec.w, l: rec.l,
-    pct: (rec.w + rec.l) > 0 ? rec.w / (rec.w + rec.l) : 0,
-    g: GM[n] || 'm', isReg: SUMMER_REG_NAMES.has(n)
-  })).sort((a, b) => b.pct - a.pct || (b.w + b.l) - (a.w + a.l));
-  const regs = all.filter(p => p.isReg);
-  const subs = all.filter(p => !p.isReg);
-  let rank = 0, lastPct = -1, sameCount = 0;
-  const row = (p, showRank) => {
-    const total = p.w + p.l;
-    const wPct = total > 0 ? Math.round(p.w / total * 100) : 0;
-    const medal = showRank && rank === 1 ? '🥇' : showRank && rank === 2 ? '🥈' : showRank && rank === 3 ? '🥉' : '';
-    return `<div class="pr" data-g="${p.g}" style="align-items:center">
-      ${showRank
-        ? medal
-          ? `<span style="font-size:14px;flex-shrink:0;width:22px;text-align:center">${medal}</span>`
-          : `<span style="font-size:11px;color:var(--text3);width:22px;text-align:right;flex-shrink:0">#${rank}</span>`
-        : `<span style="width:22px;flex-shrink:0"></span>`}
-      <div class="av av${p.g}">${ini(p.n)}</div>
-      <span class="nm nm-${p.g}" style="flex:1;min-width:0"><button class="player-link" onclick="showProfile('${esc(p.n)}')">${p.n}</button></span>
-      <div style="display:flex;gap:4px;align-items:center;flex-shrink:0">
-        <span style="font-size:13px;font-weight:700;background:var(--green-bg);color:var(--green);padding:2px 7px;border-radius:20px">${p.w}W</span>
-        <span style="font-size:13px;font-weight:700;background:var(--bg3);color:var(--text2);padding:2px 7px;border-radius:20px">${p.l}L</span>
-        <span style="font-size:11px;color:var(--text3);min-width:32px;text-align:right">${wPct}%</span>
-      </div>
-    </div>`;
-  };
-  let html = regs.map(p => {
-    if (p.pct !== lastPct) { rank += 1 + sameCount; sameCount = 0; lastPct = p.pct; } else sameCount++;
-    return row(p, true);
-  }).join('');
-  if (subs.length) {
-    html += `<div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin:10px 0 4px;padding-top:8px;border-top:1px solid var(--border)">Subs</div>`;
-    html += subs.map(p => row(p, false)).join('');
-  }
-  el.innerHTML = html;
+function copyTeams(n) {
+  const w = WEEKS.find(wk => wk.n === n);
+  if (!w || !w.teams.length) return;
+  const lines = [`Week ${w.n} · ${w.theme} · ${w.date}`, ''];
+  w.teams.forEach(t => {
+    lines.push(t.name);
+    lines.push(t.p.map(p => p.n + (p.g === 's' ? '*' : '')).join(', '));
+    lines.push('');
+  });
+  const hasSubs = w.teams.some(t => t.p.some(p => p.g === 's'));
+  if (hasSubs) lines.push('* = sub');
+  const btn = document.querySelector(`.wc[data-week="${n}"] .copy-btn`);
+  navigator.clipboard.writeText(lines.join('\n').trim()).then(() => {
+    if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000); }
+  }).catch(() => {
+    if (btn) { btn.textContent = 'Failed'; setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000); }
+  });
 }
 
 // ── Schedule / Calendar ─────────────────────────────────────────────
@@ -1439,7 +1551,7 @@ function rAttGrid() {
   // header row
   let html = `<div style="display:flex;align-items:center;gap:3px;margin-bottom:5px">
     <div style="width:90px;flex-shrink:0"></div>`;
-  WEEKS.forEach(w => {
+  WINTER_WEEKS.forEach(w => {
     const labelCls = w.teams.length === 0 ? 'color:var(--border2)' : 'color:var(--text3)';
     html += `<div style="width:18px;text-align:center;font-size:9px;font-weight:700;${labelCls}">${w.n}</div>`;
   });
@@ -1451,7 +1563,7 @@ function rAttGrid() {
     const safe = esc(r.n);
     html += `<div style="display:flex;align-items:center;gap:3px;margin-bottom:3px">
       <button class="player-link nm-${r.g}" style="width:90px;flex-shrink:0;text-align:right;padding-right:8px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" onclick="showProfile('${safe}')">${r.n}</button>`;
-    WEEKS.forEach(w => {
+    WINTER_WEEKS.forEach(w => {
       if (w.teams.length === 0) {
         html += `<div class="att-dot upcoming" title="Wk ${w.n} ${w.date}: Upcoming"></div>`;
       } else {
@@ -1465,6 +1577,81 @@ function rAttGrid() {
   el.innerHTML = html;
 }
 
+function rSummerAttGrid() {
+  const el = document.getElementById('summerAttGrid');
+  if (!el) return;
+  const allWeeks = SUMMER_WEEKS;
+  const played = allWeeks.filter(w => w.teams.length > 0);
+  const att = {};
+  SUMMER_REGULARS.forEach(r => { att[r.n] = new Set(); });
+  played.forEach(w => w.teams.forEach(t => t.p.forEach(p => {
+    if (att[p.n] !== undefined) att[p.n].add(w.n);
+  })));
+  const labelEl = document.getElementById('summerAttLabel');
+  if (labelEl) labelEl.textContent = `Attendance — ${played.length} played`;
+  let html = `<div style="display:flex;align-items:center;gap:3px;margin-bottom:5px">
+    <div style="width:90px;flex-shrink:0"></div>`;
+  allWeeks.forEach((w, i) => {
+    const labelCls = w.teams.length === 0 ? 'color:var(--border2)' : 'color:var(--text3)';
+    html += `<div style="width:18px;text-align:center;font-size:9px;font-weight:700;${labelCls}">${i + 1}</div>`;
+  });
+  html += `</div>`;
+  const sorted = [...SUMMER_REGULARS].sort((a, b) => (att[b.n]?.size || 0) - (att[a.n]?.size || 0));
+  sorted.forEach(r => {
+    const safe = esc(r.n);
+    html += `<div style="display:flex;align-items:center;gap:3px;margin-bottom:3px">
+      <button class="player-link nm-${r.g}" style="width:90px;flex-shrink:0;text-align:right;padding-right:8px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" onclick="showProfile('${safe}')">${r.n}</button>`;
+    allWeeks.forEach(w => {
+      if (w.teams.length === 0) {
+        html += `<div class="att-dot upcoming" title="Wk ${w.n} ${w.date}: Upcoming"></div>`;
+      } else {
+        const on = att[r.n]?.has(w.n);
+        const cls = on ? (r.g === 'f' ? 'on-f' : 'on-m') : 'off';
+        html += `<div class="att-dot ${cls}" title="Wk ${w.n} ${w.date}: ${on ? 'Attended' : 'Absent'}"></div>`;
+      }
+    });
+    html += `<span style="font-size:10px;color:var(--text3);margin-left:6px;flex-shrink:0">${att[r.n]?.size || 0}/${played.length}</span></div>`;
+  });
+  el.innerHTML = html;
+}
+
+function rAttTrend() {
+  const el = document.getElementById('attTrend');
+  if (!el) return;
+  const played = WINTER_WEEKS.filter(w => w.teams.length > 0);
+  const max = Math.max(...played.map(w => w.reg));
+  const bars = played.map(w => {
+    const pct = Math.round(w.reg / max * 100);
+    return `<div class="spk-bar" style="height:${pct}%" title="Wk ${w.n} ${w.date}: ${w.reg} players"></div>`;
+  }).join('');
+  const lbls = played.map(w => `<span>${w.n}</span>`).join('');
+  el.innerHTML = `<div class="spk">${bars}</div><div class="spk-lbl">${lbls}</div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-top:8px">
+      <span>Min: ${Math.min(...played.map(w=>w.reg))} players</span>
+      <span>Avg: ${Math.round(played.reduce((s,w)=>s+w.reg,0)/played.length)} players</span>
+      <span>Max: ${max} players</span>
+    </div>`;
+}
+
+function rSummerAttTrend() {
+  const el = document.getElementById('summerAttTrend');
+  if (!el) return;
+  const played = SUMMER_WEEKS.filter(w => w.teams.length > 0);
+  if (!played.length) { el.innerHTML = '<div style="font-size:13px;color:var(--text3);font-style:italic">No data yet.</div>'; return; }
+  const max = Math.max(...played.map(w => w.reg));
+  const bars = played.map(w => {
+    const pct = Math.round(w.reg / max * 100);
+    return `<div class="spk-bar" style="height:${pct}%;background:linear-gradient(to top,#F5A623,#FFD04A)" title="Wk ${w.n} ${w.date}: ${w.reg} players"></div>`;
+  }).join('');
+  const lbls = played.map(w => `<span>${w.n}</span>`).join('');
+  el.innerHTML = `<div class="spk">${bars}</div><div class="spk-lbl">${lbls}</div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-top:8px">
+      <span>Min: ${Math.min(...played.map(w=>w.reg))} players</span>
+      <span>Avg: ${Math.round(played.reduce((s,w)=>s+w.reg,0)/played.length)} players</span>
+      <span>Max: ${max} players</span>
+    </div>`;
+}
+
 function rStreaks() {
   const el = document.getElementById('streakStrip');
   const hot = REGULARS.filter(r => (STREAK[r.n] || 0) >= 5)
@@ -1472,7 +1659,7 @@ function rStreaks() {
   el.innerHTML = hot.map(r => {
     const s = STREAK[r.n] || 0;
     return `<div class="streak-card">
-      <div class="av av${r.g}" style="width:26px;height:26px;font-size:9px">${r.n.substring(0,2).toUpperCase()}</div>
+      <div class="av av${r.g}" style="width:26px;height:26px;font-size:9px">${ini(r.n)}</div>
       <div>
         <div class="streak-name">${r.n}</div>
         <div class="streak-sub">${s} game streak${s === PLAYED_COUNT ? ' · perfect!' : ''}</div>
@@ -1491,6 +1678,25 @@ function fillSelects() {
              + `<optgroup label="Subs">${subs.map(n=>`<option>${n}</option>`).join('')}</optgroup>`;
   const sel = document.getElementById('chemSel');
   sel.innerHTML = `<option value="">${sel.options[0].textContent}</option>` + opts;
+}
+function fillSummerSelects() {
+  const women = SUMMER_REGULARS.filter(r => r.g === 'f').map(r => r.n);
+  const men   = SUMMER_REGULARS.filter(r => r.g === 'm').map(r => r.n);
+  const opts  = `<optgroup label="Women">${women.map(n=>`<option>${n}</option>`).join('')}</optgroup>`
+              + `<optgroup label="Men">${men.map(n=>`<option>${n}</option>`).join('')}</optgroup>`;
+  const sel = document.getElementById('chemSummerSel');
+  if (sel) sel.innerHTML = `<option value="">— Select a player —</option>` + opts;
+}
+function fillAllSelects() {
+  const seen = new Set();
+  const women = [], men = [];
+  [...REGULARS, ...SUMMER_REGULARS].forEach(r => {
+    if (!seen.has(r.n)) { seen.add(r.n); (r.g === 'f' ? women : men).push(r.n); }
+  });
+  const opts = `<optgroup label="Women">${women.map(n=>`<option>${n}</option>`).join('')}</optgroup>`
+             + `<optgroup label="Men">${men.map(n=>`<option>${n}</option>`).join('')}</optgroup>`;
+  const sel = document.getElementById('chemAllSel');
+  if (sel) sel.innerHTML = `<option value="">— Select a player —</option>` + opts;
 }
 
 function showChemistry(name) {
@@ -1564,31 +1770,63 @@ function showChemDuo(a, b, row) {
   el.style.display = 'block';
 }
 
-function goToWeek(n) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-history').classList.add('active');
-  document.querySelector('.nb[onclick*="\'history\'"]').classList.add('active');
-  hideProfile();
-  setTimeout(() => jumpToWeek(n), 80);
+function showSummerChemistry(name) {
+  const el = document.getElementById('chemSummerRes');
+  if (!name) { el.style.display = 'none'; return; }
+  const counts = {};
+  SUMMER_WEEKS.forEach(w => w.teams.forEach(t => {
+    const names = t.p.map(p => p.n);
+    if (names.includes(name)) names.forEach(m => { if (m !== name) counts[m] = (counts[m] || 0) + 1; });
+  }));
+  const pairs = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const maxCount = pairs[0]?.[1] || 1;
+  document.getElementById('chemSummerPartners').innerHTML = pairs.map(([partner, count]) => {
+    const g = GM[partner] || 'm';
+    return `<div class="pr">
+      <div class="av av${g}">${ini(partner)}</div>
+      <span class="nm nm-${g}">${partner}</span>
+      <div class="bw"><div class="b${g}" style="width:${Math.round(count/maxCount*100)}%"></div></div>
+      <span class="an">${count}</span>
+    </div>`;
+  }).join('') || '<div style="font-size:13px;color:var(--text3)">No data yet.</div>';
+  el.style.display = 'block';
 }
 
-function rSummerLb() {
-  const el = document.getElementById('slb');
-  const sorted = [...SUMMER_REGULARS].sort((a, b) => (SUMMER_ATT[b.n]||0) - (SUMMER_ATT[a.n]||0));
-  el.innerHTML = sorted.map(r => {
-    const badge = !REG_NAMES.has(r.n) ? `<span class="bdg" style="background:var(--green-bg);color:var(--green)">new</span>` : '';
-    const att = SUMMER_ATT[r.n] || 0;
-    const pct = SUMMER_PLAYED > 0 ? Math.round(att / SUMMER_PLAYED * 100) : 0;
-    const attHtml = SUMMER_PLAYED > 0
-      ? `<div class="bw"><div class="b${r.g}" style="width:${pct}%"></div></div><span class="an">${att}/${SUMMER_PLAYED}</span>`
-      : '';
-    return `<div class="pr" data-g="${r.g}">
-      <div class="av av${r.g}">${r.n.substring(0,2).toUpperCase()}</div>
-      <span class="nm nm-${r.g}">${r.n}</span>
-      ${badge}${attHtml}
+function showAllTimeChemistry(name) {
+  const el = document.getElementById('chemAllRes');
+  if (!name) { el.style.display = 'none'; return; }
+  const counts = {};
+  WEEKS.forEach(w => w.teams.forEach(t => {
+    const names = t.p.map(p => p.n);
+    if (names.includes(name)) names.forEach(m => { if (m !== name) counts[m] = (counts[m] || 0) + 1; });
+  }));
+  const pairs = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const regPairs = pairs.filter(([p]) => ALL_REG_NAMES.has(p));
+  const subPairs = pairs.filter(([p]) => !ALL_REG_NAMES.has(p));
+  const maxCount = regPairs[0]?.[1] || pairs[0]?.[1] || 1;
+  let pHtml = regPairs.map(([partner, count]) => {
+    const g = GM[partner] || 'm';
+    return `<div class="pr">
+      <div class="av av${g}">${ini(partner)}</div>
+      <span class="nm nm-${g}">${partner}</span>
+      <div class="bw"><div class="b${g}" style="width:${Math.round(count/maxCount*100)}%"></div></div>
+      <span class="an">${count}</span>
     </div>`;
   }).join('');
+  if (subPairs.length) {
+    pHtml += `<div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin:10px 0 4px;padding-top:8px;border-top:1px solid var(--border)">Subs</div>`;
+    pHtml += subPairs.map(([partner, count]) => {
+      const g = GM[partner] || 'm';
+      return `<div class="pr" style="padding:4px 0">
+        <div class="av av${g}" style="width:22px;height:22px;font-size:8px">${ini(partner)}</div>
+        <span class="nm nm-${g}" style="font-size:12px">${partner}</span>
+        <span class="bdg bsb">sub</span>
+        <span class="an">${count}</span>
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('chemAllPartners').innerHTML = pHtml || '<div style="font-size:13px;color:var(--text3)">No data yet.</div>';
+  el.style.display = 'block';
 }
 
 function uniqueTeammates(name, weeks) {
@@ -1600,9 +1838,10 @@ function uniqueTeammates(name, weeks) {
   return partners;
 }
 
-function rConnLb() {
-  const el = document.getElementById('connLb');
-  const data = REGULARS.map(r => ({ n: r.n, g: r.g, unique: uniqueTeammates(r.n, WINTER_WEEKS).size }))
+function rConnLbInto(elementId, regulars, weeks) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const data = regulars.map(r => ({ n: r.n, g: r.g, unique: uniqueTeammates(r.n, weeks).size }))
     .sort((a, b) => b.unique - a.unique);
   const max = data[0]?.unique || 1;
   el.innerHTML = data.map(d => `<div class="pr">
@@ -1612,6 +1851,9 @@ function rConnLb() {
       <span class="an" style="width:auto;font-size:11px">${d.unique} unique</span>
     </div>`).join('');
 }
+function rConnLb()        { rConnLbInto('connLb',        REGULARS,        WINTER_WEEKS); }
+function rSummerConnLb()  { rConnLbInto('summerConnLb',  SUMMER_REGULARS, SUMMER_WEEKS); }
+function rAllTimeConnLb() { rConnLbInto('allTimeConnLb', ALL_REGULARS,    WEEKS); }
 
 // ── UI / navigation ─────────────────────────────────────────────────
 function tw(c) {
@@ -1632,6 +1874,14 @@ function jumpToWeek(n) {
   if (!card.classList.contains('open')) tw(card);
   card.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+function goToWeek(n) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-history').classList.add('active');
+  document.querySelector('.nb[onclick*="\'history\'"]').classList.add('active');
+  hideProfile();
+  setTimeout(() => jumpToWeek(n), 80);
+}
 function showSchedView(view, btn) {
   btn.closest('.tr').querySelectorAll('.tb').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
@@ -1645,8 +1895,10 @@ function showSummerLbTab(tab, btn) {
   document.getElementById('slb-att').style.display = tab === 'att' ? 'block' : 'none';
 }
 function showSeasonPanel(prefix, season) {
-  document.getElementById(prefix + '-winter').style.display = season === 'winter' ? 'block' : 'none';
-  document.getElementById(prefix + '-summer').style.display = season === 'summer' ? 'block' : 'none';
+  ['winter', 'summer', 'all'].forEach(s => {
+    const el = document.getElementById(prefix + '-' + s);
+    if (el) el.style.display = s === season ? 'block' : 'none';
+  });
 }
 let lbGender = 'all';
 function showTab(btn, g, targetId) {
@@ -1661,7 +1913,7 @@ function showTab(btn, g, targetId) {
 function applyLbFilters() {
   const q = (document.getElementById('lbSearch')?.value || '').trim().toLowerCase();
   document.querySelectorAll('#lb .pr').forEach(r => {
-    const name = r.querySelector('.player-link').textContent.toLowerCase();
+    const name = r.querySelector('.player-link')?.textContent.toLowerCase() ?? '';
     const gOk = lbGender === 'all' || r.dataset.g === lbGender;
     r.style.display = (gOk && (!q || name.includes(q))) ? 'flex' : 'none';
   });
@@ -1677,6 +1929,27 @@ function toggleTheme() {
 }
 
 // ── History filter ──────────────────────────────────────────────────
+function filterSummerWeeks() {
+  const val = document.getElementById('summerHistSearch').value.trim().toLowerCase();
+  const cards = document.querySelectorAll('#summer-weeks .wc');
+  const countEl = document.getElementById('summerHistCount');
+  let shown = 0;
+  cards.forEach(card => {
+    if (!val) { card.style.display = ''; return; }
+    const names = Array.from(card.querySelectorAll('.player-link')).map(b => b.textContent.toLowerCase());
+    const match = names.some(n => n.includes(val));
+    card.style.display = match ? '' : 'none';
+    if (match) { shown++; if (!card.classList.contains('open')) tw(card); }
+  });
+  if (!val) {
+    countEl.style.display = 'none';
+    cards.forEach(card => { if (card.classList.contains('open')) tw(card); });
+    return;
+  }
+  countEl.style.display = 'block';
+  countEl.textContent = `${shown} week${shown !== 1 ? 's' : ''} with "${val}"`;
+}
+
 function filterHistory(q) {
   const val = q.trim().toLowerCase();
   const cards = document.querySelectorAll('#weeks .wc');
@@ -1701,159 +1974,15 @@ function filterHistory(q) {
   countEl.textContent = `${shown} week${shown !== 1 ? 's' : ''} with "${q.trim()}"`;
 }
 
-// ── Attendance trend sparkline ───────────────────────────────────────
-function rAttTrend() {
-  const el = document.getElementById('attTrend');
-  if (!el) return;
-  const played = WINTER_WEEKS.filter(w => w.teams.length > 0);
-  const max = Math.max(...played.map(w => w.reg));
-  const bars = played.map(w => {
-    const pct = Math.round(w.reg / max * 100);
-    return `<div class="spk-bar" style="height:${pct}%" title="Wk ${w.n} ${w.date}: ${w.reg} players"></div>`;
-  }).join('');
-  const lbls = played.map(w => `<span>${w.n}</span>`).join('');
-  el.innerHTML = `<div class="spk">${bars}</div><div class="spk-lbl">${lbls}</div>
-    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-top:8px">
-      <span>Min: ${Math.min(...played.map(w=>w.reg))} players</span>
-      <span>Avg: ${Math.round(played.reduce((s,w)=>s+w.reg,0)/played.length)} players</span>
-      <span>Max: ${max} players</span>
-    </div>`;
-}
-
-// ── Copy teams for WhatsApp ──────────────────────────────────────────
-function copyTeams(n) {
-  const w = WEEKS.find(wk => wk.n === n);
-  if (!w || !w.teams.length) return;
-  const lines = [`Week ${w.n} · ${w.theme} · ${w.date}`, ''];
-  w.teams.forEach(t => {
-    lines.push(t.name);
-    lines.push(t.p.map(p => p.n + (p.g === 's' ? '*' : '')).join(', '));
-    lines.push('');
-  });
-  const hasSubs = w.teams.some(t => t.p.some(p => p.g === 's'));
-  if (hasSubs) lines.push('* = sub');
-  const btn = document.querySelector(`.wc[data-week="${n}"] .copy-btn`);
-  navigator.clipboard.writeText(lines.join('\n').trim()).then(() => {
-    if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000); }
-  }).catch(() => {
-    if (btn) { btn.textContent = 'Failed'; setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000); }
-  });
-}
-
 // ── Init ────────────────────────────────────────────────────────────
-function rSummerSchedPreview() {
-  const el = document.getElementById('summerSchedPreview');
-  if (!el) return;
-  const games = SUMMER_SCHED.filter(s => s.s === 'su');
-  const today = new Date(); today.setHours(0,0,0,0);
-  const upcoming = games.filter(s => {
-    const d = new Date(s.date.replace('Sunday, ','') + ', 2026');
-    return d >= today;
-  }).slice(0, 5);
-  if (!upcoming.length) {
-    el.innerHTML = '<div style="font-size:13px;color:var(--text3);font-style:italic">No upcoming sessions.</div>';
-    return;
-  }
-  el.innerHTML = upcoming.map(s => `<div class="sr">
-    <span class="sn">${s.n}</span>
-    <span class="sd">${s.date.replace('Sunday, ','')}</span>
-    <span class="sb su">☀️ Summer</span>
-  </div>`).join('');
-}
-
-function fillSummerSelects() {
-  const women = SUMMER_REGULARS.filter(r => r.g === 'f').map(r => r.n);
-  const men   = SUMMER_REGULARS.filter(r => r.g === 'm').map(r => r.n);
-  const opts  = `<optgroup label="Women">${women.map(n=>`<option>${n}</option>`).join('')}</optgroup>`
-              + `<optgroup label="Men">${men.map(n=>`<option>${n}</option>`).join('')}</optgroup>`;
-  const sel = document.getElementById('chemSummerSel');
-  if (sel) sel.innerHTML = `<option value="">— Select a player —</option>` + opts;
-}
-
-function showSummerChemistry(name) {
-  const el = document.getElementById('chemSummerRes');
-  if (!name) { el.style.display = 'none'; return; }
-  const counts = {};
-  SUMMER_WEEKS.forEach(w => w.teams.forEach(t => {
-    const names = t.p.map(p => p.n);
-    if (names.includes(name)) names.forEach(m => { if (m !== name) counts[m] = (counts[m] || 0) + 1; });
-  }));
-  const pairs = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-  const maxCount = pairs[0]?.[1] || 1;
-  document.getElementById('chemSummerPartners').innerHTML = pairs.map(([partner, count]) => {
-    const g = GM[partner] || 'm';
-    return `<div class="pr">
-      <div class="av av${g}">${ini(partner)}</div>
-      <span class="nm nm-${g}">${partner}</span>
-      <div class="bw"><div class="b${g}" style="width:${Math.round(count/maxCount*100)}%"></div></div>
-      <span class="an">${count}</span>
-    </div>`;
-  }).join('') || '<div style="font-size:13px;color:var(--text3)">No data yet.</div>';
-  el.style.display = 'block';
-}
-
-function rSummerDuos() {
-  const el = document.getElementById('summerDuos');
-  if (!el) return;
-  const played = SUMMER_WEEKS.filter(w => w.teams.length > 0).length;
-  if (!played) { el.innerHTML = '<div style="font-size:13px;color:var(--text3);font-style:italic">No data yet.</div>'; return; }
-  const counts = {};
-  const SREG = new Set(SUMMER_REGULARS.map(r => r.n));
-  SUMMER_WEEKS.forEach(w => w.teams.forEach(t => {
-    const ns = t.p.map(p => p.n).filter(n => SREG.has(n));
-    for (let i = 0; i < ns.length; i++)
-      for (let j = i+1; j < ns.length; j++) {
-        const key = [ns[i],ns[j]].sort().join('|||');
-        counts[key] = (counts[key]||0)+1;
-      }
-  }));
-  el.innerHTML = Object.entries(counts)
-    .sort((a,b) => b[1]-a[1])
-    .slice(0,10)
-    .map(([key,n]) => {
-      const [a,b] = key.split('|||');
-      return `<div class="par"><span class="pn">${a} &amp; ${b}</span><div class="dots">${dots(n,played)}</div><span class="pc">${n}/${played}</span></div>`;
-    }).join('');
-}
-
-function rSummerConnLb() {
-  const el = document.getElementById('summerConnLb');
-  if (!el) return;
-  const data = SUMMER_REGULARS.map(r => ({n:r.n,g:r.g,unique:uniqueTeammates(r.n,SUMMER_WEEKS).size}))
-    .sort((a,b) => b.unique-a.unique);
-  const max = data[0]?.unique || 1;
-  el.innerHTML = data.map(d => `<div class="pr">
-    <div class="av av${d.g}">${ini(d.n)}</div>
-    <span class="nm nm-${d.g}">${d.n}</span>
-    <div class="bw" style="width:80px"><div class="b${d.g}" style="width:${Math.round(d.unique/max*100)}%"></div></div>
-    <span class="an" style="width:auto;font-size:11px">${d.unique} unique</span>
-  </div>`).join('');
-}
-
-function rSummerEmpty() {
-  if (SUMMER_PLAYED > 0) {
-    const html = `<div style="font-size:28px;margin-bottom:.5rem">☀️</div>
-      <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px">Summer 2026 — Season underway!</div>
-      <div style="font-size:12px;color:var(--text3)">${SUMMER_PLAYED} of 11 sessions complete · 24 regulars</div>`;
-    document.querySelectorAll('.summer-empty').forEach(el => el.innerHTML = html);
-    return;
-  }
-  const start = new Date('2026-05-17');
-  const today = new Date(); today.setHours(0,0,0,0);
-  const days = Math.max(0, Math.ceil((start - today) / 86400000));
-  const countdown = days > 0
-    ? `<div style="font-size:36px;font-weight:800;color:var(--blue);line-height:1">${days}</div>
-       <div style="font-size:12px;color:var(--text3);margin-bottom:12px">day${days>1?'s':''} to go</div>`
-    : `<div style="font-size:28px;font-weight:700;color:var(--blue);margin-bottom:8px">Starting today! 🎉</div>`;
-  const html = `<div style="font-size:32px;margin-bottom:.5rem">☀️</div>
-    ${countdown}
-    <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px">Summer 2026 — May 17</div>
-    <div style="font-size:12px;color:var(--text3)">24 regulars registered · 11 Sundays</div>`;
-  document.querySelectorAll('.summer-empty').forEach(el => el.innerHTML = html);
-}
-
-// Init
-computeStats(); computeWL(); rDuos(); rLb(); rSummerLb(); rSubs(); rTopSubs(); rWeeks(); rSummerWeeks(); rWLLb(); rSched(); rCal(); fillSelects(); fillSummerSelects(); rConnLb(); rAttGrid(); rAttTrend(); rStreaks(); rSummerEmpty(); rSummerSchedPreview(); rSummerDuos(); rSummerConnLb();
+computeStats(); computeWL();
+rLb(); rSummerLb(); rWLLb(); rSummerWLOverview(); rSubs(); rTopSubs();
+rDuos(); rSummerDuos(); rAllTimeDuos();
+rConnLb(); rSummerConnLb(); rAllTimeConnLb();
+rWeeks(); rSummerWeeks();
+rSched(); rCal();
+rAttGrid(); rSummerAttGrid(); rAttTrend(); rSummerAttTrend(); rStreaks();
+fillSelects(); fillSummerSelects(); fillAllSelects();
 window.addEventListener('scroll', () => {
   const btn = document.getElementById('scrollTopBtn');
   if (btn) btn.style.display = window.scrollY > 300 ? 'block' : 'none';
