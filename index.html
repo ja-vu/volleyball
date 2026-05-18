@@ -541,12 +541,9 @@
         </div>
       </div>
       <div class="sec">
-        <div class="sl">Weekly turnout</div>
-        <div class="card" id="attTrend"></div>
-      </div>
-      <div class="sec">
         <div class="sl">Attendance — 15 played · season complete</div>
         <div class="card">
+          <div id="attStats" style="font-size:12px;color:var(--text3);margin-bottom:10px"></div>
           <div class="att-wrap" id="attGrid"></div>
           <div style="display:flex;gap:14px;margin-top:10px;font-size:11px;color:var(--text2);flex-wrap:wrap">
             <span><span class="leg-dot" style="background:var(--bar-m)"></span>Men</span>
@@ -576,13 +573,14 @@
         <div class="sl">W/L standings</div>
         <div class="card" id="summerWLOverview"></div>
       </div>
-      <div class="sec">
-        <div class="sl">Weekly turnout</div>
-        <div class="card" id="summerAttTrend"></div>
+      <div class="sec" id="summerFunFactsSec">
+        <div class="sl">Fun facts</div>
+        <div id="summerFunFacts"></div>
       </div>
       <div class="sec">
         <div class="sl" id="summerAttLabel">Attendance</div>
         <div class="card">
+          <div id="summerAttStats" style="font-size:12px;color:var(--text3);margin-bottom:10px"></div>
           <div class="att-wrap" id="summerAttGrid"></div>
           <div style="display:flex;gap:14px;margin-top:10px;font-size:11px;color:var(--text2);flex-wrap:wrap">
             <span><span class="leg-dot" style="background:var(--bar-m)"></span>Men</span>
@@ -964,11 +962,11 @@ const WEEKS = [
     {name:'Guy-Concordia', p:[{n:'John',g:'m'},{n:'Patricio',g:'m'},{n:'Audrey',g:'f'},{n:'Anthony W.',g:'m'},{n:'Rigil',g:'m'},{n:'Joey',g:'m'}]},
     {name:'Snowdon',       p:[{n:'Erik',g:'m'},{n:'Kevin H.',g:'m'},{n:'Michel',g:'m'},{n:'Khoa',g:'m'},{n:'Barbara',g:'f'},{n:'Jose',g:'m'}]},
     {name:'Berri-UQAM',    p:[{n:'Ke-Nam',g:'s',sg:'m'},{n:'Catherine',g:'s',sg:'f'},{n:'Melanie',g:'s',sg:'f'},{n:'Daniel',g:'m'},{n:'Siu',g:'m'},{n:'David',g:'s',sg:'m'}]}]},
-  {n:16, date:'May 17', theme:'Ocean', season:'s', reg:14, teams:[
+  {n:16, date:'May 17', theme:'Ocean', season:'s', reg:13, teams:[
     {name:'Hammerheads',  p:[{n:'Emad',g:'m'},{n:'Norichar',g:'s',sg:'m'},{n:'John',g:'m'},{n:'Barbara',g:'s',sg:'f'},{n:'Nathan',g:'s',sg:'m'},{n:'Brendon',g:'s',sg:'m'}]},
     {name:'Kraken Squad', p:[{n:'Lillian',g:'s',sg:'f'},{n:'William',g:'s',sg:'m'},{n:'Joey',g:'s',sg:'m'},{n:'Salem',g:'s',sg:'m'},{n:'Michel',g:'m'},{n:'Anthony W.',g:'m'}]},
     {name:'Manta Rays',   p:[{n:'Jose',g:'m'},{n:'Kevin H.',g:'m'},{n:'Julie',g:'f'},{n:'Ke-Nam',g:'s',sg:'m'},{n:'Patricio',g:'m'},{n:'James',g:'m'}]},
-    {name:'Anglerfish',   p:[{n:'Bernie',g:'m'},{n:'Mark',g:'m'},{n:'Anita',g:'f'},{n:'Daniel',g:'m'},{n:'Alain',g:'m'},{n:'Erik',g:'s',sg:'m'}]}],
+    {name:'Anglerfish',   p:[{n:'Bernie',g:'m'},{n:'Mark',g:'m'},{n:'Anita',g:'f'},{n:'Daniel',g:'m'},{n:'Alain',g:'m',ns:true},{n:'Erik',g:'s',sg:'m'}]}],
    results:[
     {r:1, a:'Manta Rays',  b:'Anglerfish',   w:'Anglerfish'},
     {r:1, a:'Hammerheads', b:'Kraken Squad',  w:'Hammerheads'},
@@ -1079,7 +1077,7 @@ function computeWL() {
   SUMMER_PLAYED = played.length;
   played.forEach(w => {
     w.teams.forEach(t => t.p.forEach(p => {
-      if (SUMMER_ATT.hasOwnProperty(p.n)) SUMMER_ATT[p.n]++;
+      if (!p.ns && SUMMER_ATT.hasOwnProperty(p.n)) SUMMER_ATT[p.n]++;
     }));
     if (!w.results) return;
     w.results.forEach(r => {
@@ -1088,8 +1086,8 @@ function computeWL() {
       if (!teamA || !teamB) return;
       const winTeam  = r.w === r.a ? teamA : teamB;
       const loseTeam = r.w === r.a ? teamB : teamA;
-      winTeam.p.forEach(p => { if (!WL[p.n]) WL[p.n]={w:0,l:0}; WL[p.n].w++; });
-      loseTeam.p.forEach(p => { if (!WL[p.n]) WL[p.n]={w:0,l:0}; WL[p.n].l++; });
+      winTeam.p.forEach(p =>  { if (!p.ns) { if (!WL[p.n]) WL[p.n]={w:0,l:0}; WL[p.n].w++; } });
+      loseTeam.p.forEach(p => { if (!p.ns) { if (!WL[p.n]) WL[p.n]={w:0,l:0}; WL[p.n].l++; } });
     });
   });
 }
@@ -1098,41 +1096,57 @@ function computeWL() {
 function pl(p) {
   const gc = (p.g === 'f' || (p.g === 's' && p.sg === 'f')) ? 'nm-f' : 'nm-m';
   const sub = p.g==='s' ? ` <span style="font-size:10px;opacity:.55">(sub)</span>` : '';
+  const ns  = p.ns ? ` <span style="font-size:10px;opacity:.55;color:var(--text3)">(no show)</span>` : '';
   const safeName = esc(p.n);
-  return `<div style="font-size:12px;padding:1px 0" class="${gc}"><button class="player-link" onclick="showProfile('${safeName}')">${p.n}</button>${sub}</div>`;
+  return `<div style="font-size:12px;padding:1px 0${p.ns ? ';opacity:.45' : ''}" class="${gc}"><button class="player-link" onclick="showProfile('${safeName}')">${p.n}</button>${sub}${ns}</div>`;
 }
 function showProfile(name) {
-  const regular = REGULARS.find(r => r.n === name);
-  const summerReg = SUMMER_REGULARS.find(r => r.n === name);
-  const isSub = !regular && !summerReg && name in SUB_COUNTS;
+  const regular    = REGULARS.find(r => r.n === name);
+  const summerReg  = SUMMER_REGULARS.find(r => r.n === name);
+  const isSub      = !regular && !summerReg && name in SUB_COUNTS;
   if (!regular && !summerReg && !isSub) return;
-  const partnerCounts = {};
+
+  const winterCounts = {};
   WINTER_WEEKS.forEach(w => w.teams.forEach(t => {
-    const names = t.p.map(p => p.n);
-    if (names.includes(name)) names.forEach(m => { if (m !== name) partnerCounts[m] = (partnerCounts[m] || 0) + 1; });
+    const names = t.p.filter(p => !p.ns).map(p => p.n);
+    if (names.includes(name)) names.forEach(m => { if (m !== name) winterCounts[m] = (winterCounts[m] || 0) + 1; });
   }));
-  const topPairs = Object.entries(partnerCounts)
-    .sort((a, b) => b[1] - a[1])
-    .map(([partner, count]) => `${partner} (${count})`);
+  const summerCounts = {};
+  SUMMER_WEEKS.forEach(w => w.teams.forEach(t => {
+    const names = t.p.filter(p => !p.ns).map(p => p.n);
+    if (names.includes(name)) names.forEach(m => { if (m !== name) summerCounts[m] = (summerCounts[m] || 0) + 1; });
+  }));
+
+  const partnerCounts = regular ? winterCounts : summerCounts;
+  const topPairs = Object.entries(partnerCounts).sort((a, b) => b[1] - a[1]).map(([p, c]) => `${p} (${c})`);
   const uniqueCount = Object.keys(partnerCounts).length;
-  const att = ATT[name] ?? 0;
-  const streak = STREAK[name] ?? 0;
+
+  const att       = ATT[name] ?? 0;
+  const streak    = STREAK[name] ?? 0;
+  const summerAtt = SUMMER_ATT[name] ?? 0;
+
+  let attText;
+  if (regular && summerReg)   attText = `❄️ ${att}/${PLAYED_COUNT} · ☀️ ${summerAtt}/${SUMMER_PLAYED}`;
+  else if (regular)           attText = `${att}/${PLAYED_COUNT} sessions`;
+  else if (summerReg)         attText = `${summerAtt}/${SUMMER_PLAYED} sessions`;
+  else                        attText = `${SUB_COUNTS[name]} session${SUB_COUNTS[name] !== 1 ? 's' : ''} (sub)`;
+
+  const streakText = regular
+    ? `${streak} ${streak === PLAYED_COUNT ? '(perfect!)' : 'game' + (streak === 1 ? '' : 's')}`
+    : 'N/A';
+
   const neverCount = regular
-    ? REGULARS.filter(r => r.n !== name && !partnerCounts[r.n]).length
+    ? REGULARS.filter(r => r.n !== name && !winterCounts[r.n]).length
     : null;
+
   document.getElementById('profileCard').classList.add('open');
   document.getElementById('profileBackdrop').classList.add('open');
   document.getElementById('profileName').textContent = name;
-  document.getElementById('profileAttendance').textContent = regular
-    ? `${att}/${PLAYED_COUNT} sessions`
-    : `${SUB_COUNTS[name]} session${SUB_COUNTS[name] !== 1 ? 's' : ''} (sub)`;
-  document.getElementById('profileStreak').textContent = regular
-    ? `${streak} ${streak === PLAYED_COUNT ? '(perfect!)' : 'game' + (streak === 1 ? '' : 's')}`
-    : 'N/A';
-  document.getElementById('profilePartner').textContent = topPairs.length
-    ? topPairs.slice(0, 3).join(', ')
-    : 'No data yet';
+  document.getElementById('profileAttendance').textContent = attText;
+  document.getElementById('profileStreak').textContent = streakText;
+  document.getElementById('profilePartner').textContent = topPairs.length ? topPairs.slice(0, 3).join(', ') : 'No data yet';
   document.getElementById('profileUnique').textContent = `${uniqueCount} player${uniqueCount !== 1 ? 's' : ''}`;
+
   const neverWrap = document.getElementById('profileNeverWrap');
   if (neverCount !== null) {
     neverWrap.style.display = '';
@@ -1142,6 +1156,7 @@ function showProfile(name) {
   } else {
     neverWrap.style.display = 'none';
   }
+
   const wlWrap = document.getElementById('profileWLWrap');
   const wl = WL[name];
   if (wl) {
@@ -1277,11 +1292,16 @@ function rWLLb() {
   })).sort((a, b) => b.pct - a.pct || (b.w + b.l) - (a.w + a.l));
   const regs = all.filter(p => p.isReg);
   const subs = all.filter(p => !p.isReg);
+  const nsCount = {};
+  SUMMER_WEEKS.forEach(w => w.teams.forEach(t => t.p.forEach(p => {
+    if (p.ns) nsCount[p.n] = (nsCount[p.n] || 0) + 1;
+  })));
   let rank = 0, lastPct = -1, sameCount = 0;
   const row = (p, showRank) => {
     const total = p.w + p.l;
     const wPct = total > 0 ? Math.round(p.w / total * 100) : 0;
     const medal = showRank && rank === 1 ? '🥇' : showRank && rank === 2 ? '🥈' : showRank && rank === 3 ? '🥉' : '';
+    const nsBadge = nsCount[p.n] ? `<span style="font-size:10px;color:var(--text3);margin-left:2px">${nsCount[p.n]} no-show</span>` : '';
     return `<div class="pr" data-g="${p.g}" style="align-items:center">
       ${showRank
         ? medal
@@ -1289,7 +1309,7 @@ function rWLLb() {
           : `<span style="font-size:11px;color:var(--text3);width:22px;text-align:right;flex-shrink:0">#${rank}</span>`
         : `<span style="width:22px;flex-shrink:0"></span>`}
       <div class="av av${p.g}">${ini(p.n)}</div>
-      <span class="nm nm-${p.g}" style="flex:1;min-width:0"><button class="player-link" onclick="showProfile('${esc(p.n)}')">${p.n}</button></span>
+      <span class="nm nm-${p.g}" style="flex:1;min-width:0"><button class="player-link" onclick="showProfile('${esc(p.n)}')">${p.n}</button>${nsBadge}</span>
       <div style="display:flex;gap:4px;align-items:center;flex-shrink:0">
         <span style="font-size:13px;font-weight:700;background:var(--green-bg);color:var(--green);padding:2px 7px;border-radius:20px">${p.w}W</span>
         <span style="font-size:13px;font-weight:700;background:var(--bg3);color:var(--text2);padding:2px 7px;border-radius:20px">${p.l}L</span>
@@ -1325,7 +1345,7 @@ function rSummerWLOverview() {
     }))
     .sort((a, b) => b.pct - a.pct || b.w - a.w || a.l - b.l);
   let rank = 0, lastPct = -1, sameCount = 0;
-  el.innerHTML = regs.map(p => {
+  const rows = regs.slice(0, 6).map(p => {
     if (p.pct !== lastPct) { rank += 1 + sameCount; sameCount = 0; lastPct = p.pct; } else sameCount++;
     const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
     const wPct = p.w + p.l > 0 ? Math.round(p.pct * 100) : 0;
@@ -1342,6 +1362,54 @@ function rSummerWLOverview() {
       </div>
     </div>`;
   }).join('');
+  const link = `<div style="text-align:right;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+    <button class="player-link" style="font-size:12px;color:var(--blue)" onclick="showPage('leaderboard',document.querySelector('.nb[onclick*=\\'leaderboard\\']'))">See full standings →</button>
+  </div>`;
+  el.innerHTML = rows + (regs.length > 6 ? link : '');
+}
+
+function rSummerFunFacts() {
+  const el = document.getElementById('summerFunFacts');
+  const sec = document.getElementById('summerFunFactsSec');
+  if (!el) return;
+  if (!SUMMER_PLAYED) { sec.style.display = 'none'; return; }
+  sec.style.display = '';
+  const facts = [];
+  const SUMMER_REG_NAMES = new Set(SUMMER_REGULARS.map(r => r.n));
+
+  const perfect = SUMMER_REGULARS.filter(r => (SUMMER_ATT[r.n] || 0) === SUMMER_PLAYED);
+  if (perfect.length) {
+    const names = perfect.map(r => r.n).join(', ');
+    facts.push({ icon: '🎯', text: `Perfect attendance so far: ${names} — ${SUMMER_PLAYED}/${SUMMER_PLAYED} sessions.` });
+  }
+
+  const duoCounts = {};
+  SUMMER_WEEKS.forEach(w => w.teams.forEach(t => {
+    const names = t.p.filter(p => !p.ns && SUMMER_REG_NAMES.has(p.n)).map(p => p.n);
+    for (let i = 0; i < names.length; i++)
+      for (let j = i + 1; j < names.length; j++) {
+        const key = [names[i], names[j]].sort().join('|||');
+        duoCounts[key] = (duoCounts[key] || 0) + 1;
+      }
+  }));
+  const topDuo = Object.entries(duoCounts).sort((a, b) => b[1] - a[1])[0];
+  if (topDuo && topDuo[1] > 1) {
+    const [a, b] = topDuo[0].split('|||');
+    facts.push({ icon: '🤝', text: `Top duo: ${a} & ${b} have been on the same team ${topDuo[1]} times.` });
+  }
+
+  const qualified = Object.entries(WL)
+    .filter(([n, r]) => SUMMER_REG_NAMES.has(n) && r.w + r.l >= 2)
+    .map(([n, r]) => ({ n, pct: r.w / (r.w + r.l), w: r.w, l: r.l }))
+    .sort((a, b) => b.pct - a.pct || b.w - a.w);
+  if (qualified.length) {
+    const top = qualified[0];
+    facts.push({ icon: '🏆', text: `Best record: ${top.n} at ${top.w}W–${top.l}L (${Math.round(top.pct * 100)}% win rate).` });
+  }
+
+  el.innerHTML = facts.length
+    ? `<div class="card">${facts.map(f => `<div class="ff"><span class="fi">${f.icon}</span>${f.text}</div>`).join('')}</div>`
+    : '';
 }
 
 // ── Team history ─────────────────────────────────────────────────────
@@ -1548,7 +1616,14 @@ function rAttGrid() {
     if (att[p.n] !== undefined) att[p.n].add(w.n);
   })));
 
-  // header row
+  const regs = played.map(w => w.reg);
+  const statsEl = document.getElementById('attStats');
+  if (statsEl && regs.length) {
+    const mn = Math.min(...regs), mx = Math.max(...regs);
+    const avg = Math.round(regs.reduce((s, v) => s + v, 0) / regs.length);
+    statsEl.textContent = `${mn} min · ${avg} avg · ${mx} max players per session`;
+  }
+
   let html = `<div style="display:flex;align-items:center;gap:3px;margin-bottom:5px">
     <div style="width:90px;flex-shrink:0"></div>`;
   WINTER_WEEKS.forEach(w => {
@@ -1585,10 +1660,17 @@ function rSummerAttGrid() {
   const att = {};
   SUMMER_REGULARS.forEach(r => { att[r.n] = new Set(); });
   played.forEach(w => w.teams.forEach(t => t.p.forEach(p => {
-    if (att[p.n] !== undefined) att[p.n].add(w.n);
+    if (!p.ns && att[p.n] !== undefined) att[p.n].add(w.n);
   })));
   const labelEl = document.getElementById('summerAttLabel');
   if (labelEl) labelEl.textContent = `Attendance — ${played.length} played`;
+  const sumRegs = played.map(w => w.reg);
+  const sumStatsEl = document.getElementById('summerAttStats');
+  if (sumStatsEl && sumRegs.length) {
+    const mn = Math.min(...sumRegs), mx = Math.max(...sumRegs);
+    const avg = Math.round(sumRegs.reduce((s, v) => s + v, 0) / sumRegs.length);
+    sumStatsEl.textContent = `${mn} min · ${avg} avg · ${mx} max players per session`;
+  }
   let html = `<div style="display:flex;align-items:center;gap:3px;margin-bottom:5px">
     <div style="width:90px;flex-shrink:0"></div>`;
   allWeeks.forEach((w, i) => {
@@ -1613,43 +1695,6 @@ function rSummerAttGrid() {
     html += `<span style="font-size:10px;color:var(--text3);margin-left:6px;flex-shrink:0">${att[r.n]?.size || 0}/${played.length}</span></div>`;
   });
   el.innerHTML = html;
-}
-
-function rAttTrend() {
-  const el = document.getElementById('attTrend');
-  if (!el) return;
-  const played = WINTER_WEEKS.filter(w => w.teams.length > 0);
-  const max = Math.max(...played.map(w => w.reg));
-  const bars = played.map(w => {
-    const pct = Math.round(w.reg / max * 100);
-    return `<div class="spk-bar" style="height:${pct}%" title="Wk ${w.n} ${w.date}: ${w.reg} players"></div>`;
-  }).join('');
-  const lbls = played.map(w => `<span>${w.n}</span>`).join('');
-  el.innerHTML = `<div class="spk">${bars}</div><div class="spk-lbl">${lbls}</div>
-    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-top:8px">
-      <span>Min: ${Math.min(...played.map(w=>w.reg))} players</span>
-      <span>Avg: ${Math.round(played.reduce((s,w)=>s+w.reg,0)/played.length)} players</span>
-      <span>Max: ${max} players</span>
-    </div>`;
-}
-
-function rSummerAttTrend() {
-  const el = document.getElementById('summerAttTrend');
-  if (!el) return;
-  const played = SUMMER_WEEKS.filter(w => w.teams.length > 0);
-  if (!played.length) { el.innerHTML = '<div style="font-size:13px;color:var(--text3);font-style:italic">No data yet.</div>'; return; }
-  const max = Math.max(...played.map(w => w.reg));
-  const bars = played.map(w => {
-    const pct = Math.round(w.reg / max * 100);
-    return `<div class="spk-bar" style="height:${pct}%;background:linear-gradient(to top,#F5A623,#FFD04A)" title="Wk ${w.n} ${w.date}: ${w.reg} players"></div>`;
-  }).join('');
-  const lbls = played.map(w => `<span>${w.n}</span>`).join('');
-  el.innerHTML = `<div class="spk">${bars}</div><div class="spk-lbl">${lbls}</div>
-    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-top:8px">
-      <span>Min: ${Math.min(...played.map(w=>w.reg))} players</span>
-      <span>Avg: ${Math.round(played.reduce((s,w)=>s+w.reg,0)/played.length)} players</span>
-      <span>Max: ${max} players</span>
-    </div>`;
 }
 
 function rStreaks() {
@@ -1976,12 +2021,12 @@ function filterHistory(q) {
 
 // ── Init ────────────────────────────────────────────────────────────
 computeStats(); computeWL();
-rLb(); rSummerLb(); rWLLb(); rSummerWLOverview(); rSubs(); rTopSubs();
+rLb(); rSummerLb(); rWLLb(); rSummerWLOverview(); rSummerFunFacts(); rSubs(); rTopSubs();
 rDuos(); rSummerDuos(); rAllTimeDuos();
 rConnLb(); rSummerConnLb(); rAllTimeConnLb();
 rWeeks(); rSummerWeeks();
 rSched(); rCal();
-rAttGrid(); rSummerAttGrid(); rAttTrend(); rSummerAttTrend(); rStreaks();
+rAttGrid(); rSummerAttGrid(); rStreaks();
 fillSelects(); fillSummerSelects(); fillAllSelects();
 window.addEventListener('scroll', () => {
   const btn = document.getElementById('scrollTopBtn');
