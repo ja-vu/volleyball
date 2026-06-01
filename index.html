@@ -745,14 +745,14 @@
       </div>
       <div class="card" style="margin-bottom:1.5rem">
         <div class="mg" style="margin-bottom:1rem">
-          <div class="met" style="border-top-color:var(--bar-m)"><div class="mv">1</div><div class="ml">Sundays played</div></div>
-          <div class="met" style="border-top-color:var(--blue)"><div class="mv" style="color:var(--blue)">10</div><div class="ml">Sundays ahead</div></div>
+          <div class="met" style="border-top-color:var(--bar-m)"><div class="mv">2</div><div class="ml">Sundays played</div></div>
+          <div class="met" style="border-top-color:var(--blue)"><div class="mv" style="color:var(--blue)">9</div><div class="ml">Sundays ahead</div></div>
           <div class="met" style="border-top-color:var(--bar-m)"><div class="mv">24</div><div class="ml">Regulars</div></div>
           <div class="met" style="border-top-color:var(--green)"><div class="mv" style="color:var(--green)">10</div><div class="ml">New to regulars</div></div>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px"><span>Week 1 of 11</span><span>9%</span></div>
-        <div class="pw"><div class="pf" style="width:9%;background:linear-gradient(90deg,#F5A623,#FFD04A)"></div></div>
-        <div style="font-size:12px;color:var(--text3);margin-top:6px">Season underway! Anglerfish swept Week 1 with a perfect 4–0.</div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px"><span>Week 2 of 11</span><span>18%</span></div>
+        <div class="pw"><div class="pf" style="width:18%;background:linear-gradient(90deg,#F5A623,#FFD04A)"></div></div>
+        <div style="font-size:12px;color:var(--text3);margin-top:6px">2 weeks in — Anglerfish swept Wk 1, Olympic Stadium swept Wk 2 (both 4–0) 🔥</div>
       </div>
       <div class="sec">
         <div class="sl">W/L standings</div>
@@ -1068,6 +1068,7 @@ const THEMES = [
   {n:14, date:'May 3',  theme:'Card Suits',      color:'#C41E3A'},
   {n:15, date:'May 10', theme:'Montreal Metro',   color:'#F4831F'},
   {n:16, date:'May 17', theme:'Ocean',             color:'#0077B6'},
+  {n:17, date:'May 31', theme:'Montreal landmarks', color:'#D4500A'},
 ];
 
 // YouTube video URLs — add as:  session_number: 'https://youtube.com/watch?v=XXXXX'
@@ -1174,6 +1175,21 @@ const WEEKS = [
     {r:4, a:'Manta Rays',  b:'Anglerfish',    w:'Anglerfish'},
     {r:4, a:'Hammerheads', b:'Kraken Squad',  w:'Hammerheads'},
   ]},
+  {n:17, date:'May 31', theme:'Montreal landmarks', season:'s', reg:20, teams:[
+    {name:'Orange Julep',    p:[{n:'Winnie',g:'f'},{n:'Sophie',g:'f'},{n:'Chy',g:'m'},{n:'Rigil',g:'m'},{n:'Michel',g:'m'},{n:'Phillipe',g:'m'}]},
+    {name:'Mont-Royal',      p:[{n:'Anthony W.',g:'m'},{n:'Barbara',g:'s',sg:'f'},{n:'Nat',g:'f'},{n:'Patricio',g:'m'},{n:'Mark',g:'m'},{n:'John',g:'m'}]},
+    {name:'Olympic Stadium', p:[{n:'Jose',g:'m'},{n:'Julie',g:'f'},{n:'Daniel',g:'m'},{n:'David',g:'s',sg:'m'},{n:'Steven',g:'m'},{n:'Kevin H.',g:'m'}]},
+    {name:'La Ronde',        p:[{n:'Anita',g:'f'},{n:'Catherine',g:'s',sg:'f'},{n:'Bernie',g:'m'},{n:'Alain',g:'m'},{n:'Salem',g:'s',sg:'m'},{n:'Emad',g:'m'}]}],
+   results:[
+    {r:1, a:'Olympic Stadium', b:'Orange Julep',    w:'Olympic Stadium'},
+    {r:1, a:'La Ronde',        b:'Mont-Royal',      w:'Mont-Royal'},
+    {r:2, a:'Mont-Royal',      b:'Olympic Stadium', w:'Olympic Stadium'},
+    {r:2, a:'La Ronde',        b:'Orange Julep',    w:'Orange Julep'},
+    {r:3, a:'Olympic Stadium', b:'La Ronde',        w:'Olympic Stadium'},
+    {r:3, a:'Orange Julep',    b:'Mont-Royal',      w:'Mont-Royal'},
+    {r:4, a:'La Ronde',        b:'Orange Julep',    w:'La Ronde'},
+    {r:4, a:'Olympic Stadium', b:'Mont-Royal',      w:'Olympic Stadium'},
+  ]},
 ];
 
 const WINTER_SCHED = [
@@ -1211,7 +1227,7 @@ const SDATES = new Set(SUMMER_DATES);
 const SUMMER_SCHED = [
   {n:1,  date:'Sunday, May 17',     s:'done'},
   {n:'', date:'Sunday, May 24',     s:'off', note:'Off week'},
-  {n:2,  date:'Sunday, May 31',     s:'su'},
+  {n:2,  date:'Sunday, May 31',     s:'done'},
   {n:'', date:'Sunday, June 7',     s:'off', note:'Off week'},
   {n:'', date:'Sunday, June 14',    s:'off', note:'Off week'},
   {n:3,  date:'Sunday, June 21',    s:'su'},
@@ -1228,7 +1244,7 @@ const S2W = {
   '2026-01-11':0,'2026-01-18':1,'2026-02-01':2,'2026-02-08':3,'2026-02-15':4,
   '2026-02-22':5,'2026-03-01':6,'2026-03-08':7,'2026-03-15':8,'2026-03-22':9,
   '2026-04-12':10,'2026-04-19':11,'2026-04-26':12,'2026-05-03':13,'2026-05-10':14,
-  '2026-05-17':15,
+  '2026-05-17':15, '2026-05-31':16,
 };
 
 const WINTER_WEEKS = WEEKS.filter(w => !w.season);
