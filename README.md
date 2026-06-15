@@ -1,6 +1,6 @@
 # Sunday Volleyball Stats Dashboard
 
-A single-file stats dashboard for a Sunday volleyball group at Supercamp Vanier (Montreal). Built with vanilla HTML, CSS, and JavaScript — no framework, no build step.
+A stats dashboard for a Sunday volleyball group at Supercamp Vanier (Montreal). Built with vanilla HTML, CSS, and JavaScript — no framework, no build step. Markup, styles, and render logic live in `index.html`; all session data lives in `data.js`, loaded as a plain script so the app still works opened directly over `file://`.
 
 ## What it tracks
 
@@ -12,7 +12,7 @@ A single-file stats dashboard for a Sunday volleyball group at Supercamp Vanier 
 
 ## How it works
 
-All session data lives in a `WEEKS` array at the top of `index.html`. Each entry contains the date, theme, and the four teams with every player. Everything else — attendance counts, streaks, sub counts, never-played pairs — is computed from that array at page load via `computeStats()`. To add a new session, append one entry to `WEEKS`.
+All session data lives in a `WEEKS` array in `data.js`. Each entry contains the date, theme, and the four teams with every player, plus optional match `results` (with optional `s:[scoreA, scoreB]` scores). Everything else — attendance counts, streaks, sub counts, never-played pairs, W/L and point differentials — is computed from that array at page load via `computeStats()` / `computeWL()`. To add a new session, append one entry to `WEEKS` in `data.js`.
 
 ## Data model
 
