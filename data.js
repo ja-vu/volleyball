@@ -15,7 +15,7 @@ const GM = {
   Domenico:'m', James:'m', 'Ke-Nam':'m', 'Kevin L.':'m', Lilian:'f', Malak:'f',
   Melanie:'f', Nadim:'m', Olivier:'m', Raks:'m', Salem:'m', Steven:'m', William:'m', Winnie:'f',
   // One-off subs
-  Bernard:'m', Bernie:'m', Dom:'m', Jimmy:'m', Nicky:'m', Phillipe:'m', Sam:'m',
+  Bernard:'m', Bernie:'m', Dom:'m', Jimmy:'m', Nicky:'m', Phillipe:'m', Sam:'m', Arron:'m',
   // Summer 2026 new regulars
   'Xuan-Mai':'f', Samuel:'m'
 };
@@ -69,6 +69,8 @@ const THEMES = [
   {n:15, date:'May 10', theme:'Montreal Metro',   color:'#F4831F'},
   {n:16, date:'May 17', theme:'Ocean',             color:'#0077B6'},
   {n:17, date:'May 31', theme:'Montreal landmarks', color:'#D4500A'},
+  {n:18, date:'Jun 21', theme:'Donut shops',        color:'#E84C7A'},
+  {n:19, date:'Jun 28', theme:'Rotisserie & fried chicken', color:'#C0392B'},
 ];
 
 // YouTube video URLs — add as:  session_number: 'https://youtube.com/watch?v=XXXXX'
@@ -194,6 +196,38 @@ const WEEKS = [
     {r:4, a:'La Ronde',        b:'Orange Julep',    w:'La Ronde'},
     {r:4, a:'Olympic Stadium', b:'Mont-Royal',      w:'Olympic Stadium'},
   ]},
+  {n:18, date:'Jun 21', theme:'Donut shops', season:'s', reg:19, teams:[
+    {name:"Homer's",      p:[{n:'Bernie',g:'m'},{n:'Michel',g:'m'},{n:'Julie',g:'f'},{n:'James',g:'m'},{n:'Rigil',g:'m'},{n:'Jose',g:'m'}]},
+    {name:"Tim Horton's", p:[{n:'Chy',g:'m'},{n:'Steven',g:'m'},{n:'Xuan-Mai',g:'f'},{n:'Winnie',g:'f'},{n:'Kevin L.',g:'m'},{n:'Siu',g:'s',sg:'m'}]},
+    {name:"Dunkin'",      p:[{n:'Anthony W.',g:'m'},{n:'Sophie',g:'f'},{n:'David',g:'s',sg:'m'},{n:'Kevin H.',g:'m'},{n:'Nathan',g:'s',sg:'m'},{n:'Alain',g:'m'}]},
+    {name:'Krispy Kreme', p:[{n:'Patricio',g:'m'},{n:'Anita',g:'f'},{n:'Joey',g:'s',sg:'m'},{n:'Emad',g:'m'},{n:'Norichar',g:'s',sg:'m'},{n:'Daniel',g:'m'}]}],
+   results:[
+    {r:1, a:"Homer's",      b:"Dunkin'",      w:"Dunkin'"},
+    {r:1, a:'Krispy Kreme', b:"Tim Horton's", w:"Tim Horton's"},
+    {r:2, a:"Tim Horton's", b:"Homer's",      w:"Tim Horton's"},
+    {r:2, a:'Krispy Kreme', b:"Dunkin'",      w:'Krispy Kreme'},
+    {r:3, a:"Tim Horton's", b:"Dunkin'",      w:"Dunkin'"},
+    {r:3, a:"Homer's",      b:'Krispy Kreme', w:'Krispy Kreme'},
+    {r:4, a:'Krispy Kreme', b:"Tim Horton's", w:'Krispy Kreme'},
+    {r:4, a:"Homer's",      b:"Dunkin'",      w:"Homer's"},
+  ]},
+  {n:19, date:'Jun 28', theme:'Rotisserie & fried chicken', season:'s', reg:20, teams:[
+    {name:'KFC',          p:[{n:'Julie',g:'f'},{n:'Rigil',g:'m'},{n:'Ke-Nam',g:'s',sg:'m'},{n:'Kevin H.',g:'m'},{n:'Arron',g:'s',sg:'m'},{n:'Winnie',g:'f'}]},
+    {name:'Popeyes',      p:[{n:'Steven',g:'m'},{n:'Xuan-Mai',g:'f'},{n:'Chy',g:'m'},{n:'Alain',g:'m'},{n:'Emad',g:'m'},{n:'Sophie',g:'f'}]},
+    {name:'Jack-Le-Coq',  p:[{n:'Samuel',g:'m'},{n:'Bernie',g:'m'},{n:'Catherine',g:'s',sg:'f'},{n:'Nat',g:'f'},{n:'Daniel',g:'m'},{n:'Mark',g:'m'}]},
+    {name:'St-Hubert',    p:[{n:'Michel',g:'m'},{n:'Patricio',g:'m'},{n:'Jose',g:'m'},{n:'Anita',g:'f'},{n:'David',g:'s',sg:'m'},{n:'Phillipe',g:'m'}]}],
+   results:[
+    {r:1, a:'KFC',          b:'Jack-Le-Coq',  w:'KFC'},
+    {r:1, a:'Popeyes',      b:'St-Hubert',    w:'St-Hubert'},
+    {r:2, a:'KFC',          b:'Popeyes',      w:'KFC'},
+    {r:2, a:'St-Hubert',    b:'Jack-Le-Coq',  w:'Jack-Le-Coq'},
+    {r:3, a:'KFC',          b:'St-Hubert',    w:'KFC'},
+    {r:3, a:'Popeyes',      b:'Jack-Le-Coq',  w:'Jack-Le-Coq'},
+    {r:4, a:'KFC',          b:'Jack-Le-Coq',  w:'Jack-Le-Coq'},
+    {r:4, a:'Popeyes',      b:'St-Hubert',    w:'Popeyes'},
+    {r:5, a:'KFC',          b:'St-Hubert',    w:'St-Hubert'},
+    {r:5, a:'Jack-Le-Coq',  b:'Popeyes',      w:'Jack-Le-Coq'},
+  ]},
 ];
 
 const WINTER_SCHED = [
@@ -234,8 +268,8 @@ const SUMMER_SCHED = [
   {n:2,  date:'Sunday, May 31',     s:'done'},
   {n:'', date:'Sunday, June 7',     s:'off', note:'Off week'},
   {n:'', date:'Sunday, June 14',    s:'off', note:'Off week'},
-  {n:3,  date:'Sunday, June 21',    s:'su'},
-  {n:4,  date:'Sunday, June 28',    s:'su'},
+  {n:3,  date:'Sunday, June 21',    s:'done'},
+  {n:4,  date:'Sunday, June 28',    s:'done'},
   {n:5,  date:'Sunday, July 5',     s:'su'},
   {n:6,  date:'Sunday, July 12',    s:'su'},
   {n:7,  date:'Sunday, July 19',    s:'su'},
@@ -248,7 +282,7 @@ const S2W = {
   '2026-01-11':0,'2026-01-18':1,'2026-02-01':2,'2026-02-08':3,'2026-02-15':4,
   '2026-02-22':5,'2026-03-01':6,'2026-03-08':7,'2026-03-15':8,'2026-03-22':9,
   '2026-04-12':10,'2026-04-19':11,'2026-04-26':12,'2026-05-03':13,'2026-05-10':14,
-  '2026-05-17':15, '2026-05-31':16,
+  '2026-05-17':15, '2026-05-31':16, '2026-06-21':17, '2026-06-28':18,
 };
 
 const WINTER_WEEKS = WEEKS.filter(w => !w.season);
