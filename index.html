@@ -626,10 +626,6 @@
         <div class="profile-label">Never played with</div>
         <div id="profileNever" class="profile-summary"></div>
       </div>
-      <div id="profileWLWrap">
-        <div class="profile-label">Summer W/L</div>
-        <div id="profileWL" class="profile-summary"></div>
-      </div>
     </div>
     <div id="profileTimelineWrap" style="margin-top:1rem;display:none">
       <div id="profileTimelineLabel" class="profile-label" style="margin-bottom:4px"></div>
@@ -745,18 +741,14 @@
       </div>
       <div class="card" style="margin-bottom:1.5rem">
         <div class="mg" style="margin-bottom:1rem">
-          <div class="met" style="border-top-color:var(--bar-m)"><div class="mv">4</div><div class="ml">Sundays played</div></div>
-          <div class="met" style="border-top-color:var(--blue)"><div class="mv" style="color:var(--blue)">7</div><div class="ml">Sundays ahead</div></div>
-          <div class="met" style="border-top-color:var(--bar-m)"><div class="mv">24</div><div class="ml">Regulars</div></div>
-          <div class="met" style="border-top-color:var(--green)"><div class="mv" style="color:var(--green)">10</div><div class="ml">New to regulars</div></div>
+          <div class="met" style="border-top-color:var(--bar-m)"><div class="mv" id="ovSumPlayed">–</div><div class="ml">Sundays played</div></div>
+          <div class="met" style="border-top-color:var(--blue)"><div class="mv" style="color:var(--blue)" id="ovSumAhead">–</div><div class="ml">Sundays ahead</div></div>
+          <div class="met" style="border-top-color:var(--bar-m)"><div class="mv" id="ovSumRegs">–</div><div class="ml">Regulars</div></div>
+          <div class="met" style="border-top-color:var(--green)"><div class="mv" style="color:var(--green)" id="ovSumNew">–</div><div class="ml">New to regulars</div></div>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px"><span>Week 4 of 11</span><span>36%</span></div>
-        <div class="pw"><div class="pf" style="width:36%;background:linear-gradient(90deg,#F5A623,#FFD04A)"></div></div>
-        <div style="font-size:12px;color:var(--text3);margin-top:6px">4 weeks in — Jack-Le-Coq topped Chicken Sunday (Wk 4, 4–1) 🍗</div>
-      </div>
-      <div class="sec">
-        <div class="sl">W/L standings</div>
-        <div class="card" id="summerWLOverview"></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px"><span id="ovSumWeekLbl">–</span><span id="ovSumPct">–</span></div>
+        <div class="pw"><div class="pf" id="ovSumBar" style="width:0%;background:linear-gradient(90deg,#F5A623,#FFD04A)"></div></div>
+        <div style="font-size:12px;color:var(--text3);margin-top:6px" id="ovSumBlurb"></div>
       </div>
       <div class="sec" id="summerFunFactsSec">
         <div class="sl">Fun facts</div>
@@ -807,21 +799,13 @@
         <div class="stg ts" style="margin-bottom:.25rem">☀️ Summer 2026</div>
         <div style="font-size:12px;color:var(--text3);margin-bottom:.75rem"><span style="color:var(--bar-m)">18M</span> · <span style="color:var(--pink)">6F</span> · 24 regulars</div>
         <div class="card">
-          <div class="tr" id="summerLbTabs">
-            <button class="tb active" onclick="showSummerLbTab('wl',this)">W/L Record</button>
-            <button class="tb" onclick="showSummerLbTab('att',this)">Attendance</button>
+          <div class="sl" style="margin-bottom:.5rem">Attendance</div>
+          <div class="tr">
+            <button class="tb active" onclick="showTab(this,'all','slb')">All</button>
+            <button class="tb" onclick="showTab(this,'m','slb')">Men</button>
+            <button class="tb" onclick="showTab(this,'f','slb')">Women</button>
           </div>
-          <div id="slb-wl">
-            <div id="wllb"></div>
-          </div>
-          <div id="slb-att" style="display:none">
-            <div class="tr">
-              <button class="tb active" onclick="showTab(this,'all','slb')">All</button>
-              <button class="tb" onclick="showTab(this,'m','slb')">Men</button>
-              <button class="tb" onclick="showTab(this,'f','slb')">Women</button>
-            </div>
-            <div id="slb"></div>
-          </div>
+          <div id="slb"></div>
         </div>
       </div>
     </div>
@@ -1144,15 +1128,6 @@ function showProfile(name) {
     neverWrap.style.display = 'none';
   }
 
-  const wlWrap = document.getElementById('profileWLWrap');
-  const wl = WL[name];
-  if (wl) {
-    wlWrap.style.display = '';
-    const pct = wl.w + wl.l > 0 ? Math.round(wl.w / (wl.w + wl.l) * 100) : 0;
-    document.getElementById('profileWL').textContent = `${wl.w}W – ${wl.l}L (${pct}%)`;
-  } else {
-    wlWrap.style.display = 'none';
-  }
 
   // Attendance timeline dots
   const tlWrap  = document.getElementById('profileTimelineWrap');
@@ -1458,46 +1433,6 @@ function rWLLb() {
   el.innerHTML = html;
 }
 
-function rSummerWLOverview() {
-  const el = document.getElementById('summerWLOverview');
-  if (!el) return;
-  if (!Object.keys(WL).length) {
-    el.innerHTML = '<div style="font-size:13px;color:var(--text3);font-style:italic">No results yet — check back after Sunday!</div>';
-    return;
-  }
-  const SUMMER_REG_NAMES = new Set(SUMMER_REGULARS.map(r => r.n));
-  const regs = Object.entries(WL)
-    .filter(([n]) => SUMMER_REG_NAMES.has(n))
-    .map(([n, rec]) => ({
-      n, w: rec.w, l: rec.l,
-      pct: (rec.w + rec.l) > 0 ? rec.w / (rec.w + rec.l) : 0,
-      g: GM[n] || 'm'
-    }))
-    .sort((a, b) => b.pct - a.pct || b.w - a.w || a.l - b.l);
-  let rank = 0, lastPct = -1, sameCount = 0;
-  const rows = regs.slice(0, 6).map(p => {
-    if (p.pct !== lastPct) { rank += 1 + sameCount; sameCount = 0; lastPct = p.pct; } else sameCount++;
-    const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
-    const wPct = p.w + p.l > 0 ? Math.round(p.pct * 100) : 0;
-    return `<div class="pr" style="align-items:center">
-      ${medal
-        ? `<span style="font-size:14px;flex-shrink:0;width:22px;text-align:center">${medal}</span>`
-        : `<span style="font-size:11px;color:var(--text3);width:22px;text-align:right;flex-shrink:0">#${rank}</span>`}
-      <div class="av av${p.g}">${ini(p.n)}</div>
-      <span class="nm nm-${p.g}" style="flex:1;min-width:0"><button class="player-link" onclick="showProfile('${esc(p.n)}')">${p.n}</button></span>
-      <div class="wr-wrap">
-        <span class="wr-w">${p.w}W</span>
-        <div class="wr-bar"><div class="wr-fill" style="width:${wPct}%"></div></div>
-        <span class="wr-l">${p.l}L</span>
-      </div>
-    </div>`;
-  }).join('');
-  const link = `<div style="text-align:right;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
-    <button class="player-link" style="font-size:12px;color:var(--blue)" onclick="showPage('leaderboard',document.querySelector('.nb[onclick*=\\'leaderboard\\']'))">See full standings →</button>
-  </div>`;
-  el.innerHTML = rows + (regs.length > 6 ? link : '');
-}
-
 function rWinterFunFacts() {
   const el = document.getElementById('winterFunFacts');
   if (!el || !PLAYED_COUNT) return;
@@ -1581,15 +1516,6 @@ function rSummerFunFacts() {
   if (topDuo && topDuo[1] > 1) {
     const [a, b] = topDuo[0].split('|||');
     facts.push({ icon: '🤝', text: `Top duo: ${a} & ${b} have been on the same team ${topDuo[1]} times.` });
-  }
-
-  const qualified = Object.entries(WL)
-    .filter(([n, r]) => SUMMER_REG_NAMES.has(n) && r.w + r.l >= 2)
-    .map(([n, r]) => ({ n, pct: r.w / (r.w + r.l), w: r.w, l: r.l }))
-    .sort((a, b) => b.pct - a.pct || b.w - a.w);
-  if (qualified.length) {
-    const top = qualified[0];
-    facts.push({ icon: '🏆', text: `Best record: ${top.n} at ${top.w}W–${top.l}L (${Math.round(top.pct * 100)}% win rate).` });
   }
 
   // Score-based superlatives (only when match scores are recorded)
@@ -2385,11 +2311,34 @@ function filterHistory(q) {
   countEl.textContent = `${shown} week${shown !== 1 ? 's' : ''} with "${q.trim()}"`;
 }
 
+// ── Summer overview progress (auto-computed from data.js) ───────────
+function rSummerProgress() {
+  const el = id => document.getElementById(id);
+  if (!el('ovSumPlayed')) return;
+  const total  = SUMMER_DATES.length;
+  const played = SUMMER_WEEKS.filter(w => w.teams.length > 0).length;
+  const ahead  = total - played;
+  const pct    = total ? Math.round(played / total * 100) : 0;
+  el('ovSumPlayed').textContent = played;
+  el('ovSumAhead').textContent  = ahead;
+  el('ovSumRegs').textContent   = SUMMER_REGULARS.length;
+  el('ovSumNew').textContent    = SUMMER_REGULARS.filter(r => !REG_NAMES.has(r.n)).length;
+  el('ovSumWeekLbl').textContent = played >= total ? 'Season complete' : `Week ${played} of ${total}`;
+  el('ovSumPct').textContent    = pct + '%';
+  el('ovSumBar').style.width    = pct + '%';
+  const last = [...SUMMER_WEEKS].reverse().find(w => w.teams.length > 0);
+  el('ovSumBlurb').textContent = played >= total
+    ? `Season complete — ${total} Sundays, ${total} themes! 🎉`
+    : last
+      ? `${played} week${played !== 1 ? 's' : ''} in — last up: ${last.theme} (${last.date}) · ${ahead} Sunday${ahead !== 1 ? 's' : ''} to go ☀️`
+      : 'Season starting soon ☀️';
+}
+
 // ── Init ────────────────────────────────────────────────────────────
 computeStats(); computeWL();
 setAccentColor('summer');
-rLastSession(); rHeaderPill('summer');
-rLb(); rSummerLb(); rWLLb(); rSummerWLOverview(); rWinterFunFacts(); rSummerFunFacts(); rSubs(); rTopSubs();
+rLastSession(); rHeaderPill('summer'); rSummerProgress();
+rLb(); rSummerLb(); rWinterFunFacts(); rSummerFunFacts(); rSubs(); rTopSubs();
 rDuos(); rSummerDuos(); rAllTimeDuos();
 rConnLb(); rSummerConnLb(); rAllTimeConnLb();
 rWeeks(); rSummerWeeks();

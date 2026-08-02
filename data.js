@@ -15,7 +15,7 @@ const GM = {
   Domenico:'m', James:'m', 'Ke-Nam':'m', 'Kevin L.':'m', Lilian:'f', Malak:'f',
   Melanie:'f', Nadim:'m', Olivier:'m', Raks:'m', Salem:'m', Steven:'m', William:'m', Winnie:'f',
   // One-off subs
-  Bernard:'m', Bernie:'m', Dom:'m', Jimmy:'m', Nicky:'m', Phillipe:'m', Sam:'m', Arron:'m',
+  Bernard:'m', Bernie:'m', Dom:'m', Jimmy:'m', Nicky:'m', Phillipe:'m', Sam:'m', Arron:'m', Jason:'m',
   // Summer 2026 new regulars
   'Xuan-Mai':'f', Samuel:'m'
 };
@@ -71,6 +71,10 @@ const THEMES = [
   {n:17, date:'May 31', theme:'Montreal landmarks', color:'#D4500A'},
   {n:18, date:'Jun 21', theme:'Donut shops',        color:'#E84C7A'},
   {n:19, date:'Jun 28', theme:'Rotisserie & fried chicken', color:'#C0392B'},
+  {n:20, date:'Jul 5',  theme:'Transformers',        color:'#5C6BC0'},
+  {n:21, date:'Jul 12', theme:'Star Wars species',   color:'#43A047'},
+  {n:22, date:'Jul 19', theme:'Coffee drinks',       color:'#8D6E63'},
+  {n:23, date:'Jul 26', theme:'One Piece',           color:'#D4AF37'},
 ];
 
 // YouTube video URLs — add as:  session_number: 'https://youtube.com/watch?v=XXXXX'
@@ -228,6 +232,38 @@ const WEEKS = [
     {r:5, a:'KFC',          b:'St-Hubert',    w:'St-Hubert'},
     {r:5, a:'Jack-Le-Coq',  b:'Popeyes',      w:'Jack-Le-Coq'},
   ]},
+  {n:20, date:'Jul 5', theme:'Transformers', season:'s', reg:22, teams:[
+    {name:'Dinobots',     p:[{n:'David',g:'s',sg:'m'},{n:'Jose',g:'m'},{n:'Kevin L.',g:'m'},{n:'Samuel',g:'m'},{n:'Anita',g:'f'},{n:'Anthony W.',g:'m'}]},
+    {name:'Autobots',     p:[{n:'Julie',g:'f'},{n:'Alain',g:'m'},{n:'Sophie',g:'f'},{n:'Michel',g:'m'},{n:'Mark',g:'m'},{n:'Bernie',g:'m'}]},
+    {name:'Predacons',    p:[{n:'Chy',g:'m'},{n:'James',g:'m'},{n:'Norichar',g:'s',sg:'m'},{n:'Steven',g:'m'},{n:'Kevin H.',g:'m'},{n:'Winnie',g:'f'}]},
+    {name:'Decepticons',  p:[{n:'Emad',g:'m'},{n:'Rigil',g:'m'},{n:'John',g:'m'},{n:'Phillipe',g:'m'},{n:'Xuan-Mai',g:'f'},{n:'Daniel',g:'m'}]}],
+   results:[
+    {r:1, a:'Predacons', b:'Dinobots',    w:'Dinobots'},
+    {r:1, a:'Autobots',  b:'Decepticons', w:'Autobots'},
+    {r:2, a:'Predacons', b:'Decepticons', w:'Decepticons'},
+    {r:2, a:'Dinobots',  b:'Autobots',    w:'Dinobots'},
+    {r:3, a:'Predacons', b:'Autobots',    w:'Autobots'},
+    // r3 Dinobots vs Decepticons — pending
+    {r:4, a:'Predacons', b:'Decepticons', w:'Decepticons'},
+    // r4 Dinobots vs Autobots — pending
+    {r:5, a:'Predacons', b:'Dinobots',    w:'Predacons'},
+    {r:5, a:'Autobots',  b:'Decepticons', w:'Autobots'},
+  ]},
+  {n:21, date:'Jul 12', theme:'Star Wars species', season:'s', reg:21, teams:[
+    {name:'Wookies',   p:[{n:'Catherine',g:'s',sg:'f'},{n:'Chy',g:'m'},{n:'Emad',g:'m'},{n:'Sophie',g:'f'},{n:'Phillipe',g:'m'},{n:'Kevin L.',g:'m'}]},
+    {name:'Jawas',     p:[{n:'Xuan-Mai',g:'f'},{n:'Winnie',g:'f'},{n:'Joey',g:'s',sg:'m'},{n:'Jose',g:'m'},{n:'Michel',g:'m'},{n:'Anthony W.',g:'m'}]},
+    {name:'Ewoks',     p:[{n:'Julie',g:'f'},{n:'Steven',g:'m'},{n:'Rigil',g:'m'},{n:'Daniel',g:'m'},{n:'Kevin H.',g:'m'},{n:'Samuel',g:'m'}]},
+    {name:'Gungans',   p:[{n:'Nat',g:'f'},{n:'David',g:'s',sg:'m'},{n:'Anita',g:'f'},{n:'Bernie',g:'m'},{n:'John',g:'m'},{n:'Alain',g:'m'}]}]},
+  {n:22, date:'Jul 19', theme:'Coffee drinks', season:'s', reg:18, teams:[
+    {name:'Espresso',    p:[{n:'Joey',g:'s',sg:'m'},{n:'Julie',g:'f'},{n:'Steven',g:'m'},{n:'John',g:'m'},{n:'Phillipe',g:'m'},{n:'James',g:'m'}]},
+    {name:'Cold Brew',   p:[{n:'Chy',g:'m'},{n:'Anita',g:'f'},{n:'Bernie',g:'m'},{n:'Siu',g:'s',sg:'m'},{n:'Samuel',g:'m'},{n:'Salem',g:'s',sg:'m'}]},
+    {name:'Macchiato',   p:[{n:'Norichar',g:'s',sg:'m'},{n:'Rigil',g:'m'},{n:'Sophie',g:'f'},{n:'Michel',g:'m'},{n:'Kevin L.',g:'m'},{n:'Anthony W.',g:'m'}]},
+    {name:'Cappuccino',  p:[{n:'David',g:'s',sg:'m'},{n:'Xuan-Mai',g:'f'},{n:'Patricio',g:'m'},{n:'Erik',g:'s',sg:'m'},{n:'Alain',g:'m'},{n:'Jose',g:'m'}]}]},
+  {n:23, date:'Jul 26', theme:'One Piece', season:'s', reg:20, teams:[
+    {name:'Red Hair Pirates',    p:[{n:'Billy',g:'s',sg:'m'},{n:'Patricio',g:'m'},{n:'Nat',g:'f'},{n:'Jason',g:'s',sg:'m'},{n:'Rigil',g:'m'},{n:'Kevin L.',g:'m'}]},
+    {name:'Straw Hat Pirates',   p:[{n:'Chy',g:'m'},{n:'Steven',g:'m'},{n:'Ke-Nam',g:'s',sg:'m'},{n:'Xuan-Mai',g:'f'},{n:'Michel',g:'m'},{n:'Alain',g:'m'}]},
+    {name:'Blackbeard Pirates',  p:[{n:'Sophie',g:'f'},{n:'Anita',g:'f'},{n:'Phillipe',g:'m'},{n:'Bernie',g:'m'},{n:'Norichar',g:'s',sg:'m'},{n:'Emad',g:'m'}]},
+    {name:'Whitebeard Pirates',  p:[{n:'Daniel',g:'m'},{n:'John',g:'m'},{n:'Samuel',g:'m'},{n:'Anthony W.',g:'m'},{n:'Winnie',g:'f'},{n:'Mark',g:'m'}]}]},
 ];
 
 const WINTER_SCHED = [
@@ -270,10 +306,10 @@ const SUMMER_SCHED = [
   {n:'', date:'Sunday, June 14',    s:'off', note:'Off week'},
   {n:3,  date:'Sunday, June 21',    s:'done'},
   {n:4,  date:'Sunday, June 28',    s:'done'},
-  {n:5,  date:'Sunday, July 5',     s:'su'},
-  {n:6,  date:'Sunday, July 12',    s:'su'},
-  {n:7,  date:'Sunday, July 19',    s:'su'},
-  {n:8,  date:'Sunday, July 26',    s:'su'},
+  {n:5,  date:'Sunday, July 5',     s:'done'},
+  {n:6,  date:'Sunday, July 12',    s:'done'},
+  {n:7,  date:'Sunday, July 19',    s:'done'},
+  {n:8,  date:'Sunday, July 26',    s:'done'},
   {n:9,  date:'Sunday, August 2',   s:'su'},
   {n:10, date:'Sunday, August 9',   s:'su'},
   {n:11, date:'Sunday, August 16',  s:'su'},
@@ -282,7 +318,8 @@ const S2W = {
   '2026-01-11':0,'2026-01-18':1,'2026-02-01':2,'2026-02-08':3,'2026-02-15':4,
   '2026-02-22':5,'2026-03-01':6,'2026-03-08':7,'2026-03-15':8,'2026-03-22':9,
   '2026-04-12':10,'2026-04-19':11,'2026-04-26':12,'2026-05-03':13,'2026-05-10':14,
-  '2026-05-17':15, '2026-05-31':16, '2026-06-21':17, '2026-06-28':18,
+  '2026-05-17':15, '2026-05-31':16, '2026-06-21':17, '2026-06-28':18, '2026-07-05':19,
+  '2026-07-12':20, '2026-07-19':21, '2026-07-26':22,
 };
 
 const WINTER_WEEKS = WEEKS.filter(w => !w.season);
