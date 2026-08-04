@@ -8,136 +8,152 @@
     /* ── Reset & base ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:            #ffffff;
-      --bg2:           #f5f5f5;
-      --bg3:           #ebebeb;
-      --border:        #e0e0e0;
-      --border2:       #d0d0d0;
-      --text:          #111111;
-      --text2:         #555555;
-      --text3:         #888888;
-      --blue:          #185FA5;
-      --blue-bg:       #E6F1FB;
-      --pink:          #993556;
-      --pink-bg:       #FBEAF0;
-      --bar-m:         #378ADD;
-      --bar-f:         #D4537E;
-      --bar-s:         #aaaaaa;
-      --green-bg:      #E1F5EE;
-      --green:         #0F6E56;
-      --fire-bg:       #FAEEDA;
-      --fire:          #854F0B;
-      --sub-bg:        #F1EFE8;
-      --sub:           #5F5E5A;
-      --info-bg:       #E6F1FB;
-      --info:          #185FA5;
-      --radius-sm:     6px;
-      --radius-md:     10px;
-      --radius-lg:     16px;
-      --accent:        #185FA5;
-      --accent-bg:     #E6F1FB;
+      --bg:            #FAF3E4;
+      --bg2:           #F1E6CC;
+      --bg3:           #E4D4AC;
+      --border:        #D8BC80;
+      --border2:       #C9AB68;
+      --text:          #1E2A45;
+      --text2:         #4F5A72;
+      --text3:         #8A8267;
+      --blue:          #1E2A45;
+      --blue-bg:       #EBDFC0;
+      --pink:          #B84568;
+      --pink-bg:       #F3DEE6;
+      --bar-m:         #35507E;
+      --bar-f:         #B84568;
+      --bar-s:         #A99A78;
+      --green-bg:      #DCEBE1;
+      --green:         #2E6E56;
+      --fire-bg:       #F5E3C2;
+      --fire:          #B0701A;
+      --sub-bg:        #EDE6D6;
+      --sub:           #756A54;
+      --info-bg:       #EBDFC0;
+      --info:          #1E2A45;
+      --radius-sm:     4px;
+      --radius-md:     8px;
+      --radius-lg:     10px;
+      --accent:        #1E2A45;
+      --accent-bg:     #EBDFC0;
+      --citrus:        #E0932E;
+      --citrus-bg:     #F7E4C4;
     }
     [data-theme="dark"] {
-      --bg:       #1c1c1e;
-      --bg2:      #2c2c2e;
-      --bg3:      #3a3a3c;
-      --border:   #3a3a3c;
-      --border2:  #48484a;
-      --text:     #f2f2f7;
-      --text2:    #aeaeb2;
-      --text3:    #636366;
-      --blue:     #5BA8F5;
-      --blue-bg:  #1C3B5A;
-      --pink:     #D4537E;
-      --pink-bg:  #3D1829;
-      --bar-m:    #5BA8F5;
-      --bar-f:    #D4537E;
-      --bar-s:    #636366;
-      --green-bg: #0D2B22;
-      --green:    #4CAF82;
-      --fire-bg:  #2E1E08;
-      --fire:     #F5A623;
-      --sub-bg:   #2C2B28;
-      --sub:      #9E9D99;
-      --info-bg:  #1C3B5A;
-      --info:     #5BA8F5;
-      --accent:   #5BA8F5;
-      --accent-bg:#1C3B5A;
+      --bg:       #1C1712;
+      --bg2:      #26201A;
+      --bg3:      #322A20;
+      --border:   #3D3226;
+      --border2:  #4A3D2C;
+      --text:     #F2E9D6;
+      --text2:    #C4B79A;
+      --text3:    #8C7F63;
+      --blue:     #E0932E;
+      --blue-bg:  #3D2E12;
+      --pink:     #D97B96;
+      --pink-bg:  #3D2530;
+      --bar-m:    #6E9BD6;
+      --bar-f:    #D97B96;
+      --bar-s:    #6B5F4A;
+      --green-bg: #1C3329;
+      --green:    #5FB394;
+      --fire-bg:  #3D2E12;
+      --fire:     #F0A83B;
+      --sub-bg:   #2E2519;
+      --sub:      #A69880;
+      --info-bg:  #3D2E12;
+      --info:     #E0932E;
+      --accent:   #E0932E;
+      --accent-bg:#3D2E12;
+      --citrus:   #F0A83B;
+      --citrus-bg:#3D2E12;
     }
     [data-theme="dark"] .avm { background: var(--bar-m); color: #fff; }
     [data-theme="dark"] .avf { background: var(--bar-f); color: #fff; }
-    [data-theme="dark"] .tw  { color: #5BA8F5; }
+    [data-theme="dark"] .tw  { color: #E0932E; }
     [data-theme="dark"] .ts,
     [data-theme="dark"] .dy.sm,
-    [data-theme="dark"] .su  { background: #2E2208; color: #F5A623; }
-    [data-theme="dark"] .of  { background: #2E0D0D; color: #E57373; }
-    [data-theme="dark"] .dy.vb:hover { background: #254A70; }
-    [data-theme="dark"] .ngm { color: #5BA8F5; }
-    [data-theme="dark"] .ngf { color: #D4537E; }
+    [data-theme="dark"] .su  { background: #3D2E12; color: #F0A83B; }
+    [data-theme="dark"] .of  { background: #3A2018; color: #D98A63; }
+    [data-theme="dark"] .dy.vb:hover { background: #3D2E12; }
+    [data-theme="dark"] .ngm { color: #6E9BD6; }
+    [data-theme="dark"] .ngf { color: #D97B96; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #e4e7ec;
-      background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='1.4' fill='%23b0b8c6' fill-opacity='0.45'/%3E%3C/svg%3E");
+      background-color: #E4CD9A;
+      background-image:
+        repeating-linear-gradient(90deg, rgba(96,74,34,.07) 0 2px, transparent 2px 64px),
+        url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='1.4' fill='%23604A22' fill-opacity='0.10'/%3E%3C/svg%3E");
       color: var(--text);
       min-height: 100vh;
     }
     [data-theme="dark"] body {
-      background-color: #111113;
-      background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='1.4' fill='%23ffffff' fill-opacity='0.04'/%3E%3C/svg%3E");
+      background-color: #14100C;
+      background-image:
+        repeating-linear-gradient(90deg, rgba(240,168,59,.06) 0 2px, transparent 2px 64px),
+        url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='1.4' fill='%23F0A83B' fill-opacity='0.06'/%3E%3C/svg%3E");
     }
 
     /* ── Layout ───────────────────────────────────────────────────── */
     .shell { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
     .header { margin-bottom: 1.5rem; text-align: center;
-              background: linear-gradient(135deg, #1155a0 0%, #2074c8 55%, #1a66b8 100%);
-              border-radius: var(--radius-lg); padding: 3.5rem 1.25rem 2.75rem;
-              box-shadow: 0 4px 20px rgba(17,85,160,.22);
+              background: linear-gradient(155deg, #E4CD9A 0%, #D8BC80 100%);
+              border-radius: var(--radius-lg); border-bottom: 4px solid #1E2A45;
+              padding: 3.5rem 1.25rem 2.75rem;
+              box-shadow: 0 4px 20px rgba(30,42,69,.18);
               position: relative; overflow: hidden; }
     .header > * { position: relative; z-index: 1; }
-    .header::before { content: ''; position: absolute; border-radius: 50%; pointer-events: none;
-              width: 260px; height: 260px; top: -80px; right: -60px;
-              background: rgba(255,255,255,.07); border: 2px solid rgba(255,255,255,.13); }
-    .header::after  { content: ''; position: absolute; border-radius: 50%; pointer-events: none;
-              width: 160px; height: 160px; bottom: -60px; left: -30px;
-              background: rgba(255,255,255,.05); border: 2px solid rgba(255,255,255,.09); }
-    [data-theme="dark"] .header { background: linear-gradient(135deg, #0d2d4f 0%, #1a4a78 55%, #122d4a 100%);
+    .header::before { content: ''; position: absolute; inset: 0; pointer-events: none;
+              background-image: repeating-linear-gradient(90deg, rgba(30,42,69,.05) 0 2px, transparent 2px 64px); }
+    .header::after  { display: none; }
+    [data-theme="dark"] .header { background: linear-gradient(155deg, #2E2113 0%, #201709 100%);
+              border-bottom-color: var(--citrus);
               box-shadow: 0 4px 24px rgba(0,0,0,.45); }
-    .header h1 { font-size: 30px; font-weight: 700; color: #fff; letter-spacing: -.3px; }
-    .header p  { font-size: 13px; color: rgba(255,255,255,.72); margin-top: 5px; }
-    .hero-stat  { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
-                  border-radius: 20px; padding: 4px 13px; font-size: 12px; color: rgba(255,255,255,.9); }
-    .hero-cta   { margin-top: 1.75rem; background: rgba(255,255,255,.15);
-                  border: 1.5px solid rgba(255,255,255,.35); color: #fff;
-                  font-size: 13px; font-weight: 600; border-radius: 20px; padding: 9px 24px;
-                  cursor: pointer; transition: background .15s; }
-    .hero-cta:hover { background: rgba(255,255,255,.25); }
-    .theme-btn { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.28); border-radius: 50%;
-                 width: 36px; height: 36px; cursor: pointer; font-size: 16px; flex-shrink: 0;
+    [data-theme="dark"] .header::before { background-image: repeating-linear-gradient(90deg, rgba(240,168,59,.05) 0 2px, transparent 2px 64px); }
+    .header h1 { font-size: 28px; font-weight: 900; color: #1E2A45; letter-spacing: -.2px; text-transform: uppercase; }
+    [data-theme="dark"] .header h1 { color: var(--citrus); }
+    .header p  { font-size: 12.5px; font-weight: 600; color: #4A3F25; margin-top: 6px; }
+    [data-theme="dark"] .header p { color: #C4B79A; }
+    .hero-stat  { background: rgba(30,42,69,.1); border: 1.5px solid rgba(30,42,69,.3);
+                  border-radius: 4px; padding: 4px 13px; font-size: 12px; font-weight: 700; color: #1E2A45; }
+    .hero-cta   { margin-top: 1.75rem; background: #1E2A45;
+                  border: 1.5px solid #1E2A45; color: var(--citrus);
+                  font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+                  border-radius: 4px; padding: 10px 26px;
+                  cursor: pointer; transition: opacity .15s; }
+    .hero-cta:hover { opacity: .82; }
+    [data-theme="dark"] .hero-cta { background: var(--citrus); border-color: var(--citrus); color: #1C1712; }
+    .theme-btn { background: rgba(30,42,69,.1); border: 1.5px solid rgba(30,42,69,.3); border-radius: 50%;
+                 width: 36px; height: 36px; cursor: pointer; font-size: 16px; flex-shrink: 0; color: #1E2A45;
                  display: flex; align-items: center; justify-content: center; transition: background .15s; }
-    .theme-btn:hover { background: rgba(255,255,255,.28); border-color: rgba(255,255,255,.5); }
+    .theme-btn:hover { background: rgba(30,42,69,.18); }
+    [data-theme="dark"] .theme-btn { color: var(--citrus); border-color: rgba(240,168,59,.35); background: rgba(240,168,59,.08); }
 
     /* ── Nav ──────────────────────────────────────────────────────── */
     .nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem;
            border-bottom: 1px solid var(--border); padding: .75rem 1rem .75rem;
            position: sticky; top: 0; z-index: 100;
-           background: #e4e7ec; margin-left: -1rem; margin-right: -1rem; }
-    [data-theme="dark"] .nav { background: #111113; }
-    .nb  { font-size: 13px; padding: 5px 14px; border-radius: 20px;
-           border: 1px solid var(--border2); background: transparent;
+           background: #E4CD9A; margin-left: -1rem; margin-right: -1rem; }
+    [data-theme="dark"] .nav { background: #14100C; }
+    .nb  { font-size: 11px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase;
+           padding: 6px 14px; border-radius: 4px;
+           border: 1.5px solid var(--border2); background: transparent;
            color: var(--text2); cursor: pointer; transition: all .15s; }
     .nb:hover  { border-color: var(--accent); color: var(--accent); }
-    .nb.active { background: var(--accent); color: #fff; border-color: transparent;
-                 box-shadow: 0 2px 8px rgba(24,95,165,.28); }
+    .nb.active { background: var(--text); color: var(--citrus); border-color: var(--text);
+                 box-shadow: 0 2px 8px rgba(30,42,69,.28); }
+    [data-theme="dark"] .nb.active { background: var(--citrus); color: #1C1712; box-shadow: 0 2px 8px rgba(240,168,59,.28); }
     .nb-icon { display: none; font-size: 20px; line-height: 1.1; }
 
     /* ── Global season toggle ────────────────────────────────────── */
     .global-season { display: flex; gap: 6px; margin-bottom: 1.25rem; align-items: center; }
-    .gst { font-size: 13px; padding: 6px 16px; border-radius: 20px;
-           border: 1px solid var(--border2); background: transparent;
-           color: var(--text2); cursor: pointer; transition: all .15s; font-weight: 500; }
+    .gst { font-size: 12px; padding: 6px 16px; border-radius: 4px;
+           border: 1.5px solid var(--border2); background: transparent;
+           color: var(--text2); cursor: pointer; transition: all .15s; font-weight: 700; letter-spacing: .02em; }
     .gst:hover  { border-color: var(--accent); color: var(--accent); }
-    .gst.active { background: var(--accent); color: #fff; border-color: transparent;
-                  box-shadow: 0 2px 8px rgba(24,95,165,.22); }
+    .gst.active { background: var(--text); color: var(--citrus); border-color: var(--text);
+                  box-shadow: 0 2px 8px rgba(30,42,69,.22); }
+    [data-theme="dark"] .gst.active { background: var(--citrus); color: #1C1712; }
 
     /* ── Pages ────────────────────────────────────────────────────── */
     .page { display: none; }
@@ -161,8 +177,8 @@
     /* ── Card ─────────────────────────────────────────────────────── */
     .card { background: var(--bg); border: 1px solid var(--border);
             border-radius: var(--radius-lg); padding: 1rem 1.1rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.05); }
-    [data-theme="dark"] .card { box-shadow: 0 4px 24px rgba(0,0,0,.35); }
+            box-shadow: 0 4px 16px rgba(30,42,69,.08), 0 1px 4px rgba(30,42,69,.05); }
+    [data-theme="dark"] .card { box-shadow: 0 4px 20px rgba(0,0,0,.35); }
     .profile-card { position: fixed; top: 0; right: -380px; width: 340px; max-width: 92vw;
                     height: 100%; overflow-y: auto; z-index: 200; border-radius: 0;
                     border: none; border-left: 1px solid var(--border);
@@ -185,13 +201,17 @@
     button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
     input[type="text"]:focus { outline: 2px solid var(--blue); outline-offset: 0; box-shadow: none; }
     .pr.selected { background: var(--blue-bg); border-radius: 6px; margin: 0 -4px; padding-left: 4px; padding-right: 4px; }
-    /* ── Metric grid ──────────────────────────────────────────────── */
-    .mg { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 1.5rem; }
+    /* ── Metric grid (scoreboard panel) ─────────────────────────────── */
+    .mg { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; margin-bottom: 1.5rem;
+          background: var(--text); border-radius: var(--radius-md); overflow: hidden;
+          box-shadow: 0 4px 16px rgba(30,42,69,.15); }
+    [data-theme="dark"] .mg { background: #322A20; }
     @media(max-width:580px){ .mg { grid-template-columns: repeat(2,1fr); } }
-    .met { background: var(--bg2); border-radius: var(--radius-md); padding: 1rem 1.1rem;
-           border-top: 3px solid transparent; box-shadow: inset 0 0 0 1px rgba(0,0,0,.04); }
-    .mv  { font-size: 40px; font-weight: 700; color: var(--text); line-height: 1; }
-    .ml  { font-size: 12px; color: var(--text2); margin-top: 6px; }
+    .met { background: var(--text); padding: 1rem .9rem; text-align: center; border-top: none; box-shadow: none; }
+    [data-theme="dark"] .met { background: #201A14; }
+    .mv  { font-size: 32px; font-weight: 900; color: var(--citrus); line-height: 1; font-variant-numeric: tabular-nums; }
+    .ml  { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #B9C3D9; margin-top: 6px; }
+    [data-theme="dark"] .ml { color: #B0A588; }
 
     /* ── Attendance heatmap ───────────────────────────────────────── */
     .att-wrap { overflow-x: auto; padding-bottom: 4px; }
@@ -230,7 +250,7 @@
     .avs { background: var(--sub-bg); color: var(--sub); }
     .nm   { font-size: 13px; flex: 1; min-width: 0; white-space: nowrap;
             overflow: hidden; text-overflow: ellipsis; }
-    .nm-m { color: var(--blue); }
+    .nm-m { color: var(--bar-m); }
     .nm-f { color: var(--pink); }
     .bw   { width: 60px; background: var(--bg2); border-radius: 4px;
             height: 6px; overflow: hidden; flex-shrink: 0; }
@@ -359,7 +379,7 @@
            padding: .85rem 1rem; font-size: 13px; line-height: 1.8; }
     .ng  { display: inline-block; padding: 2px 9px; border-radius: 20px;
            margin: 2px; font-size: 12px; font-weight: 500; }
-    .ngm { background: var(--blue-bg); color: #0C447C; }
+    .ngm { background: var(--blue-bg); color: #35507E; }
     .ngf { background: var(--pink-bg); color: #72243E; }
 
 
@@ -391,13 +411,21 @@
            display: inline-block; margin-right: 4px; vertical-align: middle; }
 
     /* ── Last session card ───────────────────────────────────────── */
-    .lsc { background: var(--bg); border: 1px solid var(--border);
-           border-radius: var(--radius-lg); padding: 1rem 1.1rem;
+    .lsc { background: var(--bg); border: 2px solid var(--text);
+           border-radius: var(--radius-md); padding: 1rem 1.1rem;
            margin-bottom: 1.5rem;
-           box-shadow: 0 2px 12px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.04); }
-    .lsc-head { display: flex; align-items: center; gap: 8px; margin-bottom: .85rem; }
-    .lsc-title { font-size: 15px; font-weight: 700; color: var(--text); flex: 1; }
-    .lsc-meta  { font-size: 11px; color: var(--text3); }
+           box-shadow: 0 2px 12px rgba(30,42,69,.08); }
+    [data-theme="dark"] .lsc { border-color: var(--citrus); }
+    .lsc-head { display: flex; align-items: flex-start; gap: 8px; margin-bottom: .85rem; }
+    .lsc-label { font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 3px; }
+    [data-theme="dark"] .lsc-label { color: var(--citrus); }
+    .lsc-title { font-size: 14px; font-weight: 800; color: var(--text); flex: 1; }
+    .lsc-meta  { font-size: 11px; color: var(--text3); font-weight: 600; margin-top: 2px; }
+    .lsc-teams { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+    @media(max-width:580px){ .lsc-teams { grid-template-columns: repeat(2,1fr); } }
+    .lsc-team-chip { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+                     padding: .5rem .55rem; font-size: 11px; font-weight: 700; text-align: center; color: var(--text);
+                     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .lsc-row { display: flex; align-items: center; gap: 10px; padding: 5px 0;
                border-bottom: 1px solid var(--border); }
     .lsc-row:last-child { border-bottom: none; }
@@ -485,7 +513,7 @@
                 cursor: pointer; text-align: left; width: 100%;
                 transition: background .15s, color .15s; }
     .sb-btn:hover  { background: rgba(255,255,255,.08); color: rgba(255,255,255,.85); }
-    .sb-btn.active { background: rgba(255,255,255,.13); color: #fff; }
+    .sb-btn.active { background: rgba(255,255,255,.1); color: #fff; border-left: 3px solid #E0932E; padding-left: 9px; }
     .sb-icon  { font-size: 17px; width: 22px; text-align: center; flex-shrink: 0; line-height: 1; }
     .sb-season { margin: .75rem .65rem 0;
                  border-top: 1px solid rgba(255,255,255,.08); padding-top: .85rem; }
@@ -498,7 +526,7 @@
                 cursor: pointer; transition: background .15s, color .15s;
                 text-align: left; margin-bottom: 2px; }
     .sb-gst:hover  { background: rgba(255,255,255,.08); color: rgba(255,255,255,.8); }
-    .sb-gst.active { background: var(--accent); color: #fff; }
+    .sb-gst.active { background: #E0932E; color: #1C1712; font-weight: 700; }
     .sb-footer { margin-top: auto; padding: .85rem .65rem 0;
                  border-top: 1px solid rgba(255,255,255,.08); }
     .sb-theme  { display: flex; align-items: center; gap: 8px; width: 100%;
@@ -658,10 +686,10 @@
       </div>
       <div class="card" style="margin-bottom:1.5rem">
         <div class="mg" style="margin-bottom:1rem">
-          <div class="met" style="border-top-color:var(--bar-m)"><div class="mv" style="color:var(--bar-m)">15</div><div class="ml">Sundays played</div></div>
-          <div class="met" style="border-top-color:var(--border2)"><div class="mv">0</div><div class="ml">Sundays left</div></div>
-          <div class="met" style="border-top-color:var(--fire)"><div class="mv" style="color:var(--fire)">3</div><div class="ml">Perfect attendance</div></div>
-          <div class="met" style="border-top-color:var(--bar-m)"><div class="mv">24</div><div class="ml">Regulars this season</div></div>
+          <div class="met"><div class="mv">15</div><div class="ml">Sundays played</div></div>
+          <div class="met"><div class="mv">0</div><div class="ml">Sundays left</div></div>
+          <div class="met"><div class="mv">3</div><div class="ml">Perfect attendance</div></div>
+          <div class="met"><div class="mv">24</div><div class="ml">Regulars this season</div></div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px"><span>Week 15 of 15</span><span>100%</span></div>
         <div class="pw"><div class="pf" style="width:100%"></div></div>
@@ -741,13 +769,13 @@
       </div>
       <div class="card" style="margin-bottom:1.5rem">
         <div class="mg" style="margin-bottom:1rem">
-          <div class="met" style="border-top-color:var(--bar-m)"><div class="mv" id="ovSumPlayed">–</div><div class="ml">Sundays played</div></div>
-          <div class="met" style="border-top-color:var(--blue)"><div class="mv" style="color:var(--blue)" id="ovSumAhead">–</div><div class="ml">Sundays ahead</div></div>
-          <div class="met" style="border-top-color:var(--bar-m)"><div class="mv" id="ovSumRegs">–</div><div class="ml">Regulars</div></div>
-          <div class="met" style="border-top-color:var(--green)"><div class="mv" style="color:var(--green)" id="ovSumNew">–</div><div class="ml">New to regulars</div></div>
+          <div class="met"><div class="mv" id="ovSumPlayed">–</div><div class="ml">Sundays played</div></div>
+          <div class="met"><div class="mv" id="ovSumAhead">–</div><div class="ml">Sundays ahead</div></div>
+          <div class="met"><div class="mv" id="ovSumRegs">–</div><div class="ml">Regulars</div></div>
+          <div class="met"><div class="mv" id="ovSumNew">–</div><div class="ml">New to regulars</div></div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px"><span id="ovSumWeekLbl">–</span><span id="ovSumPct">–</span></div>
-        <div class="pw"><div class="pf" id="ovSumBar" style="width:0%;background:linear-gradient(90deg,#F5A623,#FFD04A)"></div></div>
+        <div class="pw"><div class="pf" id="ovSumBar" style="width:0%;background:linear-gradient(90deg,#B0701A,#F0A83B)"></div></div>
         <div style="font-size:12px;color:var(--text3);margin-top:6px" id="ovSumBlurb"></div>
       </div>
       <div class="sec" id="summerFunFactsSec">
@@ -797,7 +825,7 @@
     <div id="lb-summer">
       <div class="sec">
         <div class="stg ts" style="margin-bottom:.25rem">☀️ Summer 2026</div>
-        <div style="font-size:12px;color:var(--text3);margin-bottom:.75rem"><span style="color:var(--bar-m)">18M</span> · <span style="color:var(--pink)">6F</span> · 24 regulars</div>
+        <div style="font-size:12px;color:var(--text3);margin-bottom:.75rem" id="lbSummerCount"></div>
         <div class="card">
           <div class="sl" style="margin-bottom:.5rem">Attendance</div>
           <div class="tr">
@@ -903,7 +931,7 @@
   <div id="page-history" class="page">
     <div id="hist-winter" style="display:none">
       <div class="leg">
-        <span><span class="ld" style="background:var(--blue)"></span>Male</span>
+        <span><span class="ld" style="background:var(--bar-m)"></span>Male</span>
         <span><span class="ld" style="background:var(--pink)"></span>Female</span>
       </div>
       <input id="histSearch" type="text" placeholder="Filter by player name…" oninput="filterHistory(this.value)" style="width:100%;box-sizing:border-box;padding:6px 10px;font-size:13px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);margin-bottom:.75rem">
@@ -912,7 +940,7 @@
     </div>
     <div id="hist-summer">
       <div class="leg">
-        <span><span class="ld" style="background:var(--blue)"></span>Male</span>
+        <span><span class="ld" style="background:var(--bar-m)"></span>Male</span>
         <span><span class="ld" style="background:var(--pink)"></span>Female</span>
       </div>
       <input id="summerHistSearch" type="text" placeholder="Filter by player…" oninput="filterSummerWeeks()" style="width:100%;box-sizing:border-box;padding:6px 10px;font-size:13px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);margin-bottom:10px">
@@ -952,7 +980,7 @@
     <div id="sv-list">
       <div id="nextSessionSpotlight"></div>
       <div class="sec">
-        <div class="stg ts" style="margin-bottom:.75rem">☀️ Summer 2026 <span style="font-weight:400;font-size:10px">· 24 regulars</span></div>
+        <div class="stg ts" style="margin-bottom:.75rem">☀️ Summer 2026 <span style="font-weight:400;font-size:10px" id="schSummerCount"></span></div>
         <div class="card" id="schs"></div>
       </div>
       <div class="sec">
@@ -1288,8 +1316,9 @@ function rLastSession() {
     sumEl.innerHTML = `<div class="lsc">
       <div class="lsc-head">
         <div>
-          <div class="lsc-title">⚡ Last session · ${w.theme}</div>
-          <div class="lsc-meta">Week ${w.n - 15} · ${w.date} · ${w.reg} players</div>
+          <div class="lsc-label">Last Sunday</div>
+          <div class="lsc-title">Session ${w.n} · ${w.date} · ${w.theme}</div>
+          <div class="lsc-meta">Week ${w.n - 15} of 11 · ${w.reg} players</div>
         </div>
         <button class="player-link" style="font-size:11px;color:var(--blue);flex-shrink:0" onclick="goToWeek(${w.n})">View →</button>
       </div>
@@ -1299,8 +1328,8 @@ function rLastSession() {
           <div class="lsc-bar-wrap"><div class="lsc-bar-fill" style="width:${Math.round(t.w/maxWins*100)}%"></div></div>
           <span class="lsc-rec" style="color:${t.w > t.l ? 'var(--green)' : t.w === t.l ? 'var(--text2)' : 'var(--text3)'}">${t.w}–${t.l}</span>
           <span class="lsc-trophy">${i === 0 ? '🏆' : ''}</span>
-        </div>`).join('') : `<div style="font-size:12px;color:var(--text3)">
-          ${w.teams.map(t => t.name).join(' · ')}
+        </div>`).join('') : `<div class="lsc-teams">
+          ${w.teams.map(t => `<div class="lsc-team-chip">${t.name}</div>`).join('')}
         </div>`}
     </div>`;
   }
@@ -1313,12 +1342,15 @@ function rLastSession() {
     winEl.innerHTML = `<div class="lsc">
       <div class="lsc-head">
         <div>
-          <div class="lsc-title">⚡ Last session · ${w.theme}</div>
-          <div class="lsc-meta">Week ${w.n} · ${w.date} · ${w.reg} players</div>
+          <div class="lsc-label">Last Sunday</div>
+          <div class="lsc-title">Session ${w.n} · ${w.date} · ${w.theme}</div>
+          <div class="lsc-meta">Week ${w.n} of 15 · ${w.reg} players</div>
         </div>
         <button class="player-link" style="font-size:11px;color:var(--blue);flex-shrink:0" onclick="goToWeek(${w.n})">View →</button>
       </div>
-      <div style="font-size:12px;color:var(--text2)">${w.teams.map(t => t.name).join(' · ')}</div>
+      <div class="lsc-teams">
+        ${w.teams.map(t => `<div class="lsc-team-chip">${t.name}</div>`).join('')}
+      </div>
     </div>`;
   }
 }
@@ -1326,11 +1358,11 @@ function rLastSession() {
 function setAccentColor(season) {
   const dark = document.documentElement.dataset.theme === 'dark';
   if (season === 'summer') {
-    document.documentElement.style.setProperty('--accent',    dark ? '#F5A623' : '#B45309');
-    document.documentElement.style.setProperty('--accent-bg', dark ? '#2E1E08' : '#FEF3C7');
+    document.documentElement.style.setProperty('--accent',    dark ? '#F0A83B' : '#B0701A');
+    document.documentElement.style.setProperty('--accent-bg', dark ? '#3D2E12' : '#F7E4C4');
   } else {
-    document.documentElement.style.setProperty('--accent',    dark ? '#5BA8F5' : '#185FA5');
-    document.documentElement.style.setProperty('--accent-bg', dark ? '#1C3B5A' : '#E6F1FB');
+    document.documentElement.style.setProperty('--accent',    dark ? '#6E9BD6' : '#1E2A45');
+    document.documentElement.style.setProperty('--accent-bg', dark ? '#24344F' : '#EBDFC0');
   }
 }
 
@@ -1775,7 +1807,8 @@ function rCalDet(key) {
   const th = pending
     ? `<div style="font-size:13px;color:var(--text3);padding:4px 0">Not yet played.</div>`
     : `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">${w.teams.map(t=>`<div class="tco"><div class="tn">${t.name}</div>${t.p.map(p=>pl(p)).join('')}</div>`).join('')}</div>`;
-  det.innerHTML = `<div class="card"><div style="font-size:13px;font-weight:600;margin-bottom:4px">Session ${w.n} · ${w.date} · Theme: ${w.theme}</div>${pending?'':`<div style="font-size:12px;color:var(--text2);margin-bottom:8px">${w.reg}/24 regulars</div>`}${th}<div style="margin-top:8px">${yth(w.n)}</div></div>`;
+  const regTotal = w.season === 's' ? SUMMER_REGULARS.length : REGULARS.length;
+  det.innerHTML = `<div class="card"><div style="font-size:13px;font-weight:600;margin-bottom:4px">Session ${w.n} · ${w.date} · Theme: ${w.theme}</div>${pending?'':`<div style="font-size:12px;color:var(--text2);margin-bottom:8px">${w.reg}/${regTotal} regulars</div>`}${th}<div style="margin-top:8px">${yth(w.n)}</div></div>`;
 }
 
 // ── Attendance ──────────────────────────────────────────────────────
@@ -2334,10 +2367,20 @@ function rSummerProgress() {
       : 'Season starting soon ☀️';
 }
 
+// ── Summer roster counts (auto-computed from data.js) ────────────────
+function rSummerRosterCounts() {
+  const m = SUMMER_REGULARS.filter(r => r.g === 'm').length;
+  const f = SUMMER_REGULARS.filter(r => r.g === 'f').length;
+  const lbEl = document.getElementById('lbSummerCount');
+  if (lbEl) lbEl.innerHTML = `<span style="color:var(--bar-m)">${m}M</span> · <span style="color:var(--pink)">${f}F</span> · ${SUMMER_REGULARS.length} regulars`;
+  const schEl = document.getElementById('schSummerCount');
+  if (schEl) schEl.textContent = `· ${SUMMER_REGULARS.length} regulars`;
+}
+
 // ── Init ────────────────────────────────────────────────────────────
 computeStats(); computeWL();
 setAccentColor('summer');
-rLastSession(); rHeaderPill('summer'); rSummerProgress();
+rLastSession(); rHeaderPill('summer'); rSummerProgress(); rSummerRosterCounts();
 rLb(); rSummerLb(); rWinterFunFacts(); rSummerFunFacts(); rSubs(); rTopSubs();
 rDuos(); rSummerDuos(); rAllTimeDuos();
 rConnLb(); rSummerConnLb(); rAllTimeConnLb();

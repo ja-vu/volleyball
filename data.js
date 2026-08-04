@@ -75,6 +75,7 @@ const THEMES = [
   {n:21, date:'Jul 12', theme:'Star Wars species',   color:'#43A047'},
   {n:22, date:'Jul 19', theme:'Coffee drinks',       color:'#8D6E63'},
   {n:23, date:'Jul 26', theme:'One Piece',           color:'#D4AF37'},
+  {n:24, date:'Aug 2',  theme:'Ice cream brands',    color:'#F48FB1'},
 ];
 
 // YouTube video URLs — add as:  session_number: 'https://youtube.com/watch?v=XXXXX'
@@ -264,6 +265,11 @@ const WEEKS = [
     {name:'Straw Hat Pirates',   p:[{n:'Chy',g:'m'},{n:'Steven',g:'m'},{n:'Ke-Nam',g:'s',sg:'m'},{n:'Xuan-Mai',g:'f'},{n:'Michel',g:'m'},{n:'Alain',g:'m'}]},
     {name:'Blackbeard Pirates',  p:[{n:'Sophie',g:'f'},{n:'Anita',g:'f'},{n:'Phillipe',g:'m'},{n:'Bernie',g:'m'},{n:'Norichar',g:'s',sg:'m'},{n:'Emad',g:'m'}]},
     {name:'Whitebeard Pirates',  p:[{n:'Daniel',g:'m'},{n:'John',g:'m'},{n:'Samuel',g:'m'},{n:'Anthony W.',g:'m'},{n:'Winnie',g:'f'},{n:'Mark',g:'m'}]}]},
+  {n:24, date:'Aug 2', theme:'Ice cream brands', season:'s', reg:21, teams:[
+    {name:'Häagen-Dazs',   p:[{n:'Michel',g:'m'},{n:'Kevin L.',g:'m'},{n:'Catherine',g:'s',sg:'f'},{n:'Rigil',g:'m'},{n:'Emad',g:'m'},{n:'Sophie',g:'f'}]},
+    {name:"Ben & Jerry's", p:[{n:'Bernie',g:'m'},{n:'Phillipe',g:'m'},{n:'Patricio',g:'m'},{n:'Nat',g:'f'},{n:'Anthony W.',g:'m'},{n:'Chy',g:'m'}]},
+    {name:'Magnum',        p:[{n:'Joey',g:'s',sg:'m'},{n:'Alain',g:'m'},{n:'Daniel',g:'m'},{n:'Samuel',g:'m'},{n:'Ke-Nam',g:'s',sg:'m'},{n:'Julie',g:'f'}]},
+    {name:'Cornetto',      p:[{n:'Steven',g:'m'},{n:'Kevin H.',g:'m'},{n:'Winnie',g:'f'},{n:'Jose',g:'m'},{n:'Anita',g:'f'},{n:'John',g:'m'}]}]},
 ];
 
 const WINTER_SCHED = [
@@ -310,7 +316,7 @@ const SUMMER_SCHED = [
   {n:6,  date:'Sunday, July 12',    s:'done'},
   {n:7,  date:'Sunday, July 19',    s:'done'},
   {n:8,  date:'Sunday, July 26',    s:'done'},
-  {n:9,  date:'Sunday, August 2',   s:'su'},
+  {n:9,  date:'Sunday, August 2',   s:'done'},
   {n:10, date:'Sunday, August 9',   s:'su'},
   {n:11, date:'Sunday, August 16',  s:'su'},
 ];
@@ -319,7 +325,7 @@ const S2W = {
   '2026-02-22':5,'2026-03-01':6,'2026-03-08':7,'2026-03-15':8,'2026-03-22':9,
   '2026-04-12':10,'2026-04-19':11,'2026-04-26':12,'2026-05-03':13,'2026-05-10':14,
   '2026-05-17':15, '2026-05-31':16, '2026-06-21':17, '2026-06-28':18, '2026-07-05':19,
-  '2026-07-12':20, '2026-07-19':21, '2026-07-26':22,
+  '2026-07-12':20, '2026-07-19':21, '2026-07-26':22, '2026-08-02':23,
 };
 
 const WINTER_WEEKS = WEEKS.filter(w => !w.season);
