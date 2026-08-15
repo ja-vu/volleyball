@@ -16,6 +16,7 @@ const GM = {
   Melanie:'f', Nadim:'m', Olivier:'m', Raks:'m', Salem:'m', Steven:'m', William:'m', Winnie:'f',
   // One-off subs
   Bernard:'m', Bernie:'m', Dom:'m', Jimmy:'m', Nicky:'m', Phillipe:'m', Sam:'m', Arron:'m', Jason:'m',
+  Calvin:'m', Denise:'f',
   // Summer 2026 new regulars
   'Xuan-Mai':'f', Samuel:'m'
 };
@@ -76,6 +77,8 @@ const THEMES = [
   {n:22, date:'Jul 19', theme:'Coffee drinks',       color:'#8D6E63'},
   {n:23, date:'Jul 26', theme:'One Piece',           color:'#D4AF37'},
   {n:24, date:'Aug 2',  theme:'Ice cream brands',    color:'#F48FB1'},
+  {n:25, date:'Aug 9',  theme:'Quebec grocery chains', color:'#E63946'},
+  {n:26, date:'Aug 16', theme:'Candy brands',          color:'#8E44AD'},
 ];
 
 // YouTube video URLs — add as:  session_number: 'https://youtube.com/watch?v=XXXXX'
@@ -89,6 +92,8 @@ const YT = {
   3: 'https://youtu.be/V_HG8xW1Pes?si=UO_BkNyM2K3HrnOs',
   4: 'https://youtu.be/N5DObrYZ8HA?si=6i0QITGG0hRxqjWe',
   5: 'https://youtu.be/IPCLspJVvSE?si=oOfO5t90huX-O8T0',
+  21: 'https://youtu.be/8RH6DCVrg4A?si=zs8acwdevTsZ81iC',
+  22: 'https://youtu.be/bT4Dk-yN7ng?si=fOhCmvmNPe9PG4SA',
 };
 
 // Each session: { n, date, theme, reg, teams:[{name, p:[...]}], results?:[...] }
@@ -270,6 +275,16 @@ const WEEKS = [
     {name:"Ben & Jerry's", p:[{n:'Bernie',g:'m'},{n:'Phillipe',g:'m'},{n:'Patricio',g:'m'},{n:'Nat',g:'f'},{n:'Anthony W.',g:'m'},{n:'Chy',g:'m'}]},
     {name:'Magnum',        p:[{n:'Joey',g:'s',sg:'m'},{n:'Alain',g:'m'},{n:'Daniel',g:'m'},{n:'Samuel',g:'m'},{n:'Ke-Nam',g:'s',sg:'m'},{n:'Julie',g:'f'}]},
     {name:'Cornetto',      p:[{n:'Steven',g:'m'},{n:'Kevin H.',g:'m'},{n:'Winnie',g:'f'},{n:'Jose',g:'m'},{n:'Anita',g:'f'},{n:'John',g:'m'}]}]},
+  {n:25, date:'Aug 9', theme:'Quebec grocery chains', season:'s', reg:18, teams:[
+    {name:'IGA',      p:[{n:'Billy',g:'s',sg:'m'},{n:'Dom',g:'s',sg:'m'},{n:'Nat',g:'f'},{n:'Patricio',g:'m'},{n:'Kevin H.',g:'m'},{n:'Anthony W.',g:'m'}]},
+    {name:'Super C',  p:[{n:'David',g:'s',sg:'m'},{n:'Michel',g:'m'},{n:'Samuel',g:'m'},{n:'Winnie',g:'f'},{n:'Daniel',g:'m'},{n:'James',g:'m'}]},
+    {name:'Metro',    p:[{n:'Joey',g:'s',sg:'m'},{n:'Bernie',g:'m'},{n:'Kevin L.',g:'m'},{n:'Julie',g:'f'},{n:'Jose',g:'m'},{n:'John',g:'m'}]},
+    {name:'Provigo',  p:[{n:'Karim-Etienne',g:'s',sg:'m'},{n:'Steven',g:'m'},{n:'Alain',g:'m'},{n:'Sophie',g:'f'},{n:'Norichar',g:'s',sg:'m'},{n:'Anita',g:'f'}]}]},
+  {n:26, date:'Aug 16', theme:'Candy brands', season:'s', reg:18, teams:[
+    {name:'Skittles',   p:[{n:'Denise',g:'s',sg:'f'},{n:'Michel',g:'m'},{n:'Anita',g:'f'},{n:'Bernie',g:'m'},{n:'Kevin H.',g:'m'},{n:'John',g:'m'}]},
+    {name:'Starburst',  p:[{n:'Barbara',g:'s',sg:'f'},{n:'Winnie',g:'f'},{n:'Jose',g:'m'},{n:'Norichar',g:'s',sg:'m'},{n:'Steven',g:'m'},{n:'Sophie',g:'f'}]},
+    {name:'Twizzlers',  p:[{n:'Nathan',g:'s',sg:'m'},{n:'Calvin',g:'s',sg:'m'},{n:'Anthony W.',g:'m'},{n:'Catherine',g:'s',sg:'f'},{n:'Julie',g:'f'},{n:'Phillipe',g:'m'}]},
+    {name:'Nerds',      p:[{n:'Chy',g:'m'},{n:'Kevin L.',g:'m'},{n:'Rigil',g:'m'},{n:'Xuan-Mai',g:'f'},{n:'Nat',g:'f'},{n:'Patricio',g:'m'}]}]},
 ];
 
 const WINTER_SCHED = [
@@ -317,15 +332,15 @@ const SUMMER_SCHED = [
   {n:7,  date:'Sunday, July 19',    s:'done'},
   {n:8,  date:'Sunday, July 26',    s:'done'},
   {n:9,  date:'Sunday, August 2',   s:'done'},
-  {n:10, date:'Sunday, August 9',   s:'su'},
-  {n:11, date:'Sunday, August 16',  s:'su'},
+  {n:10, date:'Sunday, August 9',   s:'done'},
+  {n:11, date:'Sunday, August 16',  s:'done'},
 ];
 const S2W = {
   '2026-01-11':0,'2026-01-18':1,'2026-02-01':2,'2026-02-08':3,'2026-02-15':4,
   '2026-02-22':5,'2026-03-01':6,'2026-03-08':7,'2026-03-15':8,'2026-03-22':9,
   '2026-04-12':10,'2026-04-19':11,'2026-04-26':12,'2026-05-03':13,'2026-05-10':14,
   '2026-05-17':15, '2026-05-31':16, '2026-06-21':17, '2026-06-28':18, '2026-07-05':19,
-  '2026-07-12':20, '2026-07-19':21, '2026-07-26':22, '2026-08-02':23,
+  '2026-07-12':20, '2026-07-19':21, '2026-07-26':22, '2026-08-02':23, '2026-08-09':24, '2026-08-16':25,
 };
 
 const WINTER_WEEKS = WEEKS.filter(w => !w.season);
